@@ -50,7 +50,7 @@ def _codex_prompt(
         "Allowed materials: MildSteelA, MildSteelE, Ah36, Dh36, Eh36, Eh40, Aluminum5083.",
         "Allowed welds: Economy, Standard, Premium.",
         "Allowed seals: Economy, Commercial, Marine.",
-        "Thickness range: 0.003 through 0.015 meters.",
+        "Thickness range: 0.003 through 0.060 meters.",
         "",
         (
             f"Current design: material={design.material}, "
@@ -689,7 +689,7 @@ def _apply_revision(
     design: VesselDesignNode, revision: ConfigRevision
 ) {
     design.material = _valid_material(revision.material);
-    design.thickness_m = max(0.003, min(0.015, revision.thickness_m));
+    design.thickness_m = max(0.003, min(0.060, revision.thickness_m));
     design.weld = _valid_weld(revision.weld);
     design.seal = _valid_seal(revision.seal);
     design.revision += 1;
@@ -764,9 +764,14 @@ def _rule_revision(
         } elif repeated_mode >= 3 and weld == "Standard" {
             weld = "Premium";
             reason = "Persistent fatigue requires the lowest weld stress concentration";
-        } elif thickness < 0.015 {
-            thickness = min(0.015, thickness + 0.001);
-            reason = "Add one millimeter only after the weld upgrade";
+        } elif thickness < 0.060 {
+            thickness = min(
+                0.060,
+                thickness + (0.006 if repeated_mode >= 7 else 0.002)
+            );
+            reason = (
+                "Increase plating faster after repeated fatigue traces"
+            );
         } else {
             weld = "Premium";
             reason = "Use premium welds after thickness revisions were exhausted";
@@ -781,7 +786,7 @@ def _rule_revision(
         thickness = max(0.003, thickness - 0.001);
         reason = "Reduce shell mass and fuel demand";
     } else {
-        thickness = min(0.015, thickness + 0.001);
+        thickness = min(0.060, thickness + 0.003);
         reason = "Increase structural margin for the unclassified failure";
     }
 
@@ -1018,6 +1023,7 @@ walker PointOptimizerCore {
         name: str = "",
         route_iterations: int = 3,
         material_iterations: int = 10,
+        route_waypoints: list[dict[str, any]] = [],
         vessel: dict[str, any] = {},
         use_codex: bool = True,
         use_live_conditions: bool = True,
@@ -1098,8 +1104,8 @@ walker PointOptimizerCore {
             draft_m=vessel.draft_m,
             block_coeff=vessel.block_coeff,
             waterplane_coeff=vessel.waterplane_coeff,
-            material="Eh36",
-            thickness_m=0.015,
+            material="Eh40",
+            thickness_m=0.060,
             weld="Premium",
             seal="Marine",
             max_power_kw=vessel.max_power_kw,
@@ -1156,7 +1162,15 @@ walker PointOptimizerCore {
             route_revision: RouteRevision;
             # One Codex call seeds the route search; Jac generates the remaining
             # alternatives locally so interactive demo runs stay fast.
-            if self.use_codex and route_index == 0 {
+            if route_index == 0 and self.route_waypoints {
+                route_revision = RouteRevision(
+                    waypoints=self.route_waypoints,
+                    reasoning=(
+                        "Land-mask-verified water route supplied by the "
+                        "interactive globe planner"
+                    )
+                );
+            } elif self.use_codex and route_index == 0 {
                 try {
                     route_revision = _codex_route(
                         origin_point,
@@ -1179,7 +1193,6 @@ walker PointOptimizerCore {
                     route_id, direct_distance
                 );
             }
-
             points = _enriched_points(
                 self.origin,
                 self.destination,

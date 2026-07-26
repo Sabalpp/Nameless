@@ -58,6 +58,7 @@ walker VoyageWalker {
         failure_mode: str = "",
         failure_zone: str = "",
         failure_reason: str = "",
+        configuration_cost_usd: float = 0.0,
         result: VoyageResult | None = None;
 
     def _initialize {
@@ -74,6 +75,12 @@ walker VoyageWalker {
             + self.beam_m * self.depth_m
         );
         shell_mass = shell_area * self.thickness_m * mat.density_kg_m3;
+        self.configuration_cost_usd = config_cost_usd(
+            self.loa_m, self.beam_m, self.depth_m,
+            mat.density_kg_m3, self.thickness_m,
+            mat.cost_per_kg_usd, self.weld, self.seal,
+            self.fuel_capacity_kg
+        );
         kg_m = estimate_kg(self.depth_m, self.fuel_kg, self.fuel_capacity_kg);
         self.gm_m = metacentric_height_m(
             self.loa_m, self.beam_m, self.depth_m,
@@ -108,6 +115,7 @@ walker VoyageWalker {
             survived=False,
             route_id=self.route_id,
             attempt=self.attempt,
+            cost_usd=self.configuration_cost_usd,
             distance_nm=self.distance_nm,
             total_distance_nm=self.total_distance_nm,
             elapsed_h=self.elapsed_h,
@@ -125,13 +133,7 @@ walker VoyageWalker {
     }
 
     def _record_success(at: WaypointNode) {
-        mat = get_material_spec(self.material);
-        cost = config_cost_usd(
-            self.loa_m, self.beam_m, self.depth_m,
-            mat.density_kg_m3, self.thickness_m,
-            mat.cost_per_kg_usd, self.weld, self.seal,
-            self.fuel_capacity_kg
-        );
+        cost = self.configuration_cost_usd;
         _trace = at +>:CompletedHere():+> SuccessTrace(
             route_id=self.route_id,
             attempt=self.attempt,

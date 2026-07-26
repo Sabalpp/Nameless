@@ -337,3 +337,27 @@ td {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.learning-node-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.learning-node-glow--active {
+  animation: learning-node-pulse 1.35s ease-out infinite;
+}
+
+@keyframes learning-node-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.7);
+  }
+  70% {
+    opacity: 0.12;
+    transform: scale(2.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
+}

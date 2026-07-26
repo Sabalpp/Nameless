@@ -70,7 +70,157 @@ function sortCampaignsByCreatedAt(campaigns) {
   });
 }
 
-function LearningMiniGraph({ iterations }) {
+let cachedLandPolygons = null;
+
+function pointInRing(lon, lat, ring) {
+  let inside = false;
+  for (let index = 0, prior = ring.length - 1; index < ring.length; prior = index, index += 1) {
+    const [x, y] = ring[index];
+    const [priorX, priorY] = ring[prior];
+    if (((y > lat) !== (priorY > lat))
+      && lon < ((priorX - x) * (lat - y)) / (priorY - y + Number.EPSILON) + x) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+function buildLandPolygons(geoJson) {
+  const polygons = [];
+  geoJson.features.forEach((feature) => {
+    const geometry = feature.geometry;
+    const groups = geometry?.type === 'Polygon'
+      ? [geometry.coordinates]
+      : geometry?.type === 'MultiPolygon'
+        ? geometry.coordinates
+        : [];
+    groups.forEach((rings) => {
+      const outer = rings[0];
+      const longitudes = outer.map((point) => point[0]);
+      const latitudes = outer.map((point) => point[1]);
+      polygons.push({
+        rings,
+        minLon: Math.min(...longitudes),
+        maxLon: Math.max(...longitudes),
+        minLat: Math.min(...latitudes),
+        maxLat: Math.max(...latitudes),
+      });
+    });
+  });
+  return polygons;
+}
+
+function isLand(lon, lat, polygons) {
+  const normalizedLon = ((lon + 180) % 360 + 360) % 360 - 180;
+  return polygons.some((polygon) => (
+    normalizedLon >= polygon.minLon
+    && normalizedLon <= polygon.maxLon
+    && lat >= polygon.minLat
+    && lat <= polygon.maxLat
+    && pointInRing(normalizedLon, lat, polygon.rings[0])
+    && !polygon.rings.slice(1).some((hole) => pointInRing(normalizedLon, lat, hole))
+  ));
+}
+
+function legCrossesLand(origin, destination, polygons) {
+  let endLon = destination.lon_deg;
+  while (endLon - origin.lon_deg > 180) endLon -= 360;
+  while (endLon - origin.lon_deg < -180) endLon += 360;
+  // Coastal clicks can resolve a few pixels inland on the low-resolution
+  // country mask. Ignore the endpoint margins so they do not force an
+  // ocean-scale detour just to approach or leave a port.
+  for (let step = 4; step < 97; step += 1) {
+    const ratio = step / 100;
+    if (isLand(
+      origin.lon_deg + (endLon - origin.lon_deg) * ratio,
+      origin.lat_deg + (destination.lat_deg - origin.lat_deg) * ratio,
+      polygons,
+    )) return true;
+  }
+  return false;
+}
+
+async function planWaterWaypoints(origin, destination) {
+  if (!cachedLandPolygons) {
+    const response = await fetch('/ne_110m_admin_0_countries.geojson');
+    if (!response.ok) throw new Error('Could not load the land map');
+    cachedLandPolygons = buildLandPolygons(await response.json());
+  }
+  const polygons = cachedLandPolygons;
+  if (!legCrossesLand(origin, destination, polygons)) return [];
+
+  let destinationLon = destination.lon_deg;
+  while (destinationLon - origin.lon_deg > 180) destinationLon -= 360;
+  while (destinationLon - origin.lon_deg < -180) destinationLon += 360;
+  const resolution = 1.5;
+  const minLat = Math.max(-78, Math.min(origin.lat_deg, destination.lat_deg) - 20);
+  const maxLat = Math.min(78, Math.max(origin.lat_deg, destination.lat_deg) + 20);
+  const minLon = Math.min(origin.lon_deg, destinationLon) - 28;
+  const maxLon = Math.max(origin.lon_deg, destinationLon) + 28;
+  const rows = Math.floor((maxLat - minLat) / resolution) + 1;
+  const columns = Math.floor((maxLon - minLon) / resolution) + 1;
+  const cellFor = (point, lon = point.lon_deg) => [
+    Math.round((point.lat_deg - minLat) / resolution),
+    Math.round((lon - minLon) / resolution),
+  ];
+  const start = cellFor(origin);
+  const end = cellFor(destination, destinationLon);
+  const keyOf = ([row, column]) => `${row}:${column}`;
+  const queue = [start];
+  const parents = new Map();
+  const visited = new Set([keyOf(start)]);
+  const directions = [
+    [-1, -1], [-1, 0], [-1, 1], [0, -1],
+    [0, 1], [1, -1], [1, 0], [1, 1],
+  ];
+  let cursor = 0;
+  let found = false;
+  while (cursor < queue.length && queue.length < 20000) {
+    const current = queue[cursor++];
+    if (keyOf(current) === keyOf(end)) {
+      found = true;
+      break;
+    }
+    directions.forEach(([rowDelta, columnDelta]) => {
+      const next = [current[0] + rowDelta, current[1] + columnDelta];
+      const key = keyOf(next);
+      if (next[0] < 0 || next[0] >= rows || next[1] < 0 || next[1] >= columns || visited.has(key)) return;
+      const lat = minLat + next[0] * resolution;
+      const lon = minLon + next[1] * resolution;
+      const nearEndpoint = Math.hypot(next[0] - start[0], next[1] - start[1]) <= 1.5
+        || Math.hypot(next[0] - end[0], next[1] - end[1]) <= 1.5;
+      if (!nearEndpoint && isLand(lon, lat, polygons)) return;
+      visited.add(key);
+      parents.set(key, current);
+      queue.push(next);
+    });
+  }
+  if (!found) throw new Error('No water-only route was found between those points');
+  const cells = [];
+  let current = end;
+  while (keyOf(current) !== keyOf(start)) {
+    cells.push(current);
+    current = parents.get(keyOf(current));
+  }
+  cells.push(start);
+  cells.reverse();
+  const turns = [];
+  for (let index = 1; index < cells.length - 1; index += 1) {
+    const incoming = [cells[index][0] - cells[index - 1][0], cells[index][1] - cells[index - 1][1]];
+    const outgoing = [cells[index + 1][0] - cells[index][0], cells[index + 1][1] - cells[index][1]];
+    if (incoming[0] !== outgoing[0] || incoming[1] !== outgoing[1]) turns.push(cells[index]);
+  }
+  const selectedTurns = turns.length > 10
+    ? turns.filter((_, index) => index % Math.ceil(turns.length / 10) === 0).slice(0, 10)
+    : turns;
+  return selectedTurns.map(([row, column], index) => ({
+    name: `Water route node ${index + 1}`,
+    lat_deg: minLat + row * resolution,
+    lon_deg: ((minLon + column * resolution + 180) % 360 + 360) % 360 - 180,
+  }));
+}
+
+function LearningMiniGraph({ iterations, selectedIndex, onSelect }) {
   if (!iterations.length) return null;
   const width = 380;
   const height = 190;
@@ -123,12 +273,20 @@ function LearningMiniGraph({ iterations }) {
           />
         ))}
         {points.map((point) => (
-          <g key={point.index} transform={`translate(${point.x} ${point.y})`}>
-            <circle r="8" fill={point.survived ? 'rgba(38,145,96,0.14)' : 'rgba(180,35,24,0.12)'} />
-            <circle r="3.5" fill={point.survived ? '#269160' : '#B42318'} />
-            <text y="-11" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(0,0,0,0.58)">
-              {point.index}
-            </text>
+          <g
+            key={point.index}
+            transform={`translate(${point.x} ${point.y})`}
+            onClick={() => onSelect(point.index)}
+            style={{ cursor: 'pointer' }}
+          >
+            {selectedIndex === point.index ? (
+              <circle
+                className="learning-node-glow learning-node-glow--active"
+                r="10"
+                fill="rgba(180,35,24,0.14)"
+              />
+            ) : null}
+            <circle r="3.5" fill="#B42318" />
           </g>
         ))}
         <text x={pad.left} y={height - 10} fontSize="8" fill="rgba(0,0,0,0.40)">
@@ -169,8 +327,11 @@ export default function App() {
   const [agentIterations, setAgentIterations] = useState(0);
   const [learningIterations, setLearningIterations] = useState([]);
   const [hasStartedPointRun, setHasStartedPointRun] = useState(false);
+  const [liveShipProgress, setLiveShipProgress] = useState(0);
+  const [activeAttemptIndex, setActiveAttemptIndex] = useState(null);
+  const [plannedWaypoints, setPlannedWaypoints] = useState([]);
 
-  const runPointSimulation = useCallback((origin, destination) => {
+  const runPointSimulation = useCallback(async (origin, destination) => {
     if (agentSocketRef.current?.readyState < 2) {
       agentSocketRef.current.close();
     }
@@ -178,19 +339,38 @@ export default function App() {
     setAgentIterations(0);
     setLearningIterations([]);
     setHasStartedPointRun(true);
-    setAgentStatus('Connecting to Jac walker…');
+    setLiveShipProgress(0);
+    setActiveAttemptIndex(null);
+    setAgentStatus('Checking route against land map…');
     setError(null);
-    const socket = new WebSocket('ws://localhost:8016/ws/StreamOptimizeFromPoints');
+    let waterWaypoints;
+    try {
+      waterWaypoints = await planWaterWaypoints(origin, destination);
+      setPlannedWaypoints(waterWaypoints);
+    } catch (routeError) {
+      setRunningGemini(false);
+      setAgentStatus(routeError.message);
+      setError(routeError.message);
+      return;
+    }
+    setAgentStatus('Connecting to Jac walker…');
+    const jacSocketUrl = new URL('/ws/StreamOptimizeFromPoints', window.location.href);
+    jacSocketUrl.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    jacSocketUrl.port = '8016';
+    const socket = new WebSocket(jacSocketUrl);
+    let receivedReportBatch = false;
     agentSocketRef.current = socket;
     socket.onopen = () => {
-      setAgentStatus('Agent is planning the route…');
+      setAgentStatus('Running mission optimizer…');
       socket.send(JSON.stringify({
         origin: { name: 'Point A', ...origin },
         destination: { name: 'Point B', ...destination },
         name: `Point A to Point B ${Date.now()}`,
-        route_iterations: 3,
-        material_iterations: 8,
+        route_iterations: 1,
+        material_iterations: 20,
+        route_waypoints: waterWaypoints,
         use_codex: true,
+        codex_timeout_s: 30,
         use_live_conditions: false,
         save_simulation: true,
         stream_events: true,
@@ -200,17 +380,43 @@ export default function App() {
       try {
         const envelope = JSON.parse(message.data);
         const reports = envelope?.data?.reports ?? [];
+        receivedReportBatch = reports.length > 0;
         reports.forEach((report, index) => {
           window.setTimeout(() => {
             if (report.event_type === 'progress' || report.event_type === 'complete') {
               setAgentStatus(report.message ?? report.status ?? 'Working…');
             }
             if (report.event_type === 'iteration') {
-              setAgentIterations((count) => count + 1);
-              setLearningIterations((current) => [...current, report.iteration]);
+              if (report.phase === 'material_search') {
+                setAgentIterations((count) => count + 1);
+                setLearningIterations((current) => {
+                  const next = [...current, report.iteration];
+                  setActiveAttemptIndex(next.length - 1);
+                  return next;
+                });
+                setLiveShipProgress(Math.max(
+                  0,
+                  Math.min(1, Number(report.iteration?.result?.distance_pct ?? 0) / 100),
+                ));
+              }
               setAgentStatus(`${report.phase?.replaceAll('_', ' ') ?? 'Iteration'} ${report.completed} of ${report.total}`);
             }
             if (report.event_type === 'complete') {
+              setLearningIterations((current) => {
+                const survivors = current
+                  .map((attempt, attemptIndex) => ({ attempt, attemptIndex }))
+                  .filter(({ attempt }) => attempt?.result?.survived)
+                  .sort((a, b) => (
+                    Number(a.attempt?.result?.cost_usd ?? Infinity)
+                    - Number(b.attempt?.result?.cost_usd ?? Infinity)
+                  ));
+                if (survivors.length > 0) {
+                  const best = survivors[0];
+                  setActiveAttemptIndex(best.attemptIndex);
+                  setLiveShipProgress(1);
+                }
+                return current;
+              });
               setRunningGemini(false);
             }
           }, index * 350);
@@ -221,13 +427,18 @@ export default function App() {
     };
     socket.onerror = () => {
       setRunningGemini(false);
-      setAgentStatus('Could not connect to Jac on port 8016');
+      setAgentStatus(`Could not connect to Jac at ${jacSocketUrl.host}`);
     };
-    socket.onclose = () => setRunningGemini(false);
+    socket.onclose = () => {
+      if (!receivedReportBatch) {
+        setRunningGemini(false);
+        setAgentStatus('Jac disconnected before returning simulation data');
+      }
+    };
   }, []);
 
   const pickGlobePoint = useCallback((point) => {
-    if (runningGemini) return;
+    if (hasStartedPointRun) return;
     setPickedPoints((current) => {
       if (current.length >= 2) {
         setAgentStatus('Point A selected — click point B');
@@ -241,7 +452,33 @@ export default function App() {
       }
       return next;
     });
-  }, [runningGemini]);
+  }, [hasStartedPointRun]);
+  const activeLearningAttempt = activeAttemptIndex === null
+    ? null
+    : learningIterations[activeAttemptIndex] ?? null;
+  const activeAttemptPath = Array.isArray(activeLearningAttempt?.path)
+    ? activeLearningAttempt.path
+    : [];
+  const visualRoute = activeAttemptPath.length >= 2
+    ? {
+      origin: activeAttemptPath[0],
+      waypoints: activeAttemptPath.slice(1, -1),
+      destination: activeAttemptPath.at(-1),
+    }
+    : pickedPoints.length === 2
+      ? { origin: pickedPoints[0], waypoints: plannedWaypoints, destination: pickedPoints[1] }
+      : null;
+  const visualFailureZone = activeLearningAttempt?.result?.failure_zone ?? '';
+  const visualTick = activeLearningAttempt
+    ? {
+      failure: activeLearningAttempt.result?.survived ? null : {
+        mode: activeLearningAttempt.result?.failure_mode,
+      },
+      zones: visualFailureZone
+        ? [{ zone: visualFailureZone, fatigue_consumed: 1 }]
+        : [],
+    }
+    : null;
 
   const setDisplayedTickPosition = useCallback((nextPosition) => {
     tickPositionRef.current = nextPosition;
@@ -764,13 +1001,11 @@ export default function App() {
       <HullDiagram
         simResult={simResult}
         loading={loading}
-        progress={tickProgress}
-        activeTick={activeTick}
-        routeGeo={pickedPoints.length === 2
-          ? { origin: pickedPoints[0], waypoints: [], destination: pickedPoints[1] }
-          : null}
-        onGlobePoint={pickGlobePoint}
-        freeCamera
+        progress={hasStartedPointRun ? liveShipProgress : tickProgress}
+        activeTick={visualTick ?? activeTick}
+        routeGeo={visualRoute}
+        onGlobePoint={hasStartedPointRun ? null : pickGlobePoint}
+        freeCamera={!hasStartedPointRun}
         showShip={hasStartedPointRun}
       />
 
@@ -795,26 +1030,55 @@ export default function App() {
           <span>B - {pickedPoints[1] ? `${pickedPoints[1].lat_deg.toFixed(2)}, ${pickedPoints[1].lon_deg.toFixed(2)}` : '—'}</span>
           {hasStartedPointRun ? <span>RUNS {agentIterations}</span> : null}
         </div>
-        <LearningMiniGraph iterations={learningIterations} />
+        <LearningMiniGraph
+          iterations={learningIterations}
+          selectedIndex={activeAttemptIndex}
+          onSelect={(index) => {
+            const attempt = learningIterations[index];
+            setActiveAttemptIndex(index);
+            setLiveShipProgress(Math.max(
+              0,
+              Math.min(1, Number(attempt?.result?.distance_pct ?? 0) / 100),
+            ));
+          }}
+        />
         <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+        {runningGemini ? (
+          <div style={{
+            width: '100%',
+            minHeight: 36,
+            padding: '9px 11px',
+            boxSizing: 'border-box',
+            border: '1px solid rgba(0,0,0,0.18)',
+            background: 'rgba(0,0,0,0.055)',
+            font: "700 10px 'Courier New', monospace",
+            letterSpacing: '0.06em',
+            lineHeight: 1.5,
+            textTransform: 'uppercase',
+            color: 'rgba(0,0,0,0.68)',
+          }}>
+            {agentStatus}
+          </div>
+        ) : (
+          <>
           <button
             type="button"
-            disabled={pickedPoints.length !== 2 || runningGemini}
+            disabled={pickedPoints.length !== 2}
             onClick={() => runPointSimulation(pickedPoints[0], pickedPoints[1])}
             style={{
               flex: 1,
               padding: '9px 10px',
               border: '1px solid rgba(0,0,0,0.18)',
-              color: pickedPoints.length === 2 && !runningGemini ? 'rgba(0,0,0,0.76)' : 'rgba(0,0,0,0.30)',
-              background: pickedPoints.length === 2 && !runningGemini ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.025)',
+              color: pickedPoints.length === 2 ? 'rgba(0,0,0,0.76)' : 'rgba(0,0,0,0.30)',
+              background: pickedPoints.length === 2 ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.025)',
               font: "700 10px 'Courier New', monospace",
               letterSpacing: '0.08em',
-              cursor: pickedPoints.length === 2 && !runningGemini ? 'pointer' : 'default',
+              cursor: pickedPoints.length === 2 ? 'pointer' : 'default',
             }}
           >
-            {runningGemini ? 'RUNNING AGENT…' : 'RUN AGENT'}
+            RUN AGENT
           </button>
-        {pickedPoints.length > 0 && !runningGemini ? (
+        {pickedPoints.length > 0 ? (
           <button
             type="button"
             onClick={() => {
@@ -822,6 +1086,9 @@ export default function App() {
               setAgentIterations(0);
               setLearningIterations([]);
               setHasStartedPointRun(false);
+              setLiveShipProgress(0);
+              setActiveAttemptIndex(null);
+              setPlannedWaypoints([]);
               setAgentStatus('Click the globe to choose point A');
             }}
             style={{
@@ -835,6 +1102,8 @@ export default function App() {
             RESET
           </button>
         ) : null}
+          </>
+        )}
         </div>
       </div>
 

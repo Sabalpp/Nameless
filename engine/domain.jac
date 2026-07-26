@@ -227,7 +227,7 @@ obj AttemptSummary {
 sem AttemptSummary = "The outcome of one vessel configuration attempting the mission";
 sem AttemptSummary.attempt = "Sequential attempt number";
 sem AttemptSummary.survived = "Whether the vessel walker reached the destination";
-sem AttemptSummary.cost_usd = "Construction cost when the attempt survived";
+sem AttemptSummary.cost_usd = "Construction cost of the attempted configuration";
 sem AttemptSummary.failure_mode = "The terminal physical failure, empty for survivors";
 sem AttemptSummary.failure_zone = "The hull zone or subsystem that failed";
 sem AttemptSummary.failure_reason = "Detailed physical diagnosis persisted by the graph";

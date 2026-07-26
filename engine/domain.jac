@@ -1,4 +1,4 @@
-"""Persistent graph schema and typed API models for SeaForge v3."""
+"""Persistent graph schema and typed API models for the SeaForge engine."""
 
 # ---------------------------------------------------------------------------
 # API input models

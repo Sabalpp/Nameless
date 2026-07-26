@@ -1,8 +1,8 @@
-"""Route planning and ocean-condition services for SeaForge.
+"""Environmental data and simulation-trace services for SeaForge.
 
-Codex proposes geographic waypoint chains.  Open-Meteo supplies a current
-marine/weather snapshot when reachable; a deterministic estimate keeps local
-and offline runs reproducible.
+Open-Meteo supplies a current marine/weather snapshot when reachable; a
+deterministic estimate keeps local and offline runs reproducible. Completed
+optimization runs are serialized as explicit graph JSON.
 """
 
 from __future__ import annotations
@@ -10,101 +10,10 @@ from __future__ import annotations
 import json
 import math
 import re
-import subprocess
-import tempfile
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-
-
-ROUTE_SCHEMA = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": ["waypoints", "reasoning"],
-    "properties": {
-        "waypoints": {
-            "type": "array",
-            "minItems": 0,
-            "maxItems": 10,
-            "items": {
-                "type": "object",
-                "additionalProperties": False,
-                "required": ["name", "lat_deg", "lon_deg"],
-                "properties": {
-                    "name": {"type": "string"},
-                    "lat_deg": {
-                        "type": "number",
-                        "minimum": -90,
-                        "maximum": 90,
-                    },
-                    "lon_deg": {
-                        "type": "number",
-                        "minimum": -180,
-                        "maximum": 180,
-                    },
-                },
-            },
-        },
-        "reasoning": {"type": "string"},
-    },
-}
-
-
-def run_codex_route_planner(
-    prompt: str,
-    model: str = "gpt-5.6-sol",
-    timeout_s: int = 120,
-) -> str:
-    """Run an isolated Codex route-planning turn and return strict JSON."""
-    bounded_timeout = max(15, min(timeout_s, 300))
-    with tempfile.TemporaryDirectory(prefix="seaforge-route-") as temp_dir:
-        temp_path = Path(temp_dir)
-        schema_path = temp_path / "route.schema.json"
-        output_path = temp_path / "route.json"
-        schema_path.write_text(json.dumps(ROUTE_SCHEMA), encoding="utf-8")
-        command = [
-            "codex",
-            "exec",
-            "--ephemeral",
-            "--ignore-user-config",
-            "--skip-git-repo-check",
-            "--cd",
-            str(temp_path),
-            "--sandbox",
-            "read-only",
-            "--model",
-            model,
-            "--output-schema",
-            str(schema_path),
-            "--output-last-message",
-            str(output_path),
-            "--color",
-            "never",
-            "-",
-        ]
-        completed = subprocess.run(
-            command,
-            input=prompt,
-            text=True,
-            capture_output=True,
-            cwd=temp_path,
-            timeout=bounded_timeout,
-            check=False,
-        )
-        if completed.returncode != 0:
-            detail = completed.stderr.strip() or completed.stdout.strip()
-            raise RuntimeError(
-                f"codex route planning failed with status "
-                f"{completed.returncode}: {detail[-1000:]}"
-            )
-        if not output_path.exists():
-            raise RuntimeError("codex route planning produced no final response")
-        parsed = json.loads(output_path.read_text(encoding="utf-8"))
-        if not isinstance(parsed, dict):
-            raise RuntimeError("codex route plan was not an object")
-        return json.dumps(parsed)
-
 
 def _estimated_condition(lat: float, lon: float) -> dict[str, object]:
     phase = math.radians(lat * 2.7 + lon * 1.3)

@@ -5,11 +5,11 @@ RouteSegment edge, carries accumulated vessel state forward, and either reaches
 the destination or persists a FailureTrace at the waypoint where it stops.
 """
 
-import from domain {
+import from engine.domain {
     WaypointNode, RouteSegment, FailedHere, CompletedHere,
     FailureTrace, SuccessTrace, VoyageResult
 }
-import from physics {
+import from engine.physics {
     ALL_ZONES, STEP_H, SIM_TIME_MULT, DAMAGE_MULT, CRACK_MULT, CORR_MULT,
     get_material_spec,
     weld_scf, weld_initial_crack_m, seal_hourly_survival,

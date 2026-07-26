@@ -1,4 +1,4 @@
-"""SeaForge v3 — physics engine ported from v2 Rust."""
+"""SeaForge v3 physics engine ported from v2 Rust."""
 
 import math;
 

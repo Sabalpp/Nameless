@@ -12,6 +12,25 @@ SeaForge v3 is a graph-native autonomous-vessel mission simulator.
   launches another walker. It keeps the cheapest survivor among all attempted
   configurations rather than stopping at the first survivor.
 
+## Project layout
+
+```text
+seaforge_v3/
+├── main.sv.jac                 # public API walkers and orchestration
+├── engine/
+│   ├── domain.jac              # persistent graph schema and API models
+│   ├── physics.jac             # structural, stability, fuel, and cost model
+│   ├── voyage.jac              # state-carrying physical voyage walker
+│   └── services.py             # marine conditions and JSON graph export
+├── agent_runner/
+│   └── codex_cli.py            # isolated route/material Codex subprocesses
+├── examples/                   # POST payload examples
+└── simulations/                # generated self-learning traces
+```
+
+The dependency direction is one-way: `main.sv.jac` orchestrates the engine and
+agent runner; the physics engine never launches or depends on an AI agent.
+
 ## Validate
 
 ```bash

@@ -16,20 +16,22 @@ SeaForge v3 is a graph-native autonomous-vessel mission simulator.
 
 ```text
 seaforge_v3/
-├── main.sv.jac                 # public API walkers and orchestration
+├── main.jac                    # full-stack entrypoint
 ├── engine/
+│   ├── orchestrator.jac        # HTTP and WebSocket optimizer walkers
 │   ├── domain.jac              # persistent graph schema and API models
 │   ├── physics.jac             # structural, stability, fuel, and cost model
 │   ├── voyage.jac              # state-carrying physical voyage walker
 │   └── services.jac            # marine conditions and JSON graph export
 ├── agent_runner/
 │   └── codex_cli.jac           # isolated route/material Codex runner
+├── web/                        # Jac dashboard, graph, and node inspector
 ├── examples/                   # POST payload examples
 └── simulations/                # generated self-learning traces
 ```
 
-The dependency direction is one-way: `main.sv.jac` orchestrates the engine and
-agent runner; the physics engine never launches or depends on an AI agent.
+The dependency direction is one-way: `main.jac` mounts the UI and imports the
+orchestrator; the physics engine never launches or depends on an AI agent.
 All project source is Jac. The agent runner and engine services use standard
 library modules directly through Jac imports; there is no Python bridge or
 `.pyi` stub layer.
@@ -37,18 +39,23 @@ library modules directly through Jac imports; there is no Python bridge or
 ## Validate
 
 ```bash
-jac check .
-jac clean --all --force
-jac test main.sv.jac -v
+jac install
+.jac/venv/bin/jac check main.jac engine/orchestrator.jac web/
+.jac/venv/bin/jac test engine/orchestrator.jac -v
+.jac/venv/bin/jac build main.jac
 ```
 
-## Run the API
+## Run the dashboard and API
 
 ```bash
-jac start --dev main.sv.jac --no_client
+.jac/venv/bin/jac start main.jac
 ```
 
-The API and graph inspector are available at:
+Open `http://localhost:8000`. The dashboard starts the optimizer through
+`ws://localhost:8000/ws/StreamOptimizeFromPoints`, draws every route and
+material iteration, and opens complete node data when a graph node is clicked.
+
+The API and graph inspector are also available at:
 
 - `POST /walker/SetupMission`
 - `POST /walker/OptimizeFromPoints`

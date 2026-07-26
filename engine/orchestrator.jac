@@ -9,6 +9,7 @@ Public walkers:
 
 import math;
 import json;
+import random;
 import from agent_runner.codex_cli {
     run_material_optimizer,
     run_route_planner
@@ -1008,9 +1009,10 @@ walker:pub SetupMission {
 
 # ---------------------------------------------------------------------------
 # OptimizeFromPoints - route first, then cheapest surviving vessel
+# The shared base keeps the HTTP and WebSocket implementations identical.
 # ---------------------------------------------------------------------------
 
-walker:pub OptimizeFromPoints {
+walker PointOptimizerCore {
     has origin: dict[str, any],
         destination: dict[str, any],
         name: str = "",
@@ -1023,7 +1025,8 @@ walker:pub OptimizeFromPoints {
         codex_model: str = "gpt-5.6-sol",
         codex_timeout_s: int = 120,
         condition_timeout_s: int = 12,
-        reports: list[PointOptimizationResult] = [];
+        stream_events: bool = False,
+        reports: list[any] = [];
 
     can optimize_points with Root entry {
         origin_point = _point_from_dict(self.origin, "Point A");
@@ -1105,6 +1108,26 @@ walker:pub OptimizeFromPoints {
             propulsive_efficiency=vessel.propulsive_efficiency,
             hull_drag_coeff=vessel.hull_drag_coeff
         ))[0] as VesselDesignNode;
+        if self.stream_events {
+            report {
+                "event_type": "session_started",
+                "mission_id": jid(mission),
+                "mission": mission.name,
+                "origin": self.origin,
+                "destination": self.destination,
+                "route_iterations": max(1, min(8, self.route_iterations)),
+                "material_iterations": max(
+                    0, min(50, self.material_iterations)
+                ),
+                "agent_backend": (
+                    "codex-cli" if self.use_codex else "local-rules"
+                ),
+                "codex_model": (
+                    self.codex_model if self.use_codex else ""
+                ),
+                "configuration": _design_snapshot(design)
+            };
+        }
 
         route_count = max(1, min(8, self.route_iterations));
         route_history: list[RouteSummary] = [];
@@ -1118,8 +1141,22 @@ walker:pub OptimizeFromPoints {
 
         for route_index in range(route_count) {
             route_id = route_index + 1;
+            if self.stream_events {
+                report {
+                    "event_type": "progress",
+                    "phase": "route_search",
+                    "status": "planning",
+                    "iteration": route_id,
+                    "total_iterations": route_count,
+                    "message": (
+                        f"Planning route {route_id} of {route_count}"
+                    )
+                };
+            }
             route_revision: RouteRevision;
-            if self.use_codex {
+            # One Codex call seeds the route search; Jac generates the remaining
+            # alternatives locally so interactive demo runs stay fast.
+            if self.use_codex and route_index == 0 {
                 try {
                     route_revision = _codex_route(
                         origin_point,
@@ -1198,7 +1235,7 @@ walker:pub OptimizeFromPoints {
                 waypoint_names=built.waypoint_names
             );
             route_history.append(summary);
-            simulation_iterations.append({
+            route_event: dict[str, any] = {
                 "event_id": f"route-{route_id}",
                 "phase": "route_search",
                 "iteration": route_id,
@@ -1216,7 +1253,17 @@ walker:pub OptimizeFromPoints {
                     built.distance_nm,
                     failure_reason
                 )
-            });
+            };
+            simulation_iterations.append(route_event);
+            if self.stream_events {
+                report {
+                    "event_type": "iteration",
+                    "phase": "route_search",
+                    "completed": route_id,
+                    "total": route_count,
+                    "iteration": route_event
+                };
+            }
             _evaluation = mission +>:EvaluatedRoute():+> RouteEvaluation(
                 route_id=route_id,
                 survived=survived,
@@ -1263,6 +1310,21 @@ walker:pub OptimizeFromPoints {
                     simulation_error = str(error);
                 }
             }
+            if self.stream_events {
+                report {
+                    "event_type": "complete",
+                    "status": "no_successful_route",
+                    "mission_id": jid(mission),
+                    "mission": mission.name,
+                    "fallbacks_used": fallbacks,
+                    "simulation_file": simulation_file,
+                    "simulation_error": simulation_error,
+                    "message": (
+                        "No route candidate reached point B with the "
+                        "certification vessel"
+                    )
+                };
+            }
             report PointOptimizationResult(
                 status="no_successful_route",
                 mission_id=jid(mission),
@@ -1288,17 +1350,59 @@ walker:pub OptimizeFromPoints {
         mission.best_route_score = best_route_score;
         mission.route_locked = True;
         mission.total_distance_nm = best_route_distance;
+        if self.stream_events {
+            report {
+                "event_type": "route_locked",
+                "route_id": best_route_id,
+                "condition_score": best_route_score,
+                "distance_nm": best_route_distance,
+                "waypoints": best_route_names,
+                "message": (
+                    f"Route {best_route_id} survived and is now locked"
+                )
+            };
+        }
         best_origin = _get_origin(mission, best_route_id);
         material_history: list[AttemptSummary] = [];
-        if best_certification is not None {
-            material_history.append(best_certification as AttemptSummary);
-        }
         material_count = max(0, min(50, self.material_iterations));
 
         if best_origin is not None {
+            # Begin optimization from a genuinely exploratory vessel instead of
+            # exposing the strong route-certification vessel as attempt one.
+            design.material = random.choice([
+                "MildSteelA", "MildSteelE", "Aluminum5083"
+            ]);
+            design.thickness_m = random.uniform(0.003, 0.006);
+            design.weld = random.choice(["Economy", "Standard"]);
+            design.seal = random.choice(["Economy", "Commercial"]);
+            design.revision += 1;
             for _material_index in range(material_count) {
+                if self.stream_events {
+                    report {
+                        "event_type": "progress",
+                        "phase": "material_search",
+                        "status": "planning",
+                        "iteration": _material_index + 1,
+                        "total_iterations": material_count,
+                        "message": (
+                            "Choosing material configuration "
+                            f"{_material_index + 1} of {material_count}"
+                        )
+                    };
+                }
                 config_revision: ConfigRevision;
-                if self.use_codex {
+                # Record the random baseline first. Let Codex react to that
+                # trace once, then let Jac's persistent history drive revisions.
+                # the persistent Jac graph/history drive cheap local revisions.
+                if _material_index == 0 {
+                    config_revision = ConfigRevision(
+                        material=design.material,
+                        thickness_m=design.thickness_m,
+                        weld=design.weld,
+                        seal=design.seal,
+                        reasoning="Random exploratory baseline"
+                    );
+                } elif self.use_codex and _material_index == 1 {
                     try {
                         config_revision = _codex_revision(
                             material_history,
@@ -1362,7 +1466,7 @@ walker:pub OptimizeFromPoints {
                         next_locked[0] if next_locked else None
                     );
                 }
-                simulation_iterations.append({
+                material_event: dict[str, any] = {
                     "event_id": (
                         f"material-{_material_index + 1}-"
                         f"attempt-{material_result.attempt}"
@@ -1385,7 +1489,17 @@ walker:pub OptimizeFromPoints {
                         best_route_distance,
                         material_result.failure_reason
                     )
-                });
+                };
+                simulation_iterations.append(material_event);
+                if self.stream_events {
+                    report {
+                        "event_type": "iteration",
+                        "phase": "material_search",
+                        "completed": _material_index + 1,
+                        "total": material_count,
+                        "iteration": material_event
+                    };
+                }
             }
         }
 
@@ -1406,6 +1520,33 @@ walker:pub OptimizeFromPoints {
             } except Exception as error {
                 simulation_error = str(error);
             }
+        }
+        if self.stream_events {
+            report {
+                "event_type": "complete",
+                "status": "solved",
+                "mission_id": jid(mission),
+                "mission": mission.name,
+                "fallbacks_used": fallbacks,
+                "simulation_file": simulation_file,
+                "simulation_error": simulation_error,
+                "best": {
+                    "route_id": best_route_id,
+                    "route_score": best_route_score,
+                    "route_distance_nm": best_route_distance,
+                    "route_waypoints": best_route_names,
+                    "cost_usd": mission.best_cost_usd,
+                    "material": mission.best_material,
+                    "thickness_mm": (
+                        mission.best_thickness_m * 1000.0
+                    ),
+                    "weld": mission.best_weld,
+                    "seal": mission.best_seal
+                },
+                "message": (
+                    "Best successful route and cheapest survivor selected"
+                )
+            };
         }
         report PointOptimizationResult(
             status="solved",
@@ -1437,6 +1578,14 @@ walker:pub OptimizeFromPoints {
             )
         );
     }
+}
+
+walker:pub OptimizeFromPoints(PointOptimizerCore) {
+}
+
+@restspec(protocol=APIProtocol.WEBSOCKET)
+async walker:pub StreamOptimizeFromPoints(PointOptimizerCore) {
+    has stream_events: bool = True;
 }
 
 # ---------------------------------------------------------------------------
@@ -1822,7 +1971,7 @@ test "two-point workflow locks route before material optimization" {
         save_simulation=False
     );
     assert len(run.reports) == 1;
-    result = run.reports[0];
+    result = run.reports[0] as PointOptimizationResult;
     assert result.status == "solved";
     assert result.route_attempts == 2;
     assert result.best_route_id > 0;

@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# Production build output
+dist/
+
+# Generated optimizer output
+optimizer_output.json

@@ -457,3 +457,65 @@ def save_simulation_trace(trace_json: str) -> str {
     os.replace(temporary, destination);
     return os.path.join("simulations", filename);
 }
+
+def:pub list_simulations() -> list[dict[str, any]] {
+    simulations_dir = os.path.join(os.getcwd(), "simulations");
+    if not os.path.isdir(simulations_dir) {
+        return [];
+    }
+    records: list[dict[str, any]] = [];
+    for filename in os.listdir(simulations_dir) {
+        if not filename.endswith(".json") {
+            continue;
+        }
+        path = os.path.join(simulations_dir, filename);
+        try {
+            with open(path, "r", encoding="utf-8") as source_file {
+                raw = json.loads(source_file.read());
+            }
+            if not isinstance(raw, dict) {
+                continue;
+            }
+            trace = raw as dict[str, any];
+            mission = _dict_value(trace.get("mission"));
+            iterations = _dict_list(trace.get("iterations"));
+            records.append({
+                "filename": filename,
+                "mission": str(mission.get("name", filename)),
+                "status": str(mission.get("status", "")),
+                "generated_at_utc": str(
+                    trace.get("generated_at_utc", "")
+                ),
+                "iterations": len(iterations),
+                "modified_at": float(os.path.getmtime(path))
+            });
+        } except Exception {
+            continue;
+        }
+    }
+    records.sort(
+        key=lambda item: _float_value(
+            item.get("modified_at", 0.0), 0.0
+        ),
+        reverse=True
+    );
+    return records;
+}
+
+def:pub load_simulation(filename: str) -> dict[str, any] {
+    safe_name = os.path.basename(filename);
+    if safe_name != filename or not safe_name.endswith(".json") {
+        raise ValueError("invalid simulation filename");
+    }
+    path = os.path.join(os.getcwd(), "simulations", safe_name);
+    if not os.path.isfile(path) {
+        raise ValueError("simulation does not exist");
+    }
+    with open(path, "r", encoding="utf-8") as source_file {
+        raw = json.loads(source_file.read());
+    }
+    if not isinstance(raw, dict) {
+        raise ValueError("simulation trace must be a JSON object");
+    }
+    return raw as dict[str, any];
+}

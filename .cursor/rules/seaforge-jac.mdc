@@ -1,0 +1,14 @@
+---
+description: SeaForge Jac stack conventions and hard constraints
+alwaysApply: true
+---
+
+# SeaForge Jac conventions
+
+- Stack is Jac-only now: `engine/`, `api.jac`, `agent.jac`, `pages/`, `components/`. Do not restore Rust `src/` or Express `ui/` unless the user asks.
+- Physics parity with Rust goldens in `parity/golden/` matters. Match constants and formulas; structural Stirling helpers stay verbatim (no `math.gamma`).
+- Client → API: `sv import` walkers and spawn — not Express/`fetch` to a Node server.
+- Run with `~/.local/bin/jac` on PATH (`jaclang` 0.34+ / byLLM). UI `:8000`, API `:8001`.
+- `main.jac` must define `app(children)`. Pages return `JsxPage`. No `to cl:` blocks.
+- Import JSX with an explicit `.jsx` path (e.g. `HullDiagram.jsx`).
+- Parameter schema source of truth: `docs/allowed_parameters.json`.

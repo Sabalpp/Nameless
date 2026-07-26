@@ -1,0 +1,692 @@
+{
+  "configuration": {
+    "material": "Ah36",
+    "material_label": "AH36 High-Strength Steel",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Economy neoprene",
+    "seal_quality": "Economy",
+    "shell_mass_kg": 738.201352777778,
+    "thickness_m": 0.008,
+    "thickness_mm": 8.0,
+    "weld_label": "Standard (Class C)",
+    "weld_quality": "Standard",
+    "zones": [
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.005,
+        "thickness_mm": 5.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 11.998847915396716,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 158.15671224891378,
+    "elapsed_h": 271.1877782045847,
+    "mode": "Fatigue Failure",
+    "segment_index": 1,
+    "segment_label": "Singapore Strait east exit → South China Sea open water",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": {
+    "cheapest_survivor": null,
+    "configs_tested": 1612,
+    "survivors_found": 0
+  },
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 700155.5907500001,
+      "seal_usd": 353340.00000000006,
+      "weld_usd": 5552820.000000002
+    },
+    "distance_completed_nm": 158.15671224891378,
+    "distance_completed_pct": 11.998847915396716,
+    "final_gm_m": 2.050568434163776,
+    "fuel_remaining_kg": 1821.016066384974,
+    "time_elapsed_h": 271.1877782045847,
+    "total_config_cost_usd": 8906315.590750001
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 1.987093733666601,
+      "segment_index": 0,
+      "segment_label": "Singapore → Singapore Strait east exit",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32,
+      "elapsed_h": 100.0,
+      "failure": null,
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 1.987093733666601,
+      "segment_index": 0,
+      "segment_label": "Singapore → Singapore Strait east exit",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.03691780821917809,
+          "crack_half_length_mm": 0.05298678887156979,
+          "fatigue_consumed": 0.25869571560119786,
+          "peak_stress_mpa": 135.39010635084676,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.04746575342465753,
+          "crack_half_length_mm": 0.05169731670654124,
+          "fatigue_consumed": 0.227719084462,
+          "peak_stress_mpa": 112.08873763122781,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.03691780821917809,
+          "crack_half_length_mm": 0.1372427184390661,
+          "fatigue_consumed": 0.24170306703603076,
+          "peak_stress_mpa": 136.08910068428867,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.033904109589041095,
+          "crack_half_length_mm": 0.13356212177955912,
+          "fatigue_consumed": 0.2513114334515075,
+          "peak_stress_mpa": 120.40885678709596,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.033904109589041095,
+          "crack_half_length_mm": 0.05229246477069367,
+          "fatigue_consumed": 0.3104624737209423,
+          "peak_stress_mpa": 123.97855385232278,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.033904109589041095,
+          "crack_half_length_mm": 0.12998411801631754,
+          "fatigue_consumed": 0.15385596850864827,
+          "peak_stress_mpa": 100.87582143558409,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.033904109589041095,
+          "crack_half_length_mm": 0.13290112127586134,
+          "fatigue_consumed": 0.22367139288449153,
+          "peak_stress_mpa": 116.944625289174,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.033904109589041095,
+          "crack_half_length_mm": 0.13091642097927214,
+          "fatigue_consumed": 0.18263545864897945,
+          "peak_stress_mpa": 106.80969328473607,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.033904109589041095,
+          "crack_half_length_mm": 0.13196132212240305,
+          "fatigue_consumed": 0.2043255032269443,
+          "peak_stress_mpa": 112.38159966795624,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 99.83671224891378,
+      "elapsed_h": 171.18777820458467,
+      "failure": null,
+      "fuel_remaining_kg": 1887.016066384974,
+      "gm_m": 1.987093733666601,
+      "segment_index": 0,
+      "segment_label": "Singapore → Singapore Strait east exit",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.06319877565224051,
+          "crack_half_length_mm": 0.062124638205324136,
+          "fatigue_consumed": 0.5577297247611295,
+          "peak_stress_mpa": 200.31430654154047,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.08125556869573779,
+          "crack_half_length_mm": 0.05608444774246118,
+          "fatigue_consumed": 0.48212036052799434,
+          "peak_stress_mpa": 159.71733662547717,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.06319877565224051,
+          "crack_half_length_mm": 0.17433763549321613,
+          "fatigue_consumed": 0.5161260713821983,
+          "peak_stress_mpa": 197.76771178638123,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.15958809233639723,
+          "fatigue_consumed": 0.5412664563842245,
+          "peak_stress_mpa": 177.19319836740206,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.06079168917897376,
+          "fatigue_consumed": 0.6930741164344016,
+          "peak_stress_mpa": 194.87936644322673,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.13911556344534992,
+          "fatigue_consumed": 0.30926120660914025,
+          "peak_stress_mpa": 129.95967421423748,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.15413534282591723,
+          "fatigue_consumed": 0.4733451256157636,
+          "peak_stress_mpa": 166.49948852002848,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.14352679289796072,
+          "fatigue_consumed": 0.37467145905235083,
+          "peak_stress_mpa": 143.24466155643887,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.1487601308160148,
+          "fatigue_consumed": 0.42616843409947697,
+          "peak_stress_mpa": 155.62825641123823,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 158.15671224891378,
+      "elapsed_h": 271.1877782045847,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1821.016066384974,
+      "gm_m": 2.050568434163776,
+      "segment_index": 1,
+      "segment_label": "Singapore Strait east exit → South China Sea open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.10011658387141861,
+          "crack_half_length_mm": 0.062124638205324136,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 471.8165830818747,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.08125556869573779,
+          "crack_half_length_mm": 0.05608444774246118,
+          "fatigue_consumed": 0.48212036052799434,
+          "peak_stress_mpa": 159.71733662547717,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.06319877565224051,
+          "crack_half_length_mm": 0.17433763549321613,
+          "fatigue_consumed": 0.5161260713821983,
+          "peak_stress_mpa": 197.76771178638123,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.15958809233639723,
+          "fatigue_consumed": 0.5412664563842245,
+          "peak_stress_mpa": 177.19319836740206,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.06079168917897376,
+          "fatigue_consumed": 0.6930741164344016,
+          "peak_stress_mpa": 194.87936644322673,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.13911556344534992,
+          "fatigue_consumed": 0.30926120660914025,
+          "peak_stress_mpa": 129.95967421423748,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.15413534282591723,
+          "fatigue_consumed": 0.4733451256157636,
+          "peak_stress_mpa": 166.49948852002848,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.14352679289796072,
+          "fatigue_consumed": 0.37467145905235083,
+          "peak_stress_mpa": 143.24466155643887,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.058039691925527,
+          "crack_half_length_mm": 0.1487601308160148,
+          "fatigue_consumed": 0.42616843409947697,
+          "peak_stress_mpa": 155.62825641123823,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": 14.58,
+      "lon_deg": 120.98
+    },
+    "origin": {
+      "lat_deg": 1.29,
+      "lon_deg": 103.85
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 22.0,
+          "hs_m": 2.4,
+          "jonswap_gamma": 5.8,
+          "ph": 8.1,
+          "salinity_ppt": 33.0,
+          "slam_probability": 0.20800000000000002,
+          "tp_s": 7.0,
+          "water_temp_c": 31.0,
+          "wind_speed_ms": 9.0
+        },
+        "distance_nm": 99.83671224891378,
+        "from": {
+          "lat_deg": 1.29,
+          "lon_deg": 103.85
+        },
+        "heading_deg": 82.7250920477133,
+        "label": "Singapore → Singapore Strait east exit",
+        "to": {
+          "lat_deg": 1.5,
+          "lon_deg": 105.5
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 42.572483830236564,
+          "hs_m": 4.1952,
+          "jonswap_gamma": 5.8,
+          "ph": 8.1,
+          "salinity_ppt": 33.0,
+          "slam_probability": 0.35135999999999995,
+          "tp_s": 8.44,
+          "water_temp_c": 30.9,
+          "wind_speed_ms": 13.48
+        },
+        "distance_nm": 318.8004063610581,
+        "from": {
+          "lat_deg": 1.5,
+          "lon_deg": 105.5
+        },
+        "heading_deg": 48.67083485992629,
+        "label": "Singapore Strait east exit → South China Sea open water",
+        "to": {
+          "lat_deg": 5.0,
+          "lon_deg": 109.5
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 55.28697807033037,
+          "hs_m": 5.0928,
+          "jonswap_gamma": 5.8,
+          "ph": 8.1,
+          "salinity_ppt": 33.0,
+          "slam_probability": 0.42304,
+          "tp_s": 9.16,
+          "water_temp_c": 30.8,
+          "wind_speed_ms": 15.719999999999999
+        },
+        "distance_nm": 402.2779516859283,
+        "from": {
+          "lat_deg": 5.0,
+          "lon_deg": 109.5
+        },
+        "heading_deg": 41.472101945435554,
+        "label": "South China Sea open water → South China Sea center",
+        "to": {
+          "lat_deg": 10.0,
+          "lon_deg": 114.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 55.28697807033038,
+          "hs_m": 5.0928,
+          "jonswap_gamma": 5.8,
+          "ph": 8.1,
+          "salinity_ppt": 33.0,
+          "slam_probability": 0.42304,
+          "tp_s": 9.16,
+          "water_temp_c": 30.7,
+          "wind_speed_ms": 15.719999999999999
+        },
+        "distance_nm": 279.2886187260111,
+        "from": {
+          "lat_deg": 10.0,
+          "lon_deg": 114.0
+        },
+        "heading_deg": 57.11508264731299,
+        "label": "South China Sea center → West of Palawan",
+        "to": {
+          "lat_deg": 12.5,
+          "lon_deg": 118.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 42.572483830236564,
+          "hs_m": 4.1952,
+          "jonswap_gamma": 5.8,
+          "ph": 8.1,
+          "salinity_ppt": 33.0,
+          "slam_probability": 0.35135999999999995,
+          "tp_s": 8.44,
+          "water_temp_c": 30.6,
+          "wind_speed_ms": 13.48
+        },
+        "distance_nm": 131.5072059557128,
+        "from": {
+          "lat_deg": 12.5,
+          "lon_deg": 118.0
+        },
+        "heading_deg": 62.612957131968244,
+        "label": "West of Palawan → Mindoro Strait approach",
+        "to": {
+          "lat_deg": 13.5,
+          "lon_deg": 120.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 22.000000000000004,
+          "hs_m": 2.4,
+          "jonswap_gamma": 5.8,
+          "ph": 8.1,
+          "salinity_ppt": 33.0,
+          "slam_probability": 0.20800000000000002,
+          "tp_s": 7.0,
+          "water_temp_c": 30.5,
+          "wind_speed_ms": 9.0
+        },
+        "distance_nm": 86.38825390791001,
+        "from": {
+          "lat_deg": 13.5,
+          "lon_deg": 120.0
+        },
+        "heading_deg": 41.23969663766633,
+        "label": "Mindoro Strait approach → Manila, Philippines",
+        "to": {
+          "lat_deg": 14.58,
+          "lon_deg": 120.98
+        }
+      }
+    ],
+    "segments": 6,
+    "total_distance_nm": 1318.0991488855343
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.10011658387141861,
+      "crack_half_length_mm": 0.062124638205324136,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 471.8165830818747,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.08125556869573779,
+      "crack_half_length_mm": 0.05608444774246118,
+      "fatigue_consumed": 0.48212036052799434,
+      "peak_stress_mpa": 159.71733662547717,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.06319877565224051,
+      "crack_half_length_mm": 0.17433763549321613,
+      "fatigue_consumed": 0.5161260713821983,
+      "peak_stress_mpa": 197.76771178638123,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.058039691925527,
+      "crack_half_length_mm": 0.15958809233639723,
+      "fatigue_consumed": 0.5412664563842245,
+      "peak_stress_mpa": 177.19319836740206,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.058039691925527,
+      "crack_half_length_mm": 0.06079168917897376,
+      "fatigue_consumed": 0.6930741164344016,
+      "peak_stress_mpa": 194.87936644322673,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.058039691925527,
+      "crack_half_length_mm": 0.13911556344534992,
+      "fatigue_consumed": 0.30926120660914025,
+      "peak_stress_mpa": 129.95967421423748,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.058039691925527,
+      "crack_half_length_mm": 0.15413534282591723,
+      "fatigue_consumed": 0.4733451256157636,
+      "peak_stress_mpa": 166.49948852002848,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.058039691925527,
+      "crack_half_length_mm": 0.14352679289796072,
+      "fatigue_consumed": 0.37467145905235083,
+      "peak_stress_mpa": 143.24466155643887,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.058039691925527,
+      "crack_half_length_mm": 0.1487601308160148,
+      "fatigue_consumed": 0.42616843409947697,
+      "peak_stress_mpa": 155.62825641123823,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

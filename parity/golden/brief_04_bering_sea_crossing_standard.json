@@ -1,0 +1,490 @@
+{
+  "configuration": {
+    "material": "Ah36",
+    "material_label": "AH36 High-Strength Steel",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Marine-grade EPDM",
+    "seal_quality": "Marine",
+    "shell_mass_kg": 613.27497,
+    "thickness_m": 0.006,
+    "thickness_mm": 6.0,
+    "weld_label": "Standard (Class C)",
+    "weld_quality": "Standard",
+    "zones": [
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 5.951020408163265,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 58.32,
+    "elapsed_h": 100.0,
+    "mode": "Fatigue Failure",
+    "segment_index": 0,
+    "segment_label": "Dutch Harbor, Alaska, USA → Bering Sea center",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": null,
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 766593.7125,
+      "seal_usd": 883350.0000000001,
+      "weld_usd": 7403760.0
+    },
+    "distance_completed_nm": 58.32,
+    "distance_completed_pct": 5.951020408163265,
+    "final_gm_m": 2.0251953524806026,
+    "fuel_remaining_kg": 1934.0,
+    "time_elapsed_h": 100.0,
+    "total_config_cost_usd": 11353703.7125
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 2.0607602560239706,
+      "segment_index": 0,
+      "segment_label": "Dutch Harbor, Alaska, USA → Bering Sea center",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32,
+      "elapsed_h": 100.0,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 2.0251953524806026,
+      "segment_index": 0,
+      "segment_label": "Dutch Harbor, Alaska, USA → Bering Sea center",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.006296263666421491,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 416.2937763720437,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": 53.01,
+      "lon_deg": 158.65
+    },
+    "origin": {
+      "lat_deg": 53.88,
+      "lon_deg": -166.54
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 18.0,
+          "hs_m": 4.5,
+          "jonswap_gamma": 2.8,
+          "ph": 8.1,
+          "salinity_ppt": 32.0,
+          "slam_probability": 0.55,
+          "tp_s": 11.0,
+          "water_temp_c": 3.0,
+          "wind_speed_ms": 13.0
+        },
+        "distance_nm": 242.35195166252984,
+        "from": {
+          "lat_deg": 53.88,
+          "lon_deg": -166.54
+        },
+        "heading_deg": 291.75246288967,
+        "label": "Dutch Harbor, Alaska, USA → Bering Sea center",
+        "to": {
+          "lat_deg": 55.5,
+          "lon_deg": -175.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 18.0,
+          "hs_m": 6.8999999999999995,
+          "jonswap_gamma": 2.8,
+          "ph": 8.1,
+          "salinity_ppt": 32.0,
+          "slam_probability": 0.8433333333333334,
+          "tp_s": 11.0,
+          "water_temp_c": -0.5555555555555554,
+          "wind_speed_ms": 22.77777777777778
+        },
+        "distance_nm": 168.67364002279714,
+        "from": {
+          "lat_deg": 55.5,
+          "lon_deg": -175.0
+        },
+        "heading_deg": 256.2700011186396,
+        "label": "Bering Sea center → International Date Line",
+        "to": {
+          "lat_deg": 54.5,
+          "lon_deg": 179.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 18.0,
+          "hs_m": 6.8999999999999995,
+          "jonswap_gamma": 2.8,
+          "ph": 8.1,
+          "salinity_ppt": 32.0,
+          "slam_probability": 0.8433333333333334,
+          "tp_s": 11.0,
+          "water_temp_c": -0.5555555555555558,
+          "wind_speed_ms": 22.77777777777778
+        },
+        "distance_nm": 444.3136584283448,
+        "from": {
+          "lat_deg": 54.5,
+          "lon_deg": 179.0
+        },
+        "heading_deg": 270.4566606699889,
+        "label": "International Date Line → Kamchatka approach",
+        "to": {
+          "lat_deg": 53.5,
+          "lon_deg": 163.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 18.0,
+          "hs_m": 4.5,
+          "jonswap_gamma": 2.8,
+          "ph": 8.1,
+          "salinity_ppt": 32.0,
+          "slam_probability": 0.55,
+          "tp_s": 11.0,
+          "water_temp_c": 3.0,
+          "wind_speed_ms": 13.0
+        },
+        "distance_nm": 124.66074988632832,
+        "from": {
+          "lat_deg": 53.5,
+          "lon_deg": 163.0
+        },
+        "heading_deg": 261.0849743431856,
+        "label": "Kamchatka approach → Petropavlovsk-Kamchatsky, Russia",
+        "to": {
+          "lat_deg": 53.01,
+          "lon_deg": 158.65
+        }
+      }
+    ],
+    "segments": 4,
+    "total_distance_nm": 980.0000000000001
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.006296263666421491,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 416.2937763720437,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

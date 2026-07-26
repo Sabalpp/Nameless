@@ -1,0 +1,648 @@
+{
+  "configuration": {
+    "material": {
+      "base_corrosion_rate_mm_yr": 0.18,
+      "cold_threshold_c": 0.0,
+      "cost": 0.85,
+      "cost_per_kg_usd": 0.85,
+      "cost_unit": "USD/kg",
+      "density_kg_m3": 7850.0,
+      "dust_coeff": 24.0,
+      "e_gpa": 206.0,
+      "grade": "MildSteelA",
+      "heat_threshold_c": 600.0,
+      "humidity_coeff": 1.28,
+      "k_ic_mpa_sqrtm": 80.0,
+      "label": "Mild Steel A",
+      "min_temp_c": 0.0,
+      "salinity_coeff": 0.15,
+      "sn_ref_cycles": 2000000,
+      "sn_ref_stress_mpa": 71.0,
+      "sn_slope": 3.0,
+      "strength_index": 0.28,
+      "uts_mpa": 400.0,
+      "uv_coeff": null,
+      "yield_mpa": 235.0
+    },
+    "material_label": "Mild Steel A",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Economy neoprene",
+    "seal_quality": "Economy",
+    "shell_mass_kg": 408.84998000000013,
+    "thickness_m": 0.004,
+    "thickness_mm": 4.0,
+    "weld_label": "Economy (Class D)",
+    "weld_quality": "Economy",
+    "zones": [
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": {
+          "base_corrosion_rate_mm_yr": 0.18,
+          "cold_threshold_c": 0.0,
+          "cost": 0.85,
+          "cost_per_kg_usd": 0.85,
+          "cost_unit": "USD/kg",
+          "density_kg_m3": 7850.0,
+          "dust_coeff": 24.0,
+          "e_gpa": 206.0,
+          "grade": "MildSteelA",
+          "heat_threshold_c": 600.0,
+          "humidity_coeff": 1.28,
+          "k_ic_mpa_sqrtm": 80.0,
+          "label": "Mild Steel A",
+          "min_temp_c": 0.0,
+          "salinity_coeff": 0.15,
+          "sn_ref_cycles": 2000000,
+          "sn_ref_stress_mpa": 71.0,
+          "sn_slope": 3.0,
+          "strength_index": 0.28,
+          "uts_mpa": 400.0,
+          "uv_coeff": null,
+          "yield_mpa": 235.0
+        },
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 10.055172413793104,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 58.32,
+    "elapsed_h": 100.0,
+    "mode": "Fatigue Failure",
+    "segment_index": 0,
+    "segment_label": "Cape Hatteras -> Bermuda (open Atlantic)",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": null,
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 347522.48300000007,
+      "seal_usd": 353340.00000000006,
+      "weld_usd": 4627350.0
+    },
+    "distance_completed_nm": 58.32,
+    "distance_completed_pct": 10.055172413793104,
+    "final_gm_m": 2.195641640085574,
+    "fuel_remaining_kg": 1934.0,
+    "time_elapsed_h": 100.0,
+    "total_config_cost_usd": 7628212.483
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 2.195641640085574,
+      "segment_index": 0,
+      "segment_label": "Cape Hatteras -> Bermuda (open Atlantic)",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32,
+      "elapsed_h": 100.0,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 2.195641640085574,
+      "segment_index": 0,
+      "segment_label": "Cape Hatteras -> Bermuda (open Atlantic)",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.03398888283278897,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 596.2416538013447,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": 32.3,
+      "lon_deg": -64.78
+    },
+    "origin": {
+      "lat_deg": 35.0,
+      "lon_deg": -74.5
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 15.0,
+          "hs_m": 3.2,
+          "jonswap_gamma": 3.5,
+          "ph": 8.1,
+          "salinity_ppt": 36.0,
+          "slam_probability": 0.42,
+          "tp_s": 10.0,
+          "water_temp_c": 22.0,
+          "wind_speed_ms": 14.0
+        },
+        "distance_nm": 580.0,
+        "from": {
+          "lat_deg": 35.0,
+          "lon_deg": -74.5
+        },
+        "heading_deg": 110.0,
+        "label": "Cape Hatteras -> Bermuda (open Atlantic)",
+        "to": {
+          "lat_deg": 32.3,
+          "lon_deg": -64.78
+        }
+      }
+    ],
+    "segments": 1,
+    "total_distance_nm": 580.0
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.03398888283278897,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 596.2416538013447,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

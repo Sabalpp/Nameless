@@ -1,0 +1,25 @@
+---
+description: Session memory protocol — keep agents current across reloads
+alwaysApply: true
+---
+
+# Project memory protocol
+
+On every new conversation, compaction, or after the user reloads the window:
+
+1. Read `MEMORY.md` before making non-trivial changes.
+2. Skim `AGENTS.md` for run commands, layout, and architecture facts.
+3. Prefer facts in those files over guesses from deleted Rust/UI paths.
+
+## Keep memory fresh
+
+Update `MEMORY.md` when you:
+
+- Finish a meaningful chunk of work
+- Make or reverse a durable decision
+- Hit a blocker or discover a gotcha
+- Stop because the user is about to reload / leave
+
+Keep sections current: **Status**, **Now**, **Next**, **Decisions**, **Gotchas**. Do not append endless history — rewrite the living sections.
+
+Never put API keys or `.env` contents in memory files.

@@ -1,0 +1,1544 @@
+{
+  "configuration": {
+    "material": "Ah36",
+    "material_label": "AH36 High-Strength Steel",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Economy neoprene",
+    "seal_quality": "Economy",
+    "shell_mass_kg": 817.6999600000003,
+    "thickness_m": 0.008,
+    "thickness_mm": 8.0,
+    "weld_label": "Premium (Class B+)",
+    "weld_quality": "Premium",
+    "zones": [
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 38.29380185749285,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 848.2077111434666,
+    "elapsed_h": 1454.4027968852304,
+    "mode": "Fatigue Failure",
+    "segment_index": 1,
+    "segment_label": "California Current exit → Pacific open water",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": {
+    "cheapest_survivor": null,
+    "configs_tested": 1612,
+    "survivors_found": 0
+  },
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 767729.4068888891,
+      "seal_usd": 353340.00000000006,
+      "weld_usd": 9357530.0
+    },
+    "distance_completed_nm": 848.2077111434666,
+    "distance_completed_pct": 38.29380185749285,
+    "final_gm_m": 2.0730972702873216,
+    "fuel_remaining_kg": 1040.094154055748,
+    "time_elapsed_h": 1454.4027968852304,
+    "total_config_cost_usd": 12778599.40688889
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "San Diego, California, USA → California Current exit",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32,
+      "elapsed_h": 100.0,
+      "failure": null,
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "San Diego, California, USA → California Current exit",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.032944341810910945,
+          "crack_half_length_mm": 0.012536220549132726,
+          "fatigue_consumed": 0.02659116022378402,
+          "peak_stress_mpa": 70.22276182264292,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.04235701089974263,
+          "crack_half_length_mm": 0.012522444132762574,
+          "fatigue_consumed": 0.025504053974022688,
+          "peak_stress_mpa": 59.84193006223373,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.04235701089974263,
+          "crack_half_length_mm": 0.012516126984491328,
+          "fatigue_consumed": 0.01832565718871985,
+          "peak_stress_mpa": 53.59887883436712,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.023531672722079244,
+          "crack_half_length_mm": 0.12607479998990234,
+          "fatigue_consumed": 0.0206129401041986,
+          "peak_stress_mpa": 67.87931472196615,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.030255007785530447,
+          "crack_half_length_mm": 0.012523214645814684,
+          "fatigue_consumed": 0.02660102130770707,
+          "peak_stress_mpa": 60.552767076809744,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.030255007785530447,
+          "crack_half_length_mm": 0.050148007705096045,
+          "fatigue_consumed": 0.019311261754472904,
+          "peak_stress_mpa": 55.792620066328574,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.030255007785530447,
+          "crack_half_length_mm": 0.12555388232321782,
+          "fatigue_consumed": 0.016472648027947175,
+          "peak_stress_mpa": 54.40428652804756,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.030255007785530447,
+          "crack_half_length_mm": 0.050175693249770024,
+          "fatigue_consumed": 0.022923525046221443,
+          "peak_stress_mpa": 59.07453889375967,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.030255007785530447,
+          "crack_half_length_mm": 0.12587954461510975,
+          "fatigue_consumed": 0.026157954970305004,
+          "peak_stress_mpa": 63.47166761605548,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 116.64,
+      "elapsed_h": 200.0,
+      "failure": null,
+      "fuel_remaining_kg": 1868.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "San Diego, California, USA → California Current exit",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.06588868362182189,
+          "crack_half_length_mm": 0.012580463858068793,
+          "fatigue_consumed": 0.05825095538100718,
+          "peak_stress_mpa": 74.26185733233119,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.08471402179948526,
+          "crack_half_length_mm": 0.01254988493971484,
+          "fatigue_consumed": 0.056031697369677474,
+          "peak_stress_mpa": 63.33049078117856,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.08471402179948526,
+          "crack_half_length_mm": 0.012534989887400238,
+          "fatigue_consumed": 0.039989763046981944,
+          "peak_stress_mpa": 56.022194452967774,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.04706334544415849,
+          "crack_half_length_mm": 0.12734212067535644,
+          "fatigue_consumed": 0.044849707737899105,
+          "peak_stress_mpa": 70.8907048179501,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.06051001557106089,
+          "crack_half_length_mm": 0.012551452815159335,
+          "fatigue_consumed": 0.05839440536658659,
+          "peak_stress_mpa": 63.98757319919969,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.06051001557106089,
+          "crack_half_length_mm": 0.05032060447717719,
+          "fatigue_consumed": 0.04210461690360767,
+          "peak_stress_mpa": 58.2234001428001,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.06051001557106089,
+          "crack_half_length_mm": 0.12619039236958463,
+          "fatigue_consumed": 0.03582220159362151,
+          "peak_stress_mpa": 56.50200379450356,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.06051001557106089,
+          "crack_half_length_mm": 0.05038530479835485,
+          "fatigue_consumed": 0.050151053457116526,
+          "peak_stress_mpa": 62.0369387133922,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.06051001557106089,
+          "crack_half_length_mm": 0.12695619189251298,
+          "fatigue_consumed": 0.0574090821840221,
+          "peak_stress_mpa": 67.0447858739917,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 174.96,
+      "elapsed_h": 300.0,
+      "failure": null,
+      "fuel_remaining_kg": 1802.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "San Diego, California, USA → California Current exit",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.09883302543273283,
+          "crack_half_length_mm": 0.012635755006151918,
+          "fatigue_consumed": 0.09446710013428405,
+          "peak_stress_mpa": 79.02591089508024,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.1270710326992279,
+          "crack_half_length_mm": 0.01258421395958918,
+          "fatigue_consumed": 0.09107192314209427,
+          "peak_stress_mpa": 67.45207284538947,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.1270710326992279,
+          "crack_half_length_mm": 0.01255742359721571,
+          "fatigue_consumed": 0.06450656412297065,
+          "peak_stress_mpa": 58.82906983667317,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.07059501816623773,
+          "crack_half_length_mm": 0.12886544962257387,
+          "fatigue_consumed": 0.07219194883053208,
+          "peak_stress_mpa": 74.3974911263087,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.09076502335659135,
+          "crack_half_length_mm": 0.012586605835761861,
+          "fatigue_consumed": 0.09483517971122682,
+          "peak_stress_mpa": 68.05425920056928,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.09076502335659135,
+          "crack_half_length_mm": 0.05052540685175676,
+          "fatigue_consumed": 0.06786125411578633,
+          "peak_stress_mpa": 61.05022912548677,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.09076502335659135,
+          "crack_half_length_mm": 0.12693317511919713,
+          "fatigue_consumed": 0.057568228799220335,
+          "peak_stress_mpa": 58.922566942382375,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.09076502335659135,
+          "crack_half_length_mm": 0.05064059995160802,
+          "fatigue_consumed": 0.08113868745325613,
+          "peak_stress_mpa": 65.51479518306672,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.09076502335659135,
+          "crack_half_length_mm": 0.1283071872660276,
+          "fatigue_consumed": 0.0932135746081095,
+          "peak_stress_mpa": 71.27638640964729,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 206.68771114346634,
+      "elapsed_h": 354.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1766.094154055748,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "San Diego, California, USA → California Current exit",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.11675566879329873,
+          "crack_half_length_mm": 0.012673424914759012,
+          "fatigue_consumed": 0.11608381349164279,
+          "peak_stress_mpa": 84.11484126905398,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.1501144313056698,
+          "crack_half_length_mm": 0.012607528589118669,
+          "fatigue_consumed": 0.11153928235116373,
+          "peak_stress_mpa": 71.78178622808034,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.1501144313056698,
+          "crack_half_length_mm": 0.012571840183386042,
+          "fatigue_consumed": 0.07860839657218646,
+          "peak_stress_mpa": 61.64924661015885,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.08339690628092765,
+          "crack_half_length_mm": 0.1298660756526335,
+          "fatigue_consumed": 0.08829072243321617,
+          "peak_stress_mpa": 78.11467813733687,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.10722459378976411,
+          "crack_half_length_mm": 0.01261048934350988,
+          "fatigue_consumed": 0.11612237724630617,
+          "peak_stress_mpa": 72.42862643245475,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.10722459378976411,
+          "crack_half_length_mm": 0.050657515223585,
+          "fatigue_consumed": 0.08267771889755451,
+          "peak_stress_mpa": 63.983320603925435,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.10722459378976411,
+          "crack_half_length_mm": 0.1274037862954259,
+          "fatigue_consumed": 0.07000397526830057,
+          "peak_stress_mpa": 61.39000033846912,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.10722459378976411,
+          "crack_half_length_mm": 0.05081005150946885,
+          "fatigue_consumed": 0.09910273452124412,
+          "peak_stress_mpa": 69.19571466010575,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.10722459378976411,
+          "crack_half_length_mm": 0.129234723782308,
+          "fatigue_consumed": 0.11412176344382524,
+          "peak_stress_mpa": 75.83131915057274,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 265.00771114346634,
+      "elapsed_h": 454.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1700.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.14707064528566371,
+          "crack_half_length_mm": 0.012753779421623746,
+          "fatigue_consumed": 0.15812054579031565,
+          "peak_stress_mpa": 87.65693052626071,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.18909082965299617,
+          "crack_half_length_mm": 0.012657334300916884,
+          "fatigue_consumed": 0.15078074368953878,
+          "peak_stress_mpa": 74.87189912893625,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.18909082965299617,
+          "crack_half_length_mm": 0.012601683667268267,
+          "fatigue_consumed": 0.10541155637497403,
+          "peak_stress_mpa": 63.74695529136817,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.1050504609183312,
+          "crack_half_length_mm": 0.13194578215663283,
+          "fatigue_consumed": 0.11930217165581922,
+          "peak_stress_mpa": 80.63735254501798,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.13506487832356867,
+          "crack_half_length_mm": 0.012661134373380007,
+          "fatigue_consumed": 0.15684875921334548,
+          "peak_stress_mpa": 75.38567306476284,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.13506487832356867,
+          "crack_half_length_mm": 0.050929582367980404,
+          "fatigue_consumed": 0.11078003994442615,
+          "peak_stress_mpa": 66.0215324791936,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.13506487832356867,
+          "crack_half_length_mm": 0.12836341849254532,
+          "fatigue_consumed": 0.09351314044660868,
+          "peak_stress_mpa": 63.137039136595334,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.13506487832356867,
+          "crack_half_length_mm": 0.051164781026828476,
+          "fatigue_consumed": 0.13332402070465543,
+          "peak_stress_mpa": 71.7121214962525,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.13506487832356867,
+          "crack_half_length_mm": 0.13121647374009265,
+          "fatigue_consumed": 0.15411833995665397,
+          "peak_stress_mpa": 78.91803161492702,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 323.32771114346633,
+      "elapsed_h": 554.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1634.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.1773856217780287,
+          "crack_half_length_mm": 0.012857180126745782,
+          "fatigue_consumed": 0.20486522148183542,
+          "peak_stress_mpa": 93.95056015866076,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.22806722800032256,
+          "crack_half_length_mm": 0.012720951503724239,
+          "fatigue_consumed": 0.19279352692838636,
+          "peak_stress_mpa": 80.15952417421146,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.22806722800032256,
+          "crack_half_length_mm": 0.012637668173978503,
+          "fatigue_consumed": 0.13365798550422966,
+          "peak_stress_mpa": 67.17953659539018,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.12670401555573477,
+          "crack_half_length_mm": 0.1345186095998298,
+          "fatigue_consumed": 0.15326137974244836,
+          "peak_stress_mpa": 85.11021069899422,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.16290516285737322,
+          "crack_half_length_mm": 0.012725492252474832,
+          "fatigue_consumed": 0.20038617539002163,
+          "peak_stress_mpa": 80.58897607540226,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.16290516285737322,
+          "crack_half_length_mm": 0.05125754299437577,
+          "fatigue_consumed": 0.1403553764283955,
+          "peak_stress_mpa": 69.48212693900697,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.16290516285737322,
+          "crack_half_length_mm": 0.12949991666986038,
+          "fatigue_consumed": 0.11810719964821147,
+          "peak_stress_mpa": 66.0506686035837,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.16290516285737322,
+          "crack_half_length_mm": 0.05160546679948992,
+          "fatigue_consumed": 0.16962553565251814,
+          "peak_stress_mpa": 76.0713269655271,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.16290516285737322,
+          "crack_half_length_mm": 0.13377686251381812,
+          "fatigue_consumed": 0.19687246864096009,
+          "peak_stress_mpa": 84.35901202930474,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 381.6477111434663,
+      "elapsed_h": 654.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1568.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.20770059827039367,
+          "crack_half_length_mm": 0.012991902317753753,
+          "fatigue_consumed": 0.2560763661247789,
+          "peak_stress_mpa": 100.97863300574402,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.267043626347649,
+          "crack_half_length_mm": 0.012802539028122218,
+          "fatigue_consumed": 0.23780461391346142,
+          "peak_stress_mpa": 85.88022590113525,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.267043626347649,
+          "crack_half_length_mm": 0.012681166995143888,
+          "fatigue_consumed": 0.16344073591893818,
+          "peak_stress_mpa": 70.83342684629847,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.1483575701931383,
+          "crack_half_length_mm": 0.13774342389295885,
+          "fatigue_consumed": 0.1898791821403293,
+          "peak_stress_mpa": 90.03558062089668,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.1907454473911778,
+          "crack_half_length_mm": 0.012807549897911363,
+          "fatigue_consumed": 0.24695194193785447,
+          "peak_stress_mpa": 86.19453738429374,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.1907454473911778,
+          "crack_half_length_mm": 0.051654073871551,
+          "fatigue_consumed": 0.17149358597359166,
+          "peak_stress_mpa": 73.15382631218489,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.1907454473911778,
+          "crack_half_length_mm": 0.1308504267386753,
+          "fatigue_consumed": 0.14384656652421574,
+          "peak_stress_mpa": 69.12654709240601,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.1907454473911778,
+          "crack_half_length_mm": 0.052155211603460504,
+          "fatigue_consumed": 0.20815262854967198,
+          "peak_stress_mpa": 80.73511766712589,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.1907454473911778,
+          "crack_half_length_mm": 0.13711413343480575,
+          "fatigue_consumed": 0.2426089551061536,
+          "peak_stress_mpa": 90.24356081221383,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 439.9677111434663,
+      "elapsed_h": 754.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1502.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.23801557476275864,
+          "crack_half_length_mm": 0.013169173788561053,
+          "fatigue_consumed": 0.3112182237534338,
+          "peak_stress_mpa": 108.72925109488202,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.3060200246949754,
+          "crack_half_length_mm": 0.012907651540740257,
+          "fatigue_consumed": 0.2860623450520917,
+          "peak_stress_mpa": 92.07475600480453,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.3060200246949754,
+          "crack_half_length_mm": 0.012733892226411973,
+          "fatigue_consumed": 0.19485986300662017,
+          "peak_stress_mpa": 74.72528255955761,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.17001112483054187,
+          "crack_half_length_mm": 0.141834283721598,
+          "fatigue_consumed": 0.22867635044666715,
+          "peak_stress_mpa": 95.39418933316222,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.21858573192498235,
+          "crack_half_length_mm": 0.012912576580814579,
+          "fatigue_consumed": 0.29678223508876145,
+          "peak_stress_mpa": 92.23726750968858,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.21858573192498235,
+          "crack_half_length_mm": 0.05213514628041748,
+          "fatigue_consumed": 0.20429105108943318,
+          "peak_stress_mpa": 77.05195968579248,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.21858573192498235,
+          "crack_half_length_mm": 0.1324613942451824,
+          "fatigue_consumed": 0.17079598658312323,
+          "peak_stress_mpa": 72.37630839132343,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.21858573192498235,
+          "crack_half_length_mm": 0.052844325131908065,
+          "fatigue_consumed": 0.24906277128545135,
+          "peak_stress_mpa": 85.72889723003371,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.21858573192498235,
+          "crack_half_length_mm": 0.14151196418092069,
+          "fatigue_consumed": 0.29157765525285895,
+          "peak_stress_mpa": 96.62110518584127,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 498.2877111434663,
+      "elapsed_h": 854.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1436.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.26833055125512356,
+          "crack_half_length_mm": 0.013404065205229293,
+          "fatigue_consumed": 0.37063119686586055,
+          "peak_stress_mpa": 117.15107813991344,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.34499642304230177,
+          "crack_half_length_mm": 0.013043783516284144,
+          "fatigue_consumed": 0.33783880342840283,
+          "peak_stress_mpa": 98.78841502300841,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.34499642304230177,
+          "crack_half_length_mm": 0.012797989367089223,
+          "fatigue_consumed": 0.22802304419730596,
+          "peak_stress_mpa": 78.87323152333421,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.1916646794679454,
+          "crack_half_length_mm": 0.14708066414318952,
+          "fatigue_consumed": 0.2698124195807089,
+          "peak_stress_mpa": 101.14506132020428,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.24642601645878692,
+          "crack_half_length_mm": 0.013047601613631058,
+          "fatigue_consumed": 0.35013402252101705,
+          "peak_stress_mpa": 98.75565200080369,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.24642601645878692,
+          "crack_half_length_mm": 0.052721052395492074,
+          "fatigue_consumed": 0.23885131172246798,
+          "peak_stress_mpa": 81.19334221780609,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.24642601645878692,
+          "crack_half_length_mm": 0.13439145492766716,
+          "fatigue_consumed": 0.1990250176016105,
+          "peak_stress_mpa": 75.8128764966491,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.24642601645878692,
+          "crack_half_length_mm": 0.05371307315425825,
+          "fatigue_consumed": 0.29252696133119555,
+          "peak_stress_mpa": 91.0810090711181,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.24642601645878692,
+          "crack_half_length_mm": 0.14738814765745117,
+          "fatigue_consumed": 0.3440585894060679,
+          "peak_stress_mpa": 103.5511631690632,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 556.6077111434663,
+      "elapsed_h": 954.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1370.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.29864552774748854,
+          "crack_half_length_mm": 0.013717987784253812,
+          "fatigue_consumed": 0.4346898748984397,
+          "peak_stress_mpa": 126.31152427826564,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.3839728213896282,
+          "crack_half_length_mm": 0.013221170781805918,
+          "fatigue_consumed": 0.3934325557884075,
+          "peak_stress_mpa": 106.07173323657105,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.3839728213896282,
+          "crack_half_length_mm": 0.012876162801225504,
+          "fatigue_consumed": 0.2630462656289364,
+          "peak_stress_mpa": 83.29703464774464,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.21331823410534898,
+          "crack_half_length_mm": 0.1539007287416571,
+          "fatigue_consumed": 0.3134653504845485,
+          "peak_stress_mpa": 107.33350235017184,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.27426630099259147,
+          "crack_half_length_mm": 0.013222108562213392,
+          "fatigue_consumed": 0.4072872693576197,
+          "peak_stress_mpa": 105.792259771585,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.27426630099259147,
+          "crack_half_length_mm": 0.05343782763495199,
+          "fatigue_consumed": 0.27528579817283966,
+          "peak_stress_mpa": 85.59651092640728,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.27426630099259147,
+          "crack_half_length_mm": 0.1367154568544154,
+          "fatigue_consumed": 0.22860860478823344,
+          "peak_stress_mpa": 79.45072008452816,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.27426630099259147,
+          "crack_half_length_mm": 0.05481575175298808,
+          "fatigue_consumed": 0.3387314083027797,
+          "peak_stress_mpa": 96.82333086883126,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.27426630099259147,
+          "crack_half_length_mm": 0.15538017442322385,
+          "fatigue_consumed": 0.400369092578853,
+          "peak_stress_mpa": 111.10736110669205,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 614.9277111434664,
+      "elapsed_h": 1054.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1304.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.3289605042398535,
+          "crack_half_length_mm": 0.014142063472117567,
+          "fatigue_consumed": 0.5038075944920123,
+          "peak_stress_mpa": 136.28699162448825,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.4229492197369546,
+          "crack_half_length_mm": 0.013454001873072649,
+          "fatigue_consumed": 0.45317183775569314,
+          "peak_stress_mpa": 113.98131825217351,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.4229492197369546,
+          "crack_half_length_mm": 0.01297184426741191,
+          "fatigue_consumed": 0.30005458750840097,
+          "peak_stress_mpa": 88.0182731296268,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.23497178874275254,
+          "crack_half_length_mm": 0.16291897508954406,
+          "fatigue_consumed": 0.3598360538876185,
+          "peak_stress_mpa": 114.01594118975322,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.302106585526396,
+          "crack_half_length_mm": 0.01344906863244174,
+          "fatigue_consumed": 0.4685474865266058,
+          "peak_stress_mpa": 113.39437682225524,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.302106585526396,
+          "crack_half_length_mm": 0.05431925874936485,
+          "fatigue_consumed": 0.31371469169472765,
+          "peak_stress_mpa": 90.28202466134867,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.302106585526396,
+          "crack_half_length_mm": 0.1395301650728464,
+          "fatigue_consumed": 0.25962778022286176,
+          "peak_stress_mpa": 83.30618627020044,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.302106585526396,
+          "crack_half_length_mm": 0.0562268924607515,
+          "fatigue_consumed": 0.38787960419139966,
+          "peak_stress_mpa": 102.99207855591452,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.302106585526396,
+          "crack_half_length_mm": 0.16650433314400634,
+          "fatigue_consumed": 0.46087425900858614,
+          "peak_stress_mpa": 119.38393366333622,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 673.2477111434664,
+      "elapsed_h": 1154.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1238.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.3592754807322185,
+          "crack_half_length_mm": 0.014722831009348212,
+          "fatigue_consumed": 0.5784420752841916,
+          "peak_stress_mpa": 147.16499500321555,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.461925618084281,
+          "crack_half_length_mm": 0.013762303458144639,
+          "fatigue_consumed": 0.5174183068398301,
+          "peak_stress_mpa": 122.5809383391585,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.461925618084281,
+          "crack_half_length_mm": 0.01308942216827285,
+          "fatigue_consumed": 0.3391830014435657,
+          "peak_stress_mpa": 93.06056719057733,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.2566253433801561,
+          "crack_half_length_mm": 0.17510643944352464,
+          "fatigue_consumed": 0.40915498088545493,
+          "peak_stress_mpa": 121.26501147176384,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.3299468700602006,
+          "crack_half_length_mm": 0.013746522146736473,
+          "fatigue_consumed": 0.534248717485819,
+          "peak_stress_mpa": 121.61481766419189,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.3299468700602006,
+          "crack_half_length_mm": 0.05540977848435485,
+          "fatigue_consumed": 0.3542679509018619,
+          "peak_stress_mpa": 95.2728536342381,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.3299468700602006,
+          "crack_half_length_mm": 0.14296252668365145,
+          "fatigue_consumed": 0.29217052844297287,
+          "peak_stress_mpa": 87.39794681783731,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.3299468700602006,
+          "crack_half_length_mm": 0.058051010990606285,
+          "fatigue_consumed": 0.44019492778616887,
+          "peak_stress_mpa": 109.62892574044908,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.3299468700602006,
+          "crack_half_length_mm": 0.18247204721601915,
+          "fatigue_consumed": 0.5260029951443776,
+          "peak_stress_mpa": 128.5067899687877,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 731.5677111434665,
+      "elapsed_h": 1254.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1172.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.38959045722458346,
+          "crack_half_length_mm": 0.015532385235593096,
+          "fatigue_consumed": 0.6591026238490602,
+          "peak_stress_mpa": 159.04725403743112,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.5009020164316074,
+          "crack_half_length_mm": 0.01417497699292753,
+          "fatigue_consumed": 0.5865715446605642,
+          "peak_stress_mpa": 131.94295191779767,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.5009020164316074,
+          "crack_half_length_mm": 0.013234558574760726,
+          "fatigue_consumed": 0.3805773966186795,
+          "peak_stress_mpa": 98.44983494322072,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.2782788980175596,
+          "crack_half_length_mm": 0.1920496232177449,
+          "fatigue_consumed": 0.4616921611089384,
+          "peak_stress_mpa": 129.1780286050088,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.3577871545940052,
+          "crack_half_length_mm": 0.014140077197537617,
+          "fatigue_consumed": 0.6047571040620674,
+          "peak_stress_mpa": 130.51299727687007,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.3577871545940052,
+          "crack_half_length_mm": 0.05676873672930534,
+          "fatigue_consumed": 0.397086558374178,
+          "peak_stress_mpa": 100.5948967429527,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.3577871545940052,
+          "crack_half_length_mm": 0.14718193452816497,
+          "fatigue_consumed": 0.32633287885580736,
+          "peak_stress_mpa": 91.7476073120366,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.3577871545940052,
+          "crack_half_length_mm": 0.060438477134307236,
+          "fatigue_consumed": 0.49592401717172285,
+          "peak_stress_mpa": 116.78261323882192,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.3577871545940052,
+          "crack_half_length_mm": 0.20637303521057496,
+          "fatigue_consumed": 0.5962742127993047,
+          "peak_stress_mpa": 138.65352137656592,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 789.8877111434665,
+      "elapsed_h": 1354.4027968852304,
+      "failure": null,
+      "fuel_remaining_kg": 1106.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.41990543371694844,
+          "crack_half_length_mm": 0.016625108372919986,
+          "fatigue_consumed": 0.7449874789102723,
+          "peak_stress_mpa": 169.34859239028293,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.5398784147789338,
+          "crack_half_length_mm": 0.014734887550983757,
+          "fatigue_consumed": 0.6610745860021509,
+          "peak_stress_mpa": 142.15026673003186,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.5398784147789338,
+          "crack_half_length_mm": 0.01341463522371939,
+          "fatigue_consumed": 0.42439565671308505,
+          "peak_stress_mpa": 104.21460334289048,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.2999324526549632,
+          "crack_half_length_mm": 0.2165057383958799,
+          "fatigue_consumed": 0.5177733077015179,
+          "peak_stress_mpa": 137.8919067966982,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.01466700485809029,
+          "fatigue_consumed": 0.6804752455367922,
+          "peak_stress_mpa": 140.15639942936045,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.058476870291477294,
+          "fatigue_consumed": 0.44232406700448096,
+          "peak_stress_mpa": 106.27768575883607,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.15241891988044304,
+          "fatigue_consumed": 0.36222031504030944,
+          "peak_stress_mpa": 96.38055820815158,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.06361242957012121,
+          "fatigue_consumed": 0.5553412867877094,
+          "peak_stress_mpa": 124.51134755252717,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.24431300570069878,
+          "fatigue_consumed": 0.6723427336948077,
+          "peak_stress_mpa": 150.09229439941058,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 848.2077111434666,
+      "elapsed_h": 1454.4027968852304,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1040.094154055748,
+      "gm_m": 2.0730972702873216,
+      "segment_index": 1,
+      "segment_label": "California Current exit → Pacific open water",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.4502204102093134,
+          "crack_half_length_mm": 0.016625108372919986,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 171.09750150296267,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.5398784147789338,
+          "crack_half_length_mm": 0.014734887550983757,
+          "fatigue_consumed": 0.6610745860021509,
+          "peak_stress_mpa": 142.15026673003186,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.5398784147789338,
+          "crack_half_length_mm": 0.01341463522371939,
+          "fatigue_consumed": 0.42439565671308505,
+          "peak_stress_mpa": 104.21460334289048,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.2999324526549632,
+          "crack_half_length_mm": 0.2165057383958799,
+          "fatigue_consumed": 0.5177733077015179,
+          "peak_stress_mpa": 137.8919067966982,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.01466700485809029,
+          "fatigue_consumed": 0.6804752455367922,
+          "peak_stress_mpa": 140.15639942936045,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.058476870291477294,
+          "fatigue_consumed": 0.44232406700448096,
+          "peak_stress_mpa": 106.27768575883607,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.15241891988044304,
+          "fatigue_consumed": 0.36222031504030944,
+          "peak_stress_mpa": 96.38055820815158,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.06361242957012121,
+          "fatigue_consumed": 0.5553412867877094,
+          "peak_stress_mpa": 124.51134755252717,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.3856274391278097,
+          "crack_half_length_mm": 0.24431300570069878,
+          "fatigue_consumed": 0.6723427336948077,
+          "peak_stress_mpa": 150.09229439941058,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": 21.35,
+      "lon_deg": -157.97
+    },
+    "origin": {
+      "lat_deg": 32.72,
+      "lon_deg": -117.17
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 38.0,
+          "hs_m": 2.1,
+          "jonswap_gamma": 2.2,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.12,
+          "tp_s": 9.0,
+          "water_temp_c": 26.0,
+          "wind_speed_ms": 8.5
+        },
+        "distance_nm": 206.68771114346634,
+        "from": {
+          "lat_deg": 32.72,
+          "lon_deg": -117.17
+        },
+        "heading_deg": 222.36457092427813,
+        "label": "San Diego, California, USA → California Current exit",
+        "to": {
+          "lat_deg": 30.0,
+          "lon_deg": -120.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 38.0,
+          "hs_m": 2.1,
+          "jonswap_gamma": 2.2,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.12,
+          "tp_s": 9.0,
+          "water_temp_c": 24.8,
+          "wind_speed_ms": 8.5
+        },
+        "distance_nm": 785.2762305916424,
+        "from": {
+          "lat_deg": 30.0,
+          "lon_deg": -120.0
+        },
+        "heading_deg": 256.8275659839817,
+        "label": "California Current exit → Pacific open water",
+        "to": {
+          "lat_deg": 26.0,
+          "lon_deg": -135.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 38.0,
+          "hs_m": 2.1,
+          "jonswap_gamma": 2.2,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.12,
+          "tp_s": 9.0,
+          "water_temp_c": 23.6,
+          "wind_speed_ms": 8.5
+        },
+        "distance_nm": 793.4500552978004,
+        "from": {
+          "lat_deg": 26.0,
+          "lon_deg": -135.0
+        },
+        "heading_deg": 260.80020785997937,
+        "label": "Pacific open water → North Hawaiian Ridge",
+        "to": {
+          "lat_deg": 23.0,
+          "lon_deg": -150.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 38.0,
+          "hs_m": 2.1,
+          "jonswap_gamma": 2.2,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.12,
+          "tp_s": 9.0,
+          "water_temp_c": 22.4,
+          "wind_speed_ms": 8.5
+        },
+        "distance_nm": 429.58600296709085,
+        "from": {
+          "lat_deg": 23.0,
+          "lon_deg": -150.0
+        },
+        "heading_deg": 258.9244844915715,
+        "label": "North Hawaiian Ridge → Pearl Harbor, Hawaii, USA",
+        "to": {
+          "lat_deg": 21.35,
+          "lon_deg": -157.97
+        }
+      }
+    ],
+    "segments": 4,
+    "total_distance_nm": 2215.0
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.4502204102093134,
+      "crack_half_length_mm": 0.016625108372919986,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 171.09750150296267,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.5398784147789338,
+      "crack_half_length_mm": 0.014734887550983757,
+      "fatigue_consumed": 0.6610745860021509,
+      "peak_stress_mpa": 142.15026673003186,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.5398784147789338,
+      "crack_half_length_mm": 0.01341463522371939,
+      "fatigue_consumed": 0.42439565671308505,
+      "peak_stress_mpa": 104.21460334289048,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.2999324526549632,
+      "crack_half_length_mm": 0.2165057383958799,
+      "fatigue_consumed": 0.5177733077015179,
+      "peak_stress_mpa": 137.8919067966982,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.3856274391278097,
+      "crack_half_length_mm": 0.01466700485809029,
+      "fatigue_consumed": 0.6804752455367922,
+      "peak_stress_mpa": 140.15639942936045,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.3856274391278097,
+      "crack_half_length_mm": 0.058476870291477294,
+      "fatigue_consumed": 0.44232406700448096,
+      "peak_stress_mpa": 106.27768575883607,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.3856274391278097,
+      "crack_half_length_mm": 0.15241891988044304,
+      "fatigue_consumed": 0.36222031504030944,
+      "peak_stress_mpa": 96.38055820815158,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.3856274391278097,
+      "crack_half_length_mm": 0.06361242957012121,
+      "fatigue_consumed": 0.5553412867877094,
+      "peak_stress_mpa": 124.51134755252717,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.3856274391278097,
+      "crack_half_length_mm": 0.24431300570069878,
+      "fatigue_consumed": 0.6723427336948077,
+      "peak_stress_mpa": 150.09229439941058,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

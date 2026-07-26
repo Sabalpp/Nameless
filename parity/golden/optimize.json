@@ -1,0 +1,64 @@
+{
+  "optimizer": {
+    "all_survivors": [
+      {
+        "cost_usd": 36146851.19999999,
+        "final_gm_m": 0.9353673900794666,
+        "fuel_remaining_kg": 4606.172839506169,
+        "material": "CfrpEpoxy",
+        "seal_quality": "Commercial",
+        "thickness_mm": 8.0,
+        "weld_quality": "Premium",
+        "worst_zone_fatigue": 0.07911886688098
+      },
+      {
+        "cost_usd": 36530971.19999999,
+        "final_gm_m": 0.9353673900794666,
+        "fuel_remaining_kg": 4606.172839506169,
+        "material": "CfrpEpoxy",
+        "seal_quality": "Marine",
+        "thickness_mm": 8.0,
+        "weld_quality": "Premium",
+        "worst_zone_fatigue": 0.07911886688098
+      },
+      {
+        "cost_usd": 39870843.99999999,
+        "final_gm_m": 0.9292213393112538,
+        "fuel_remaining_kg": 4606.172839506169,
+        "material": "CfrpEpoxy",
+        "seal_quality": "Commercial",
+        "thickness_mm": 10.0,
+        "weld_quality": "Premium",
+        "worst_zone_fatigue": 0.0053620257515339
+      },
+      {
+        "cost_usd": 40254963.99999999,
+        "final_gm_m": 0.9292213393112538,
+        "fuel_remaining_kg": 4606.172839506169,
+        "material": "CfrpEpoxy",
+        "seal_quality": "Marine",
+        "thickness_mm": 10.0,
+        "weld_quality": "Premium",
+        "worst_zone_fatigue": 0.0053620257515339
+      }
+    ],
+    "cheapest_survivor": {
+      "cost_usd": 36146851.19999999,
+      "final_gm_m": 0.9353673900794666,
+      "fuel_remaining_kg": 4606.172839506169,
+      "material": "CfrpEpoxy",
+      "seal_quality": "Commercial",
+      "thickness_mm": 8.0,
+      "weld_quality": "Premium",
+      "worst_zone_fatigue": 0.07911886688098
+    },
+    "configs_tested": 432,
+    "failure_summary": {
+      "Brittle Fracture": 6,
+      "Fatigue Failure": 420,
+      "Seal Breach / Flooding": 2
+    },
+    "survivors_found": 4
+  },
+  "schema_version": "1.0"
+}

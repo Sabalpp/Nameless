@@ -1,0 +1,34 @@
+[project]
+name = "seaforge"
+version = "0.2.0"
+entry-point = "main.jac"
+kind = "web-app"
+
+[plugins.byllm.model]
+default_model = "gemini/gemini-2.5-flash"
+
+[plugins.byllm.call_params]
+temperature = 0.2
+max_tokens = 4096
+
+[dependencies.npm]
+react = "^18.3.1"
+react-dom = "^18.3.1"
+three = "^0.185.0"
+vite = "latest"
+"@vitejs/plugin-react" = "latest"
+react-router-dom = "latest"
+"@tanstack/react-form" = "latest"
+react-error-boundary = "latest"
+zod = "latest"
+
+[dependencies]
+byllm = "~=0.6"
+
+[serve]
+base_route_app = "app"
+port = 8000
+
+[plugins.client.app_meta_data]
+title = "SeaForge"
+description = "Naval hull simulation and Gemini campaign runner"

@@ -1,0 +1,988 @@
+{
+  "configuration": {
+    "material": "Eh36",
+    "material_label": "EH36 High-Strength Steel",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Marine-grade EPDM",
+    "seal_quality": "Marine",
+    "shell_mass_kg": 817.6999600000003,
+    "thickness_m": 0.008,
+    "thickness_mm": 8.0,
+    "weld_label": "Premium (Class B+)",
+    "weld_quality": "Premium",
+    "zones": [
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": "Eh36",
+        "material_label": "EH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.008,
+        "thickness_mm": 8.0,
+        "weld_label": "Premium (Class B+)",
+        "weld_quality": "Premium",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 14.175,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 102.06,
+    "elapsed_h": 700.0,
+    "mode": "Fatigue Failure",
+    "segment_index": 0,
+    "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": null,
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 1308319.9360000005,
+      "seal_usd": 883350.0000000001,
+      "weld_usd": 13882050.000000002
+    },
+    "distance_completed_nm": 102.06,
+    "distance_completed_pct": 14.175,
+    "final_gm_m": 1.9432712638666465,
+    "fuel_remaining_kg": 1884.5,
+    "time_elapsed_h": 700.0,
+    "total_config_cost_usd": 18373719.936000004
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.0125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 14.58,
+      "elapsed_h": 100.0,
+      "failure": null,
+      "fuel_remaining_kg": 1983.5,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.05058410958904109,
+          "crack_half_length_mm": 0.012578657026183611,
+          "fatigue_consumed": 0.0661199388441184,
+          "peak_stress_mpa": 74.4519357757431,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.05058410958904109,
+          "crack_half_length_mm": 0.012548298332945856,
+          "fatigue_consumed": 0.04060009608293888,
+          "peak_stress_mpa": 63.28112627167782,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.05058410958904109,
+          "crack_half_length_mm": 0.012534704235383675,
+          "fatigue_consumed": 0.029172752041806947,
+          "peak_stress_mpa": 56.67927849269871,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.03613150684931506,
+          "crack_half_length_mm": 0.012510102156980122,
+          "fatigue_consumed": 0.008577244113386721,
+          "peak_stress_mpa": 37.58871158941491,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.03613150684931506,
+          "crack_half_length_mm": 0.012549842399826396,
+          "fatigue_consumed": 0.04231872770827522,
+          "peak_stress_mpa": 63.99102260981995,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.03613150684931506,
+          "crack_half_length_mm": 0.01251470574733136,
+          "fatigue_consumed": 0.012485926023427844,
+          "peak_stress_mpa": 42.60053980133691,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.03613150684931506,
+          "crack_half_length_mm": 0.012505172304373823,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 30.070969271531926,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.03613150684931506,
+          "crack_half_length_mm": 0.01251745652726165,
+          "fatigue_consumed": 0.014821477827932254,
+          "peak_stress_mpa": 45.1064539072979,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.03613150684931506,
+          "crack_half_length_mm": 0.012508213427778801,
+          "fatigue_consumed": 0.006973617139891302,
+          "peak_stress_mpa": 35.08279748345391,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 29.16,
+      "elapsed_h": 200.0,
+      "failure": null,
+      "fuel_remaining_kg": 1967.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.10116821917808218,
+          "crack_half_length_mm": 0.012702331333348093,
+          "fatigue_consumed": 0.15126185608273546,
+          "peak_stress_mpa": 84.50128233041538,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.10116821917808218,
+          "crack_half_length_mm": 0.012613628782829745,
+          "fatigue_consumed": 0.09073197237834676,
+          "peak_stress_mpa": 68.87116371513422,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.10116821917808218,
+          "crack_half_length_mm": 0.01257849767775786,
+          "fatigue_consumed": 0.06450325239408271,
+          "peak_stress_mpa": 60.502458681813,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.07226301369863013,
+          "crack_half_length_mm": 0.01252115460659737,
+          "fatigue_consumed": 0.018558303454789343,
+          "peak_stress_mpa": 38.55339520638626,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.07226301369863013,
+          "crack_half_length_mm": 0.012617000915974643,
+          "fatigue_consumed": 0.09451220239528751,
+          "peak_stress_mpa": 69.56310864107917,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.07226301369863013,
+          "crack_half_length_mm": 0.01253119789823619,
+          "fatigue_consumed": 0.0271161631234829,
+          "peak_stress_mpa": 43.99689543916027,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.07226301369863013,
+          "crack_half_length_mm": 0.012510532391510428,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 30.373546586228905,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.07226301369863013,
+          "crack_half_length_mm": 0.012537323628517356,
+          "fatigue_consumed": 0.03225984870785351,
+          "peak_stress_mpa": 46.77668174711946,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.07226301369863013,
+          "crack_half_length_mm": 0.012517108287319246,
+          "fatigue_consumed": 0.015065496867596218,
+          "peak_stress_mpa": 35.880778592737734,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 43.74,
+      "elapsed_h": 300.0,
+      "failure": null,
+      "fuel_remaining_kg": 1950.5,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.15175232876712327,
+          "crack_half_length_mm": 0.012909118697500737,
+          "fatigue_consumed": 0.25127366855177996,
+          "peak_stress_mpa": 97.459993156612,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.15175232876712327,
+          "crack_half_length_mm": 0.012705433428004663,
+          "fatigue_consumed": 0.14687634564571403,
+          "peak_stress_mpa": 75.7329553564054,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.15175232876712327,
+          "crack_half_length_mm": 0.012635309936810769,
+          "fatigue_consumed": 0.10320589050586765,
+          "peak_stress_mpa": 65.0757241390783,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.1083945205479452,
+          "crack_half_length_mm": 0.012533344320806864,
+          "fatigue_consumed": 0.029008150118698603,
+          "peak_stress_mpa": 39.632467763305335,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.1083945205479452,
+          "crack_half_length_mm": 0.012711022819220538,
+          "fatigue_consumed": 0.15289951382768113,
+          "peak_stress_mpa": 76.40758155449431,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.1083945205479452,
+          "crack_half_length_mm": 0.012549909143880208,
+          "fatigue_consumed": 0.042555030631768555,
+          "peak_stress_mpa": 45.58703146804373,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.1083945205479452,
+          "crack_half_length_mm": 0.01251608809663564,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 30.68057919423891,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.1083945205479452,
+          "crack_half_length_mm": 0.012560246316842867,
+          "fatigue_consumed": 0.05074858618889853,
+          "peak_stress_mpa": 48.69517838187603,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.1083945205479452,
+          "crack_half_length_mm": 0.012526804633481431,
+          "fatigue_consumed": 0.023509868470533414,
+          "peak_stress_mpa": 36.76503472904933,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32,
+      "elapsed_h": 400.0,
+      "failure": null,
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.20233643835616436,
+          "crack_half_length_mm": 0.013263360160706426,
+          "fatigue_consumed": 0.36710835548735343,
+          "peak_stress_mpa": 112.87914414643282,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.20233643835616436,
+          "crack_half_length_mm": 0.01283606478793527,
+          "fatigue_consumed": 0.2087809554353507,
+          "peak_stress_mpa": 83.50291893416109,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.20233643835616436,
+          "crack_half_length_mm": 0.012709640125371638,
+          "fatigue_consumed": 0.14491695561455584,
+          "peak_stress_mpa": 70.13417945102813,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.14452602739726025,
+          "crack_half_length_mm": 0.01254681594017514,
+          "fatigue_consumed": 0.03975636437717011,
+          "peak_stress_mpa": 40.76406753250993,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.14452602739726025,
+          "crack_half_length_mm": 0.012844180210513772,
+          "fatigue_consumed": 0.21718580786666808,
+          "peak_stress_mpa": 84.12718678282747,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.14452602739726025,
+          "crack_half_length_mm": 0.012571201081480021,
+          "fatigue_consumed": 0.058564239371850145,
+          "peak_stress_mpa": 47.271103416161075,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.14452602739726025,
+          "crack_half_length_mm": 0.01252184762784568,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 30.992153873525268,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.14452602739726025,
+          "crack_half_length_mm": 0.012586787959815885,
+          "fatigue_consumed": 0.07001303009692046,
+          "peak_stress_mpa": 50.738214736972466,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.14452602739726025,
+          "crack_half_length_mm": 0.012537392544569117,
+          "fatigue_consumed": 0.03216628443152617,
+          "peak_stress_mpa": 37.6882316884655,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 72.9,
+      "elapsed_h": 500.0,
+      "failure": null,
+      "fuel_remaining_kg": 1917.5,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.25292054794520547,
+          "crack_half_length_mm": 0.01388482308752059,
+          "fatigue_consumed": 0.5015541770034355,
+          "peak_stress_mpa": 131.01541229390364,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.25292054794520547,
+          "crack_half_length_mm": 0.013023631167231915,
+          "fatigue_consumed": 0.27712599017931233,
+          "peak_stress_mpa": 92.19038638917081,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.25292054794520547,
+          "crack_half_length_mm": 0.01280741810251165,
+          "fatigue_consumed": 0.1899137129436002,
+          "peak_stress_mpa": 75.65883645038413,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.18065753424657535,
+          "crack_half_length_mm": 0.012561718535886132,
+          "fatigue_consumed": 0.05081401035692021,
+          "peak_stress_mpa": 41.93762951030169,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.18065753424657535,
+          "crack_half_length_mm": 0.013034244961348513,
+          "fatigue_consumed": 0.2880345186104361,
+          "peak_stress_mpa": 92.71498398163716,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.18065753424657535,
+          "crack_half_length_mm": 0.012595463597127227,
+          "fatigue_consumed": 0.07517005665200166,
+          "peak_stress_mpa": 49.03273601490417,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.18065753424657535,
+          "crack_half_length_mm": 0.012527819586266057,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 31.308359517868265,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.18065753424657535,
+          "crack_half_length_mm": 0.012617572036807252,
+          "fatigue_consumed": 0.09009300214722667,
+          "peak_stress_mpa": 52.886132538536046,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.18065753424657535,
+          "crack_half_length_mm": 0.0125489631590776,
+          "fatigue_consumed": 0.04104180936736768,
+          "peak_stress_mpa": 38.642186517615684,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 87.48,
+      "elapsed_h": 600.0,
+      "failure": null,
+      "fuel_remaining_kg": 1901.0,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.30350465753424655,
+          "crack_half_length_mm": 0.01501539052040376,
+          "fatigue_consumed": 0.6579683794109771,
+          "peak_stress_mpa": 152.42326601124506,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.30350465753424655,
+          "crack_half_length_mm": 0.013295975315826318,
+          "fatigue_consumed": 0.3526842672479691,
+          "peak_stress_mpa": 101.92030458328095,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.30350465753424655,
+          "crack_half_length_mm": 0.01293683738327376,
+          "fatigue_consumed": 0.23850325097082586,
+          "peak_stress_mpa": 81.6998408111659,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.01257822038016355,
+          "fatigue_consumed": 0.062192653371022644,
+          "peak_stress_mpa": 43.15505451425158,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.0133082326325596,
+          "fatigue_consumed": 0.3661932902539449,
+          "peak_stress_mpa": 102.2811732899426,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.01262315160019213,
+          "fatigue_consumed": 0.09240019438954153,
+          "peak_stress_mpa": 50.87619482571602,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.0125340129874466,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 31.629287199391985,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.012653340538055509,
+          "fatigue_consumed": 0.11103074002783413,
+          "peak_stress_mpa": 55.14529491558964,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.012561617960770693,
+          "fatigue_consumed": 0.05014379888285593,
+          "peak_stress_mpa": 39.62816611765079,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 102.06,
+      "elapsed_h": 700.0,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1884.5,
+      "gm_m": 1.9432712638666465,
+      "segment_index": 0,
+      "segment_label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.3540887671232876,
+          "crack_half_length_mm": 0.01501539052040376,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 175.1838153877935,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.30350465753424655,
+          "crack_half_length_mm": 0.013295975315826318,
+          "fatigue_consumed": 0.3526842672479691,
+          "peak_stress_mpa": 101.92030458328095,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.30350465753424655,
+          "crack_half_length_mm": 0.01293683738327376,
+          "fatigue_consumed": 0.23850325097082586,
+          "peak_stress_mpa": 81.6998408111659,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.01257822038016355,
+          "fatigue_consumed": 0.062192653371022644,
+          "peak_stress_mpa": 43.15505451425158,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.0133082326325596,
+          "fatigue_consumed": 0.3661932902539449,
+          "peak_stress_mpa": 102.2811732899426,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.01262315160019213,
+          "fatigue_consumed": 0.09240019438954153,
+          "peak_stress_mpa": 50.87619482571602,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.0125340129874466,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 31.629287199391985,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.012653340538055509,
+          "fatigue_consumed": 0.11103074002783413,
+          "peak_stress_mpa": 55.14529491558964,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.21678904109589042,
+          "crack_half_length_mm": 0.012561617960770693,
+          "fatigue_consumed": 0.05014379888285593,
+          "peak_stress_mpa": 39.62816611765079,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": 23.61,
+      "lon_deg": 58.59
+    },
+    "origin": {
+      "lat_deg": 26.21,
+      "lon_deg": 50.59
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 25.0,
+          "hs_m": 1.9040000000000001,
+          "jonswap_gamma": 4.8,
+          "ph": 7.55,
+          "salinity_ppt": 48.0,
+          "slam_probability": 0.12,
+          "tp_s": 5.2,
+          "water_temp_c": 41.0,
+          "wind_speed_ms": 7.5
+        },
+        "distance_nm": 116.14238551708084,
+        "from": {
+          "lat_deg": 26.21,
+          "lon_deg": 50.59
+        },
+        "heading_deg": 118.92066749668345,
+        "label": "Manama, Bahrain → Persian Gulf center, north Qatar",
+        "to": {
+          "lat_deg": 25.5,
+          "lon_deg": 52.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 25.0,
+          "hs_m": 1.8224,
+          "jonswap_gamma": 4.8,
+          "ph": 7.55,
+          "salinity_ppt": 48.0,
+          "slam_probability": 0.12,
+          "tp_s": 5.2,
+          "water_temp_c": 40.7,
+          "wind_speed_ms": 7.5
+        },
+        "distance_nm": 181.60334169382406,
+        "from": {
+          "lat_deg": 25.5,
+          "lon_deg": 52.0
+        },
+        "heading_deg": 81.87750831283432,
+        "label": "Persian Gulf center, north Qatar → Persian Gulf center, off UAE",
+        "to": {
+          "lat_deg": 25.8,
+          "lon_deg": 54.5
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 25.0,
+          "hs_m": 1.7408,
+          "jonswap_gamma": 4.8,
+          "ph": 7.55,
+          "salinity_ppt": 48.0,
+          "slam_probability": 0.12,
+          "tp_s": 5.2,
+          "water_temp_c": 40.4,
+          "wind_speed_ms": 7.5
+        },
+        "distance_nm": 156.94458030667724,
+        "from": {
+          "lat_deg": 25.8,
+          "lon_deg": 54.5
+        },
+        "heading_deg": 73.28446917821395,
+        "label": "Persian Gulf center, off UAE → Strait of Hormuz shipping lane",
+        "to": {
+          "lat_deg": 26.35,
+          "lon_deg": 56.6
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 25.0,
+          "hs_m": 1.7408,
+          "jonswap_gamma": 4.8,
+          "ph": 7.55,
+          "salinity_ppt": 48.0,
+          "slam_probability": 0.12,
+          "tp_s": 5.2,
+          "water_temp_c": 40.1,
+          "wind_speed_ms": 7.5
+        },
+        "distance_nm": 151.0117947895837,
+        "from": {
+          "lat_deg": 26.35,
+          "lon_deg": 56.6
+        },
+        "heading_deg": 144.81105793446386,
+        "label": "Strait of Hormuz shipping lane → Gulf of Oman entry",
+        "to": {
+          "lat_deg": 24.8,
+          "lon_deg": 57.8
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 25.0,
+          "hs_m": 1.8224,
+          "jonswap_gamma": 4.8,
+          "ph": 7.55,
+          "salinity_ppt": 48.0,
+          "slam_probability": 0.12,
+          "tp_s": 5.2,
+          "water_temp_c": 39.8,
+          "wind_speed_ms": 7.5
+        },
+        "distance_nm": 77.56064680338622,
+        "from": {
+          "lat_deg": 24.8,
+          "lon_deg": 57.8
+        },
+        "heading_deg": 157.87381266994885,
+        "label": "Gulf of Oman entry → Gulf of Oman approach",
+        "to": {
+          "lat_deg": 23.9,
+          "lon_deg": 58.2
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 25.0,
+          "hs_m": 1.9040000000000001,
+          "jonswap_gamma": 4.8,
+          "ph": 7.55,
+          "salinity_ppt": 48.0,
+          "slam_probability": 0.12,
+          "tp_s": 5.2,
+          "water_temp_c": 39.5,
+          "wind_speed_ms": 7.5
+        },
+        "distance_nm": 36.7372508894479,
+        "from": {
+          "lat_deg": 23.9,
+          "lon_deg": 58.2
+        },
+        "heading_deg": 129.0124436650712,
+        "label": "Gulf of Oman approach → Muscat, Oman",
+        "to": {
+          "lat_deg": 23.61,
+          "lon_deg": 58.59
+        }
+      }
+    ],
+    "segments": 6,
+    "total_distance_nm": 720.0
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.3540887671232876,
+      "crack_half_length_mm": 0.01501539052040376,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 175.1838153877935,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.30350465753424655,
+      "crack_half_length_mm": 0.013295975315826318,
+      "fatigue_consumed": 0.3526842672479691,
+      "peak_stress_mpa": 101.92030458328095,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.30350465753424655,
+      "crack_half_length_mm": 0.01293683738327376,
+      "fatigue_consumed": 0.23850325097082586,
+      "peak_stress_mpa": 81.6998408111659,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.21678904109589042,
+      "crack_half_length_mm": 0.01257822038016355,
+      "fatigue_consumed": 0.062192653371022644,
+      "peak_stress_mpa": 43.15505451425158,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.21678904109589042,
+      "crack_half_length_mm": 0.0133082326325596,
+      "fatigue_consumed": 0.3661932902539449,
+      "peak_stress_mpa": 102.2811732899426,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.21678904109589042,
+      "crack_half_length_mm": 0.01262315160019213,
+      "fatigue_consumed": 0.09240019438954153,
+      "peak_stress_mpa": 50.87619482571602,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.21678904109589042,
+      "crack_half_length_mm": 0.0125340129874466,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 31.629287199391985,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.21678904109589042,
+      "crack_half_length_mm": 0.012653340538055509,
+      "fatigue_consumed": 0.11103074002783413,
+      "peak_stress_mpa": 55.14529491558964,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.21678904109589042,
+      "crack_half_length_mm": 0.012561617960770693,
+      "fatigue_consumed": 0.05014379888285593,
+      "peak_stress_mpa": 39.62816611765079,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

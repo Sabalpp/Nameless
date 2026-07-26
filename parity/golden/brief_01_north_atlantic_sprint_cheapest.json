@@ -1,0 +1,494 @@
+{
+  "configuration": {
+    "material": "MildSteelA",
+    "material_label": "Mild Steel A",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Economy neoprene",
+    "seal_quality": "Economy",
+    "shell_mass_kg": 408.84998000000013,
+    "thickness_m": 0.004,
+    "thickness_mm": 4.0,
+    "weld_label": "Economy (Class D)",
+    "weld_quality": "Economy",
+    "zones": [
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": "MildSteelA",
+        "material_label": "Mild Steel A",
+        "seal_label": "Economy neoprene",
+        "seal_quality": "Economy",
+        "thickness_m": 0.004,
+        "thickness_mm": 4.0,
+        "weld_label": "Economy (Class D)",
+        "weld_quality": "Economy",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 1.7889570552147238,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 58.32000000000001,
+    "elapsed_h": 100.0,
+    "mode": "Fatigue Failure",
+    "segment_index": 0,
+    "segment_label": "New York Harbor, USA → Nova Scotia shelf",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": {
+    "cheapest_survivor": null,
+    "configs_tested": 1612,
+    "survivors_found": 0
+  },
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 347522.48300000007,
+      "seal_usd": 353340.00000000006,
+      "weld_usd": 4627350.0
+    },
+    "distance_completed_nm": 58.32000000000001,
+    "distance_completed_pct": 1.7889570552147238,
+    "final_gm_m": 2.195641640085574,
+    "fuel_remaining_kg": 1934.0,
+    "time_elapsed_h": 100.0,
+    "total_config_cost_usd": 7628212.483
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 2.195641640085574,
+      "segment_index": 0,
+      "segment_label": "New York Harbor, USA → Nova Scotia shelf",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32000000000001,
+      "elapsed_h": 100.0,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 2.195641640085574,
+      "segment_index": 0,
+      "segment_label": "New York Harbor, USA → Nova Scotia shelf",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.01243512455990765,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 1475.728935256662,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.125,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": 50.9,
+      "lon_deg": -1.4
+    },
+    "origin": {
+      "lat_deg": 40.65,
+      "lon_deg": -74.03
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 4.0,
+          "hs_m": 6.7139999999999995,
+          "jonswap_gamma": 3.6,
+          "ph": 8.1,
+          "salinity_ppt": 35.0,
+          "slam_probability": 0.6240000000000001,
+          "tp_s": 10.62,
+          "water_temp_c": 7.9,
+          "wind_speed_ms": 14.0
+        },
+        "distance_nm": 703.7514836563004,
+        "from": {
+          "lat_deg": 40.65,
+          "lon_deg": -74.03
+        },
+        "heading_deg": 67.44962319399781,
+        "label": "New York Harbor, USA → Nova Scotia shelf",
+        "to": {
+          "lat_deg": 44.0,
+          "lon_deg": -60.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 12.88888888888889,
+          "hs_m": 12.745999999999999,
+          "jonswap_gamma": 3.6,
+          "ph": 8.1,
+          "salinity_ppt": 35.0,
+          "slam_probability": 0.944,
+          "tp_s": 16.38,
+          "water_temp_c": 6.266666666666667,
+          "wind_speed_ms": 26.444444444444443
+        },
+        "distance_nm": 1190.8853192888587,
+        "from": {
+          "lat_deg": 44.0,
+          "lon_deg": -60.0
+        },
+        "heading_deg": 55.43732430001313,
+        "label": "Nova Scotia shelf → Mid-Atlantic apex",
+        "to": {
+          "lat_deg": 52.0,
+          "lon_deg": -35.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 12.88888888888889,
+          "hs_m": 12.745999999999999,
+          "jonswap_gamma": 3.6,
+          "ph": 8.1,
+          "salinity_ppt": 35.0,
+          "slam_probability": 0.9440000000000002,
+          "tp_s": 16.380000000000003,
+          "water_temp_c": 4.633333333333334,
+          "wind_speed_ms": 26.444444444444443
+        },
+        "distance_nm": 971.6464253831514,
+        "from": {
+          "lat_deg": 52.0,
+          "lon_deg": -35.0
+        },
+        "heading_deg": 86.20588644414238,
+        "label": "Mid-Atlantic apex → Western Approaches",
+        "to": {
+          "lat_deg": 50.5,
+          "lon_deg": -11.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 4.0,
+          "hs_m": 6.7139999999999995,
+          "jonswap_gamma": 3.6,
+          "ph": 8.1,
+          "salinity_ppt": 35.0,
+          "slam_probability": 0.6240000000000001,
+          "tp_s": 10.62,
+          "water_temp_c": 3.0,
+          "wind_speed_ms": 14.0
+        },
+        "distance_nm": 393.71677167168974,
+        "from": {
+          "lat_deg": 50.5,
+          "lon_deg": -11.0
+        },
+        "heading_deg": 82.52709581542626,
+        "label": "Western Approaches → Southampton, UK",
+        "to": {
+          "lat_deg": 50.9,
+          "lon_deg": -1.4
+        }
+      }
+    ],
+    "segments": 4,
+    "total_distance_nm": 3260.0000000000005
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.01243512455990765,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 1475.728935256662,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.125,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

@@ -1,18 +1,15 @@
-# Rust build artifacts
-/target/
+# Jac build artifacts
+.jac/
+target/
 
-# Node/Vite artifacts
-ui/node_modules/
-ui/dist/
-ui/.vite/
+# Node (Jac-managed client deps)
+node_modules/
 
 # Local simulation outputs
 /result.json
 /sim_output.json
-ui/*_output.json
 /simulations/*
 !/simulations/.gitkeep
-/gemini_runner/design_memory.json
 
 # Local secrets
 .env
@@ -24,3 +21,6 @@ ui/*_output.json
 # OS/editor noise
 .DS_Store
 *.log
+demo_output.json
+brief_output.json
+optimizer_output.json

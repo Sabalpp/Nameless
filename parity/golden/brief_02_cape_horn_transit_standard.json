@@ -1,0 +1,538 @@
+{
+  "configuration": {
+    "material": "Ah36",
+    "material_label": "AH36 High-Strength Steel",
+    "propulsion": {
+      "fuel_capacity_kg": 2000.0,
+      "hull_drag_coeff": 0.007,
+      "max_power_kw": 300.0,
+      "propulsive_efficiency": 0.72,
+      "sfc_g_per_kwh": 220.0
+    },
+    "seal_label": "Marine-grade EPDM",
+    "seal_quality": "Marine",
+    "shell_mass_kg": 613.27497,
+    "thickness_m": 0.006,
+    "thickness_mm": 6.0,
+    "weld_label": "Standard (Class C)",
+    "weld_quality": "Standard",
+    "zones": [
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Keel",
+        "zone_key": "Keel"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bilge Strake",
+        "zone_key": "BilgeStrake"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bottom Plating",
+        "zone_key": "BottomPlating"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Side Plating",
+        "zone_key": "SidePlating"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bow Flare",
+        "zone_key": "BowFlare"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Stern Plate",
+        "zone_key": "SternPlate"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Transom Frame",
+        "zone_key": "TransomFrame"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Weather Deck",
+        "zone_key": "WeatherDeck"
+      },
+      {
+        "material": "Ah36",
+        "material_label": "AH36 High-Strength Steel",
+        "seal_label": "Marine-grade EPDM",
+        "seal_quality": "Marine",
+        "thickness_m": 0.006,
+        "thickness_mm": 6.0,
+        "weld_label": "Standard (Class C)",
+        "weld_quality": "Standard",
+        "zone": "Bulkhead Frame",
+        "zone_key": "BulkheadFrame"
+      }
+    ]
+  },
+  "failure": {
+    "completion_pct": 3.9405405405405407,
+    "detail": {
+      "failed_metric": "fatigue",
+      "failed_value": "100%",
+      "failed_zone": "Keel",
+      "raw_fatigue_consumed": 1.0
+    },
+    "distance_completed_nm": 58.32000000000001,
+    "elapsed_h": 100.0,
+    "mode": "Fatigue Failure",
+    "segment_index": 0,
+    "segment_label": "Valparaíso, Chile → Offshore Pacific, central Chile",
+    "suggested_fix": "Upgrade weld class (Premium reduces SCF from 2.65 → 1.50) or increase plate thickness. Higher-grade steel improves yield but not fatigue class without weld improvement.",
+    "why": "Miner's cumulative damage reached 1.00 at Keel — weld toe cracking likely. S-N curve exhausted by repeated wave loading."
+  },
+  "optimizer": null,
+  "result": {
+    "cost_breakdown": {
+      "fuel_capacity_usd": 2300000.0,
+      "material_usd": 766593.7125,
+      "seal_usd": 883350.0000000001,
+      "weld_usd": 7403760.0
+    },
+    "distance_completed_nm": 58.32000000000001,
+    "distance_completed_pct": 3.9405405405405407,
+    "final_gm_m": 2.0607602560239706,
+    "fuel_remaining_kg": 1934.0,
+    "time_elapsed_h": 100.0,
+    "total_config_cost_usd": 11353703.7125
+  },
+  "schema_version": "1.0",
+  "status": "failed",
+  "ticks": [
+    {
+      "distance_completed_nm": 0.0,
+      "elapsed_h": 0.0,
+      "failure": null,
+      "fuel_remaining_kg": 2000.0,
+      "gm_m": 2.0607602560239706,
+      "segment_index": 0,
+      "segment_label": "Valparaíso, Chile → Offshore Pacific, central Chile",
+      "speed_kts": 0.0,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    },
+    {
+      "distance_completed_nm": 58.32000000000001,
+      "elapsed_h": 100.0,
+      "failure": "Fatigue Failure",
+      "fuel_remaining_kg": 1934.0,
+      "gm_m": 2.0607602560239706,
+      "segment_index": 0,
+      "segment_label": "Valparaíso, Chile → Offshore Pacific, central Chile",
+      "speed_kts": 58.32,
+      "zones": [
+        {
+          "corrosion_depth_mm": 0.007684539448511339,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 1.0,
+          "peak_stress_mpa": 488.50657450665193,
+          "zone": "Keel"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bilge Strake"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bottom Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Side Plating"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bow Flare"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Stern Plate"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Transom Frame"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Weather Deck"
+        },
+        {
+          "corrosion_depth_mm": 0.0,
+          "crack_half_length_mm": 0.05,
+          "fatigue_consumed": 0.0,
+          "peak_stress_mpa": 0.0,
+          "zone": "Bulkhead Frame"
+        }
+      ]
+    }
+  ],
+  "voyage": {
+    "destination": {
+      "lat_deg": -51.69,
+      "lon_deg": -57.85
+    },
+    "origin": {
+      "lat_deg": -33.03,
+      "lon_deg": -71.63
+    },
+    "route_segments": [
+      {
+        "conditions": {
+          "encounter_angle_deg": 15.0,
+          "hs_m": 6.2,
+          "jonswap_gamma": 1.4,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.27999999999999997,
+          "tp_s": 14.0,
+          "water_temp_c": 5.0,
+          "wind_speed_ms": 12.0
+        },
+        "distance_nm": 127.84275136887332,
+        "from": {
+          "lat_deg": -33.03,
+          "lon_deg": -71.63
+        },
+        "heading_deg": 229.5758672918386,
+        "label": "Valparaíso, Chile → Offshore Pacific, central Chile",
+        "to": {
+          "lat_deg": -35.0,
+          "lon_deg": -74.5
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 33.57142857142857,
+          "hs_m": 7.163265306122449,
+          "jonswap_gamma": 1.3285714285714285,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.3485714285714286,
+          "tp_s": 16.285714285714285,
+          "water_temp_c": 4.4,
+          "wind_speed_ms": 17.714285714285715
+        },
+        "distance_nm": 468.3424617625335,
+        "from": {
+          "lat_deg": -35.0,
+          "lon_deg": -74.5
+        },
+        "heading_deg": 192.48340213981683,
+        "label": "Offshore Pacific, central Chile → Offshore Pacific, Patagonia",
+        "to": {
+          "lat_deg": -46.0,
+          "lon_deg": -78.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 52.142857142857146,
+          "hs_m": 10.053061224489797,
+          "jonswap_gamma": 1.2571428571428571,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.5542857142857144,
+          "tp_s": 18.571428571428573,
+          "water_temp_c": 3.8,
+          "wind_speed_ms": 23.42857142857143
+        },
+        "distance_nm": 360.6109507466149,
+        "from": {
+          "lat_deg": -46.0,
+          "lon_deg": -78.0
+        },
+        "heading_deg": 168.42474672659193,
+        "label": "Offshore Pacific, Patagonia → Offshore Pacific, Tierra del Fuego",
+        "to": {
+          "lat_deg": -54.5,
+          "lon_deg": -75.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 70.71428571428572,
+          "hs_m": 14.869387755102043,
+          "jonswap_gamma": 1.1857142857142855,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.8971428571428572,
+          "tp_s": 20.857142857142858,
+          "water_temp_c": 3.2,
+          "wind_speed_ms": 29.142857142857146
+        },
+        "distance_nm": 202.90920568790028,
+        "from": {
+          "lat_deg": -54.5,
+          "lon_deg": -75.0
+        },
+        "heading_deg": 123.7010146204849,
+        "label": "Offshore Pacific, Tierra del Fuego → Drake Passage, Cape Horn south",
+        "to": {
+          "lat_deg": -57.0,
+          "lon_deg": -67.5
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 74.58333333333333,
+          "hs_m": 16.115277777777777,
+          "jonswap_gamma": 1.1708333333333332,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.98,
+          "tp_s": 21.333333333333332,
+          "water_temp_c": 2.5999999999999996,
+          "wind_speed_ms": 30.333333333333332
+        },
+        "distance_nm": 196.44408744729972,
+        "from": {
+          "lat_deg": -57.0,
+          "lon_deg": -67.5
+        },
+        "heading_deg": 53.5385529253648,
+        "label": "Drake Passage, Cape Horn south → Drake Passage, NE of Horn",
+        "to": {
+          "lat_deg": -54.0,
+          "lon_deg": -61.0
+        }
+      },
+      {
+        "conditions": {
+          "encounter_angle_deg": 63.75,
+          "hs_m": 12.8375,
+          "jonswap_gamma": 1.2125,
+          "ph": 8.1,
+          "salinity_ppt": 34.0,
+          "slam_probability": 0.7525000000000001,
+          "tp_s": 20.0,
+          "water_temp_c": 2.0,
+          "wind_speed_ms": 27.0
+        },
+        "distance_nm": 123.85054298677828,
+        "from": {
+          "lat_deg": -54.0,
+          "lon_deg": -61.0
+        },
+        "heading_deg": 40.73951022228073,
+        "label": "Drake Passage, NE of Horn → Stanley, Falkland Islands",
+        "to": {
+          "lat_deg": -51.69,
+          "lon_deg": -57.85
+        }
+      }
+    ],
+    "segments": 6,
+    "total_distance_nm": 1480.0
+  },
+  "zones": [
+    {
+      "corrosion_depth_mm": 0.007684539448511339,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 1.0,
+      "peak_stress_mpa": 488.50657450665193,
+      "zone": "Keel"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bilge Strake"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bottom Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Side Plating"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bow Flare"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Stern Plate"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Transom Frame"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Weather Deck"
+    },
+    {
+      "corrosion_depth_mm": 0.0,
+      "crack_half_length_mm": 0.05,
+      "fatigue_consumed": 0.0,
+      "peak_stress_mpa": 0.0,
+      "zone": "Bulkhead Frame"
+    }
+  ]
+}

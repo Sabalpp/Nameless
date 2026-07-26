@@ -1,0 +1,40 @@
+# Jac build artifacts and machine-local configuration
+.jac/
+jac.local.toml
+
+# Python bytecode and tooling caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Generated simulation traces (retain the directory placeholder)
+simulations/*
+!simulations/.gitkeep
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Editor and OS metadata
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

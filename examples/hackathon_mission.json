@@ -1,0 +1,73 @@
+{
+  "name": "North Atlantic Demonstrator",
+  "origin": {
+    "name": "Norfolk, Virginia",
+    "lat_deg": 36.8508,
+    "lon_deg": -76.2859,
+    "hs_m": 1.2,
+    "tp_s": 7.5,
+    "water_temp_c": 18.0,
+    "salinity_ppt": 32.0,
+    "wind_speed_ms": 8.0
+  },
+  "destination": {
+    "name": "Bermuda",
+    "lat_deg": 32.3078,
+    "lon_deg": -64.7505,
+    "hs_m": 3.0,
+    "tp_s": 10.0,
+    "jonswap_gamma": 3.5,
+    "encounter_angle_deg": 25.0,
+    "water_temp_c": 23.0,
+    "salinity_ppt": 36.0,
+    "wind_speed_ms": 14.0,
+    "slam_probability": 0.35
+  },
+  "waypoints": [
+    {
+      "name": "Cape Hatteras",
+      "lat_deg": 35.25,
+      "lon_deg": -75.5,
+      "hs_m": 4.5,
+      "tp_s": 9.0,
+      "jonswap_gamma": 4.0,
+      "encounter_angle_deg": 15.0,
+      "water_temp_c": 20.0,
+      "salinity_ppt": 35.0,
+      "wind_speed_ms": 18.0,
+      "slam_probability": 0.55
+    },
+    {
+      "name": "Open Atlantic",
+      "lat_deg": 34.0,
+      "lon_deg": -70.0,
+      "hs_m": 5.5,
+      "tp_s": 11.0,
+      "jonswap_gamma": 3.3,
+      "encounter_angle_deg": 45.0,
+      "water_temp_c": 21.0,
+      "salinity_ppt": 36.0,
+      "wind_speed_ms": 20.0,
+      "slam_probability": 0.45
+    }
+  ],
+  "vessel": {
+    "loa_m": 7.315,
+    "beam_m": 2.5,
+    "depth_m": 0.85,
+    "draft_m": 0.4,
+    "block_coeff": 0.44,
+    "waterplane_coeff": 0.76,
+    "material": "MildSteelA",
+    "thickness_m": 0.004,
+    "weld": "Economy",
+    "seal": "Economy",
+    "max_power_kw": 300.0,
+    "fuel_capacity_kg": 2000.0,
+    "sfc_g_per_kwh": 220.0,
+    "propulsive_efficiency": 0.72,
+    "hull_drag_coeff": 0.007
+  },
+  "distance_nm": 580.0,
+  "max_iterations": 12
+}

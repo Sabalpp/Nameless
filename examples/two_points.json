@@ -1,0 +1,12 @@
+{
+  "origin": {
+    "name": "Norfolk",
+    "lat_deg": 36.8508,
+    "lon_deg": -76.2859
+  },
+  "destination": {
+    "name": "Bermuda",
+    "lat_deg": 32.3078,
+    "lon_deg": -64.7505
+  }
+}

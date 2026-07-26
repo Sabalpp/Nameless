@@ -6,9 +6,14 @@ import from "../components/HullDiagram.jsx" { default as HullDiagram }
 import from ..components.missions { MISSIONS }
 import from ..components.panel {
     CELL_STYLE,
+    COACH_TEXT,
     COLLAPSED_RAIL_WIDTH,
     EMPTY_STATE,
     INSPECTOR_WIDTH,
+    MISSION_SUMMARY,
+    MISSION_SUMMARY_SUB,
+    NARRATIVE_BLOCK,
+    NARRATIVE_LABEL,
     PANEL_HEADER_STYLE,
     PANEL_LABEL,
     PANEL_ROW,
@@ -16,9 +21,11 @@ import from ..components.panel {
     PANEL_SECTION_TITLE,
     PANEL_VALUE,
     PANEL_WRAPPED_VALUE,
+    SF_BG,
     SIDEBAR_WIDTH,
     SPINE_STEP_TITLE,
-    list_item_style
+    list_item_style,
+    status_color
 }
 sv import from ..api {
     api_simulations,
@@ -172,6 +179,56 @@ def dots(n: int) -> str {
     return out;
 }
 
+def format_stressor(value: any) -> str {
+    if not value {
+        return "—";
+    }
+    return js_replace(str(value), "_", "g", " ");
+}
+
+def mission_id_from_params(params: any) -> any {
+    if not params {
+        return None;
+    }
+    if params["id"] {
+        return params["id"];
+    }
+    if params["mission_id"] {
+        return params["mission_id"];
+    }
+    return None;
+}
+
+def mission_for_campaign(campaign_id: any, simulations: list, missions: list) -> any {
+    for sim in simulations {
+        if sim["run_id"] == campaign_id {
+            mid = mission_id_from_params(sim["params"]);
+            if mid {
+                for mission in missions {
+                    if mission["id"] == mid {
+                        return mission;
+                    }
+                }
+            }
+        }
+    }
+    return None;
+}
+
+def campaign_display_label(campaign: any, simulations: list, missions: list, running_id: any) -> str {
+    mission = mission_for_campaign(campaign["id"], simulations, missions);
+    name = mission["name"] if mission else "Optimization";
+    status = "running" if campaign["id"] == running_id else "complete";
+    return f"{name} · {status}";
+}
+
+def run_display_status(sim: any) -> str {
+    if sim["failure"] and sim["failure"]["mode"] {
+        return str(sim["failure"]["mode"]);
+    }
+    return display_status(sim["status"]);
+}
+
 def:pub page() -> JsxPage {
     has sim_result: any = None;
     has loading: bool = False;
@@ -188,6 +245,9 @@ def:pub page() -> JsxPage {
     has gemini_dot_count: int = 0;
     has sidebar_open: bool = True;
     has conditions_open: bool = False;
+    has inspector_open: bool = True;
+    has params_open: bool = False;
+    has inspector_scroll_ref: Ref[any] = Ref(None);
     has gemini_dot_ref: Ref[int] = Ref(0);
 
     has tick_position_ref: Ref[float] = Ref(0.0);
@@ -368,6 +428,22 @@ def:pub page() -> JsxPage {
         return lambda { clearInterval(id); };
     }, [running_gemini]);
 
+    useEffect(lambda {
+        if not selected_simulation_id {
+            return lambda {};
+        }
+        el = inspector_scroll_ref.current;
+        if el {
+            if el.scrollTo {
+                el.scrollTo({"top": 0, "behavior": "smooth"});
+            } else {
+                el.scrollTop = 0;
+            }
+        }
+        inspector_open = True;
+        return lambda {};
+    }, [selected_simulation_id]);
+
     can with (selected_mission, selected_simulation_id) entry {
         if not selected_mission {
             if not selected_simulation_id {
@@ -481,6 +557,10 @@ def:pub page() -> JsxPage {
             frame_ref.current = None;
         }
         set_displayed_tick_position(0.0);
+        if sim_result {
+            inspector_open = True;
+            params_open = False;
+        }
     }
 
     ticks: list = list(sim_result["ticks"]) if sim_result and Array.isArray(sim_result["ticks"]) else [];
@@ -588,8 +668,9 @@ def:pub page() -> JsxPage {
     );
     campaign_mission_id = None;
     for sim in visible_simulations {
-        if sim["params"] and sim["params"]["id"] {
-            campaign_mission_id = sim["params"]["id"];
+        mid = mission_id_from_params(sim["params"]);
+        if mid {
+            campaign_mission_id = mid;
             break;
         }
     }
@@ -794,6 +875,16 @@ def:pub page() -> JsxPage {
         </div>;
     }
 
+    def render_narrative(label: str, value: any) -> JsxElement {
+        if not value {
+            return <></>;
+        }
+        return <div style={NARRATIVE_BLOCK}>
+            <div style={NARRATIVE_LABEL}>{label}</div>
+            <div>{str(value)}</div>
+        </div>;
+    }
+
     route_geo = None;
     if mission_brief {
         route_geo = {
@@ -804,7 +895,9 @@ def:pub page() -> JsxPage {
     }
 
     def toggle_sidebar(e: MouseEvent) -> None { sidebar_open = not sidebar_open; }
+    def toggle_inspector(e: MouseEvent) -> None { inspector_open = not inspector_open; }
     def toggle_conditions(e: MouseEvent) -> None { conditions_open = not conditions_open; }
+    def toggle_params(e: MouseEvent) -> None { params_open = not params_open; }
     def on_run_gemini(e: MouseEvent) -> None { run_gemini_simulations(); }
     def on_stop_gemini(e: MouseEvent) -> None { stop_gemini_simulations(); }
 
@@ -814,13 +907,43 @@ def:pub page() -> JsxPage {
         else ("Select a mission to begin" if not selected_mission else "Optimize Design")
     );
     conditions_label = ("▼ " if conditions_open else "▶ ") + "Conditions";
+    zone_count = len(displayed_zones);
+    params_label = (("▼ " if params_open else "▶ ") + f"Parameter Configuration ({zone_count} zones)");
     sidebar_toggle_label = "Minimize sidebar" if sidebar_open else "Expand sidebar";
+    inspector_toggle_label = "Minimize inspector" if inspector_open else "Expand inspector";
+    effective_sidebar_w = sidebar_width if sidebar_open else COLLAPSED_RAIL_WIDTH;
+    effective_inspector_w = (
+        inspector_width if inspector_open else COLLAPSED_RAIL_WIDTH
+    ) if sim_result else 0;
+    playback_center = f"calc({effective_sidebar_w}px + (100vw - {effective_sidebar_w + effective_inspector_w}px) / 2)";
+    inspector_status = (
+        display_status(selected_simulation["status"])
+        if selected_simulation
+        else display_status(sim_result["status"] if sim_result else None)
+    );
+    inspector_score = (
+        f"{selected_simulation['eval']['score_pct']}%"
+        if selected_simulation and selected_simulation["eval"] and Number.isFinite(selected_simulation["eval"]["score_pct"])
+        else "—"
+    );
+    inspector_cost = (
+        fmt_usd(sim_result["result"]["total_config_cost_usd"])
+        if sim_result and sim_result["result"] and sim_result["result"]["total_config_cost_usd"]
+        else "—"
+    );
+    optimize_btn_class = "sf-btn-primary" + (" sf-optimizing" if running_gemini else "");
+    inspector_status_class = "sf-inspector-metric-value";
+    if inspector_status == "SUCCESS" {
+        inspector_status_class = "sf-inspector-metric-value sf-status-survived";
+    } elif inspector_status != "—" {
+        inspector_status_class = "sf-inspector-metric-value sf-status-failed";
+    }
 
     return <div style={{
         "width": "100vw",
         "height": "100vh",
         "overflow": "hidden",
-        "background": "#C3C4CA",
+        "background": SF_BG,
         "position": "relative"
     }}>
         <HullDiagram
@@ -838,7 +961,7 @@ def:pub page() -> JsxPage {
                 "left": 0,
                 "width": sidebar_width if sidebar_open else COLLAPSED_RAIL_WIDTH,
                 "height": "100vh",
-                "background": "#C3C4CA",
+                "background": SF_BG,
                 "borderRight": "1px solid rgba(0,0,0,0.13)",
                 "overflow": "hidden",
                 "zIndex": 10,
@@ -905,6 +1028,11 @@ def:pub page() -> JsxPage {
 
                 <div className="no-scrollbar" style={{"flex": 1, "overflowY": "auto"}}>
                     <div style={SPINE_STEP_TITLE}>01 Mission</div>
+                    {if not selected_mission {
+                        <div style={COACH_TEXT}>
+                            Choose a route to optimize. Each mission tests the hull against different sea conditions.
+                        </div>;
+                    }}
                     <div style={{"flexShrink": 0}}>
                         {for m in mission_list {
                             is_selected = selected_mission and selected_mission["id"] == m["id"];
@@ -932,24 +1060,17 @@ def:pub page() -> JsxPage {
                     </div>
 
                     {if mission_brief {
+                        <div style={MISSION_SUMMARY}>
+                            <div>{mission_brief["name"]}</div>
+                            <div style={MISSION_SUMMARY_SUB}>
+                                {format_stressor(mission_brief["primary_stressor"] if mission_brief["primary_stressor"] else "")}
+                            </div>
+                        </div>
                         <div style={{"borderTop": "1px solid rgba(0,0,0,0.08)"}}>
                             <button
                                 type="button"
+                                className="sf-disclosure"
                                 onClick={toggle_conditions}
-                                style={{
-                                    "width": "100%",
-                                    "padding": "8px 14px",
-                                    "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 10,
-                                    "fontWeight": 700,
-                                    "letterSpacing": "0.08em",
-                                    "textTransform": "uppercase",
-                                    "textAlign": "left",
-                                    "color": "rgba(0,0,0,0.55)",
-                                    "background": "transparent",
-                                    "border": "none",
-                                    "cursor": "pointer"
-                                }}
                             >
                                 {conditions_label}
                             </button>
@@ -960,12 +1081,7 @@ def:pub page() -> JsxPage {
                                 }
                                 render_panel_row(
                                     "Physics",
-                                    js_replace(
-                                        str(mission_brief["primary_stressor"] if mission_brief["primary_stressor"] else ""),
-                                        "_",
-                                        "g",
-                                        " "
-                                    ),
+                                    format_stressor(mission_brief["primary_stressor"] if mission_brief["primary_stressor"] else ""),
                                     True
                                 );
                                 failure_modes = mission_brief["failure_modes_under_test"] if mission_brief["failure_modes_under_test"] else [];
@@ -989,43 +1105,21 @@ def:pub page() -> JsxPage {
                     <div style={({"padding": "0 14px 14px", "display": "flex"} if running_gemini else {"padding": "0 14px 14px"}) as dict[str, object]}>
                         <button
                             type="button"
+                            className={optimize_btn_class}
                             onClick={on_run_gemini}
                             disabled={running_gemini or not selected_mission}
-                            style={{
-                                "width": "63%" if running_gemini else "100%",
-                                "height": 40,
-                                "fontFamily": "'Courier New', monospace",
-                                "fontSize": 11,
-                                "fontWeight": 700,
-                                "letterSpacing": "0.06em",
-                                "textTransform": "uppercase",
-                                "textAlign": "center",
-                                "cursor": "default" if running_gemini or not selected_mission else "pointer",
-                                "color": "rgba(0,0,0,0.45)" if running_gemini or not selected_mission else "rgba(0,0,0,0.85)",
-                                "background": "rgba(0,0,0,0.035)" if running_gemini or not selected_mission else "rgba(0,0,0,0.075)",
-                                "border": "1px solid rgba(0,0,0,0.16)"
-                            }}
+                            style={({"width": "63%"} if running_gemini else {"width": "100%"}) as dict[str, object]}
                         >
                             {optimize_label}
                         </button>
                         {if running_gemini {
                             <button
                                 type="button"
+                                className="sf-btn-danger"
                                 onClick={on_stop_gemini}
                                 style={{
                                     "width": "37%",
-                                    "height": 40,
-                                    "marginLeft": -1,
-                                    "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 11,
-                                    "fontWeight": 700,
-                                    "letterSpacing": "0.06em",
-                                    "textTransform": "uppercase",
-                                    "textAlign": "center",
-                                    "cursor": "pointer",
-                                    "color": "rgba(120,0,0,0.82)",
-                                    "background": "rgba(180,0,0,0.08)",
-                                    "border": "1px solid rgba(120,0,0,0.24)"
+                                    "marginLeft": -1
                                 }}
                             >
                                 Stop
@@ -1039,6 +1133,12 @@ def:pub page() -> JsxPage {
                         <div className="no-scrollbar" style={{"maxHeight": 116, "overflowY": "auto"}}>
                             {for campaign in visible_campaigns {
                                 is_selected = selected_campaign_id == campaign["id"];
+                                campaign_label = campaign_display_label(
+                                    campaign,
+                                    simulations,
+                                    mission_list,
+                                    running_campaign_id
+                                );
                                 <div
                                     key={campaign["id"]}
                                     onClick={lambda (e: MouseEvent) -> None { select_campaign(campaign["id"]); }}
@@ -1053,7 +1153,7 @@ def:pub page() -> JsxPage {
                                     }}
                                 >
                                     <span style={{"overflow": "hidden", "textOverflow": "ellipsis"}}>
-                                        {campaign["id"]}
+                                        {campaign_label}
                                     </span>
                                     <span style={{
                                         "color": "rgba(0,0,0,0.85)" if is_selected else "rgba(0,0,0,0.55)",
@@ -1067,8 +1167,8 @@ def:pub page() -> JsxPage {
                             }}
                         </div>
 
-                        <div style={PANEL_SECTION_TITLE}>Session Details</div>
-                        if selected_campaign {
+                        {if selected_campaign {
+                            <div style={PANEL_SECTION_TITLE}>Session Details</div>
                             render_panel_row("Session", selected_campaign["id"], True);
                             render_panel_row("Status", selected_campaign_status);
                             render_panel_row("Mission", campaign_mission["name"] if campaign_mission else "—", True);
@@ -1086,7 +1186,7 @@ def:pub page() -> JsxPage {
                                 );
                             }
                             render_panel_row("Leg", active_route_segment["label"] if active_route_segment and active_route_segment["label"] else "—", True);
-                        }
+                        }}
 
                         <div style={PANEL_SECTION_TITLE}>Design Runs</div>
                         <div className="no-scrollbar" style={{"maxHeight": 170, "overflowY": "auto", "paddingBottom": 14}}>
@@ -1097,11 +1197,8 @@ def:pub page() -> JsxPage {
                             } else {
                                 for sim in visible_simulations {
                                     is_selected = selected_simulation_id == sim["id"];
-                                    failure = (
-                                        sim["failure"]["mode"]
-                                        if sim["failure"] and sim["failure"]["mode"]
-                                        else display_status(sim["status"])
-                                    );
+                                    failure = run_display_status(sim);
+                                    run_tone = status_color(sim["status"]);
                                     eval_score = (
                                         f"{sim['eval']['score_pct']}%"
                                         if sim["eval"] and Number.isFinite(sim["eval"]["score_pct"])
@@ -1125,10 +1222,12 @@ def:pub page() -> JsxPage {
                                                 {pad2(int(sim["iteration"]))}
                                             </span>
                                             {" "}
-                                            {failure}
+                                            <span style={{"color": run_tone}}>
+                                                {failure}
+                                            </span>
                                         </span>
                                         <span style={{
-                                            "color": "rgba(0,0,0,0.85)" if is_selected else "rgba(0,0,0,0.55)",
+                                            "color": run_tone if is_selected else "rgba(0,0,0,0.55)",
                                             "fontWeight": 700,
                                             "minWidth": 34,
                                             "textAlign": "right"
@@ -1146,111 +1245,173 @@ def:pub page() -> JsxPage {
 
         {if sim_result {
             <div
+                className="sf-inspector-enter"
                 style={{
                     "position": "absolute",
                     "top": 0,
                     "right": 0,
-                    "width": inspector_width,
+                    "width": inspector_width if inspector_open else COLLAPSED_RAIL_WIDTH,
                     "height": "100vh",
-                    "background": "#C3C4CA",
+                    "background": SF_BG,
                     "borderLeft": "1px solid rgba(0,0,0,0.13)",
                     "overflow": "hidden",
-                    "zIndex": 10
+                    "zIndex": 10,
+                    "transition": "width 220ms ease"
                 }}
             >
-                <div className="no-scrollbar" style={{"height": "100%", "overflowY": "auto"}}>
-                    <div style={PANEL_HEADER_STYLE}>Inspection</div>
+                <button
+                    type="button"
+                    onClick={toggle_inspector}
+                    aria-label={inspector_toggle_label}
+                    style={{
+                        "position": "absolute",
+                        "top": 0,
+                        "right": 0,
+                        "width": COLLAPSED_RAIL_WIDTH,
+                        "height": 28,
+                        "display": "flex",
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "background": "transparent",
+                        "border": "none",
+                        "cursor": "pointer",
+                        "zIndex": 3
+                    }}
+                >
+                    {if inspector_open {
+                        <span style={{
+                            "fontFamily": "'Courier New', monospace",
+                            "fontSize": 12,
+                            "color": "rgba(0,0,0,0.55)"
+                        }}>
+                            {"❯"}
+                        </span>;
+                    } else {
+                        <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                            <rect y="0" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
+                            <rect y="4.25" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
+                            <rect y="8.5" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
+                        </svg>;
+                    }}
+                </button>
 
-                    <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Cost</div>
-                    {render_panel_row(
-                        "Total",
-                        (
-                            fmt_usd(sim_result["result"]["total_config_cost_usd"])
-                            if sim_result["result"] and sim_result["result"]["total_config_cost_usd"]
-                            else "—"
-                        )
-                    )}
+                <div
+                    ref={inspector_scroll_ref}
+                    className="no-scrollbar"
+                    style={{
+                        "height": "100%",
+                        "overflowY": "auto",
+                        "opacity": 1 if inspector_open else 0,
+                        "pointerEvents": "auto" if inspector_open else "none",
+                        "transition": "opacity 160ms ease"
+                    }}
+                >
+                    <div className="sf-inspector-sticky">
+                        <div className="sf-inspector-metric">
+                            <span className="sf-inspector-metric-label">Status</span>
+                            <span className={inspector_status_class}>
+                                {inspector_status}
+                            </span>
+                        </div>
+                        <div className="sf-inspector-metric">
+                            <span className="sf-inspector-metric-label">Score</span>
+                            <span className="sf-inspector-metric-value">{inspector_score}</span>
+                        </div>
+                        <div className="sf-inspector-metric">
+                            <span className="sf-inspector-metric-label">Cost</span>
+                            <span className="sf-inspector-metric-value">{inspector_cost}</span>
+                        </div>
+                    </div>
 
-                    <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Analysis</div>
-                    if selected_simulation or sim_result["failure"] {
-                        if selected_simulation {
-                            render_panel_row("Status", display_status(selected_simulation["status"]));
-                        }
-                        if selected_simulation and selected_simulation["eval"] and Number.isFinite(selected_simulation["eval"]["score_pct"]) {
-                            render_panel_row("Score", f"{selected_simulation['eval']['score_pct']}%");
-                        }
-                        if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["model_used"] {
-                            render_panel_row("Model", selected_simulation["assessment"]["model_used"], True);
-                        }
-                        if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["assessment"] {
-                            render_panel_row("Thoughts", selected_simulation["assessment"]["assessment"], True);
-                        }
-                        if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["failed_part"] {
-                            render_panel_row("Part", selected_simulation["assessment"]["failed_part"], True);
-                        }
-                        if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["failed_metric"] {
-                            render_panel_row("Metric", selected_simulation["assessment"]["failed_metric"], True);
-                        }
-                        if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["root_cause"] {
-                            render_panel_row("Cause", selected_simulation["assessment"]["root_cause"], True);
-                        }
-                        changes: list[any] = list(selected_simulation["assessment"]["changes"]) if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["changes"] else [];
-                        if len(changes) > 0 {
-                            render_panel_row("Solution", "; ".join([str(x) for x in changes]), True);
-                        }
-                        if sim_result["failure"] {
-                            render_panel_row("Failed", failure_detail, True);
-                        }
-                    }
+                    <div style={({"paddingRight": COLLAPSED_RAIL_WIDTH}) as dict[str, object]}>
+                        <div style={PANEL_HEADER_STYLE}>Inspection</div>
 
-                    <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Parameter Configuration</div>
-                    if config {
-                        render_panel_row("Shell mass", f"{fmt_number(config['shell_mass_kg'], 0)} kg");
-                        if config["propulsion"] {
-                            render_panel_row("Fuel cap", f"{fmt_number(config['propulsion']['fuel_capacity_kg'], 0)} kg");
-                            render_panel_row("Efficiency", fmt_number(config["propulsion"]["propulsive_efficiency"], 2));
-                            render_panel_row("Drag coeff", fmt_number(config["propulsion"]["hull_drag_coeff"], 4));
-                        }
-                        for (index, zone_raw) in enumerate(displayed_zones) {
-                            zone: any = zone_raw;
-                            zone_key = zone["zone_key"] if zone["zone_key"] else (zone["zone"] if zone["zone"] else index);
-                            <div
-                                key={f"{zone_key}-{index}"}
-                                style={{
-                                    "padding": "6px 14px 7px",
-                                    "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 12,
-                                    "lineHeight": 1.25,
-                                    "color": "rgba(0,0,0,0.85)"
-                                }}
-                            >
-                                <div style={{
-                                    "color": "rgba(0,0,0,0.85)",
-                                    "marginBottom": 3,
-                                    "whiteSpace": "nowrap",
-                                    "overflow": "hidden",
-                                    "textOverflow": "ellipsis"
-                                }}>
-                                    {zone["zone"] if zone["zone"] else "Component"}
-                                </div>
-                                <div style={{
-                                    "display": "grid",
-                                    "gridTemplateColumns": "70px 1fr",
-                                    "gap": 6,
-                                    "color": "rgba(0,0,0,0.55)"
-                                }}>
-                                    <span title="Material">MAT</span>
-                                    <span>{zone["material_label"] if zone["material_label"] else (zone["material"] if zone["material"] else "—")}</span>
-                                    <span title="Thickness">THK</span>
-                                    <span>{fmt_number(zone["thickness_mm"])} mm</span>
-                                    <span title="Weld quality">WLD</span>
-                                    <span>{zone["weld_label"] if zone["weld_label"] else (zone["weld_quality"] if zone["weld_quality"] else "—")}</span>
-                                    <span title="Seal quality">SEL</span>
-                                    <span>{zone["seal_label"] if zone["seal_label"] else (zone["seal_quality"] if zone["seal_quality"] else "—")}</span>
-                                </div>
+                        <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Analysis</div>
+                        if selected_simulation or sim_result["failure"] {
+                            if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["model_used"] {
+                                render_panel_row("Model", selected_simulation["assessment"]["model_used"], True);
+                            }
+                            if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["assessment"] {
+                                render_narrative("Thoughts", selected_simulation["assessment"]["assessment"]);
+                            }
+                            if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["failed_part"] {
+                                render_panel_row("Part", selected_simulation["assessment"]["failed_part"], True);
+                            }
+                            if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["failed_metric"] {
+                                render_panel_row("Metric", selected_simulation["assessment"]["failed_metric"], True);
+                            }
+                            if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["root_cause"] {
+                                render_narrative("Cause", selected_simulation["assessment"]["root_cause"]);
+                            }
+                            changes: list[any] = list(selected_simulation["assessment"]["changes"]) if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["changes"] else [];
+                            if len(changes) > 0 {
+                                render_narrative("Solution", "; ".join([str(x) for x in changes]));
+                            }
+                            if sim_result["failure"] {
+                                render_narrative("Failed", failure_detail);
+                            }
+                        } else {
+                            <div style={EMPTY_STATE}>
+                                Select a design run to read the analysis.
                             </div>;
                         }
-                    }
+
+                        <button
+                            type="button"
+                            className="sf-disclosure"
+                            onClick={toggle_params}
+                            style={({"marginTop": 8, **PANEL_SECTION_DIVIDER}) as dict[str, object]}
+                        >
+                            {params_label}
+                        </button>
+                        if params_open and config {
+                            render_panel_row("Shell mass", f"{fmt_number(config['shell_mass_kg'], 0)} kg");
+                            if config["propulsion"] {
+                                render_panel_row("Fuel cap", f"{fmt_number(config['propulsion']['fuel_capacity_kg'], 0)} kg");
+                                render_panel_row("Efficiency", fmt_number(config["propulsion"]["propulsive_efficiency"], 2));
+                                render_panel_row("Drag coeff", fmt_number(config["propulsion"]["hull_drag_coeff"], 4));
+                            }
+                            for (index, zone_raw) in enumerate(displayed_zones) {
+                                zone: any = zone_raw;
+                                zone_key = zone["zone_key"] if zone["zone_key"] else (zone["zone"] if zone["zone"] else index);
+                                <div
+                                    key={f"{zone_key}-{index}"}
+                                    style={{
+                                        "padding": "6px 14px 7px",
+                                        "fontFamily": "'Courier New', monospace",
+                                        "fontSize": 13,
+                                        "lineHeight": 1.35,
+                                        "color": "rgba(0,0,0,0.85)"
+                                    }}
+                                >
+                                    <div style={{
+                                        "color": "rgba(0,0,0,0.85)",
+                                        "marginBottom": 3,
+                                        "whiteSpace": "nowrap",
+                                        "overflow": "hidden",
+                                        "textOverflow": "ellipsis"
+                                    }}>
+                                        {zone["zone"] if zone["zone"] else "Component"}
+                                    </div>
+                                    <div style={{
+                                        "display": "grid",
+                                        "gridTemplateColumns": "70px 1fr",
+                                        "gap": 6,
+                                        "color": "rgba(0,0,0,0.55)"
+                                    }}>
+                                        <span title="Material">MAT</span>
+                                        <span>{zone["material_label"] if zone["material_label"] else (zone["material"] if zone["material"] else "—")}</span>
+                                        <span title="Thickness">THK</span>
+                                        <span>{fmt_number(zone["thickness_mm"])} mm</span>
+                                        <span title="Weld quality">WLD</span>
+                                        <span>{zone["weld_label"] if zone["weld_label"] else (zone["weld_quality"] if zone["weld_quality"] else "—")}</span>
+                                        <span title="Seal quality">SEL</span>
+                                        <span>{zone["seal_label"] if zone["seal_label"] else (zone["seal_quality"] if zone["seal_quality"] else "—")}</span>
+                                    </div>
+                                </div>;
+                            }
+                        }
+                    </div>
                 </div>
             </div>;
         }}
@@ -1258,17 +1419,18 @@ def:pub page() -> JsxPage {
         <div style={{
             "position": "absolute",
             "bottom": 24,
-            "left": "50%",
+            "left": playback_center,
             "transform": "translateX(-50%)",
             "display": "flex",
             "flexDirection": "column",
             "alignItems": "center",
-            "userSelect": "none"
+            "userSelect": "none",
+            "transition": "left 220ms ease"
         }}>
             <div style={({
                 **cell,
-                "width": 108,
-                "height": 28,
+                "width": 120,
+                "height": 32,
                 "marginBottom": -1,
                 "fontSize": 10,
                 "fontWeight": 700,
@@ -1279,14 +1441,14 @@ def:pub page() -> JsxPage {
                 {active_day_label}
             </div>
 
-            <div style={{"display": "flex", "width": 108}}>
+            <div style={{"display": "flex", "width": 120}}>
                 <button
                     onClick={step_back}
                     disabled={not can_step_back}
                     aria-label="Step back"
                     style={({
                         **cell,
-                        "width": 36,
+                        "width": 40,
                         "marginRight": -1,
                         "fontSize": 13,
                         "fontWeight": 700,
@@ -1300,7 +1462,7 @@ def:pub page() -> JsxPage {
 
                 <div style={({
                     **cell,
-                    "width": 36,
+                    "width": 40,
                     "fontSize": 10,
                     "fontWeight": 700,
                     "letterSpacing": "0.06em",
@@ -1316,7 +1478,7 @@ def:pub page() -> JsxPage {
                     aria-label="Step forward"
                     style={({
                         **cell,
-                        "width": 36,
+                        "width": 40,
                         "marginLeft": -1,
                         "fontSize": 13,
                         "fontWeight": 700,
@@ -1329,14 +1491,14 @@ def:pub page() -> JsxPage {
                 </button>
             </div>
             <div style={{
-                "marginTop": 6,
+                "marginTop": 5,
                 "fontFamily": "'Courier New', monospace",
-                "fontSize": 9,
-                "letterSpacing": "0.04em",
-                "color": "rgba(0,0,0,0.45)",
+                "fontSize": 8,
+                "letterSpacing": "0.03em",
+                "color": "rgba(0,0,0,0.32)",
                 "textTransform": "uppercase"
             }}>
-                left/right step · up/down speed
+                arrows step · up/down speed
             </div>
         </div>
 
@@ -1344,7 +1506,7 @@ def:pub page() -> JsxPage {
             <div style={{
                 "position": "absolute",
                 "bottom": 16,
-                "left": (sidebar_width + 12) if sidebar_open else (COLLAPSED_RAIL_WIDTH + 12),
+                "left": effective_sidebar_w + 12,
                 "maxWidth": 360,
                 "padding": "10px 12px",
                 "background": "rgba(180,35,24,0.10)",

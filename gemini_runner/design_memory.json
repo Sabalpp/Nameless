@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "scope": "global",
-  "updated_at": "2026-07-26T22:27:15.515438Z",
+  "updated_at": "2026-07-26T22:54:02.398090Z",
   "missions": {
     "params": {
-      "runs_seen": 500,
-      "successes_seen": 500,
+      "runs_seen": 650,
+      "successes_seen": 650,
       "failures_seen": 0,
       "best_survivor_cost_usd": 5977800,
       "best_survivor_summary": {
@@ -355,46 +355,1520 @@
       "component_lessons": {},
       "strategy_stats": {
         "explore:targeted_reinforcement": {
-          "runs": 90,
-          "successes": 90,
+          "runs": 117,
+          "successes": 117,
           "best_cost_usd": 5977800,
           "best_potential_score": 40.0
         },
         "explore:weld_quality_path": {
-          "runs": 80,
-          "successes": 80,
+          "runs": 104,
+          "successes": 104,
           "best_cost_usd": 6806936,
           "best_potential_score": 40.0
         },
         "explore:material_substitution": {
-          "runs": 80,
-          "successes": 80,
+          "runs": 104,
+          "successes": 104,
           "best_cost_usd": 6709130,
           "best_potential_score": 40.0
         },
         "explore:lightweight_composite_path": {
-          "runs": 80,
-          "successes": 80,
+          "runs": 104,
+          "successes": 104,
           "best_cost_usd": 6175419,
           "best_potential_score": 40.0
         },
         "explore:fuel_drag_tradeoff": {
-          "runs": 80,
-          "successes": 80,
+          "runs": 104,
+          "successes": 104,
           "best_cost_usd": 8546711,
           "best_potential_score": 40.0
         },
         "explore:cost_cut_from_best": {
-          "runs": 80,
-          "successes": 80,
+          "runs": 104,
+          "successes": 104,
           "best_cost_usd": 6233875,
           "best_potential_score": 40.0
         },
         "gemini": {
-          "runs": 10,
-          "successes": 10,
+          "runs": 13,
+          "successes": 13,
           "best_cost_usd": 6694903,
           "best_potential_score": 40.0
+        }
+      }
+    },
+    "01_north_atlantic_sprint": {
+      "runs_seen": 51,
+      "successes_seen": 0,
+      "failures_seen": 51,
+      "best_survivor_cost_usd": null,
+      "best_survivor_summary": null,
+      "best_potential_score": 41.7,
+      "lessons": [
+        {
+          "iteration": 50,
+          "status": "failed",
+          "strategy": "gemini",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 49,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 48,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 47,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 46,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 45,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 44,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 43,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 42,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 41,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 40,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 39,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 38,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 37,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 36,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 35,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29346890,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 34,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 29180206,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 33,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 28814985,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 32,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 28434010,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 31,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 28099807,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 30,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 27806652,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 29,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 27549495,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 28,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 27323918,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        },
+        {
+          "iteration": 27,
+          "status": "failed",
+          "strategy": "emergency-survival-escalation",
+          "cost_usd": 27126035,
+          "completion_pct": 41.3,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 41% completion."
+        }
+      ],
+      "component_lessons": {
+        "Keel": [
+          {
+            "iteration": 17,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 39.5,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 75.03,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 14,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 25.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 42.88,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 12,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 10.7,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 24.5,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 9,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 3.6,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 14.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 2,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 1,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          },
+          {
+            "iteration": 1,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "gemini",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Side Plating": [
+          {
+            "iteration": 15,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 25.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Side Plating \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SidePlating",
+              "material": "Eh36",
+              "thickness_mm": 14.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 11,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 8.9,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Side Plating \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SidePlating",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 3,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Side Plating \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SidePlating",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Bow Flare": [
+          {
+            "iteration": 50,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "gemini",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 49,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 48,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 47,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 46,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 45,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 44,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 43,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 41.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 100.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          }
+        ],
+        "Stern Plate": [
+          {
+            "iteration": 6,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Stern Plate \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SternPlate",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Transom Frame": [
+          {
+            "iteration": 7,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Weather Deck": [
+          {
+            "iteration": 8,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "emergency-survival-escalation",
+            "completion_pct": 1.8,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Weather Deck \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "WeatherDeck",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ]
+      },
+      "strategy_stats": {
+        "gemini": {
+          "runs": 2,
+          "successes": 0,
+          "best_cost_usd": 7628212,
+          "best_potential_score": 41.7
+        },
+        "local-material-repair-fallback": {
+          "runs": 17,
+          "successes": 0,
+          "best_cost_usd": 7628212,
+          "best_potential_score": 41.7
+        },
+        "emergency-survival-escalation": {
+          "runs": 32,
+          "successes": 0,
+          "best_cost_usd": 14115815,
+          "best_potential_score": 41.7
+        }
+      }
+    },
+    "03_persian_gulf_patrol": {
+      "runs_seen": 50,
+      "successes_seen": 21,
+      "failures_seen": 29,
+      "best_survivor_cost_usd": 15616840,
+      "best_survivor_summary": {
+        "iteration": 31,
+        "strategy": "explore:targeted_reinforcement",
+        "cost_usd": 15616840,
+        "propulsion": {
+          "max_power_kw": 233.60640000000004,
+          "fuel_capacity_kg": 1272.112,
+          "sfc_g_per_kwh": 220.0,
+          "propulsive_efficiency": 0.72,
+          "hull_drag_coeff": 0.007
+        },
+        "zones": [
+          {
+            "zone": "Keel",
+            "material": "Eh36",
+            "thickness_mm": 23.05,
+            "weld_quality": "Standard",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "BilgeStrake",
+            "material": "Eh36",
+            "thickness_mm": 24.5,
+            "weld_quality": "Premium",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "BottomPlating",
+            "material": "MildSteelA",
+            "thickness_mm": 40.91,
+            "weld_quality": "Economy",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "SidePlating",
+            "material": "Eh36",
+            "thickness_mm": 14.0,
+            "weld_quality": "Premium",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "BowFlare",
+            "material": "Aluminum5083",
+            "thickness_mm": 16.93,
+            "weld_quality": "Premium",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "SternPlate",
+            "material": "Eh36",
+            "thickness_mm": 14.0,
+            "weld_quality": "Premium",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "TransomFrame",
+            "material": "MildSteelA",
+            "thickness_mm": 13.36,
+            "weld_quality": "Standard",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "WeatherDeck",
+            "material": "Eh36",
+            "thickness_mm": 14.0,
+            "weld_quality": "Premium",
+            "seal_quality": "Marine"
+          },
+          {
+            "zone": "BulkheadFrame",
+            "material": "MildSteelA",
+            "thickness_mm": 15.68,
+            "weld_quality": "Standard",
+            "seal_quality": "Marine"
+          }
+        ]
+      },
+      "best_potential_score": 112.0,
+      "lessons": [
+        {
+          "iteration": 50,
+          "status": "failed",
+          "strategy": "gemini",
+          "cost_usd": 15963832,
+          "completion_pct": 63.2,
+          "failed_part": "Bulkhead Frame",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bulkhead Frame failed by fatigue at 63% completion."
+        },
+        {
+          "iteration": 49,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 14687009,
+          "completion_pct": 61.6,
+          "failed_part": "Transom Frame",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Transom Frame failed by fatigue at 62% completion."
+        },
+        {
+          "iteration": 48,
+          "status": "survived",
+          "strategy": "explore:cost_cut_from_best",
+          "cost_usd": 15880167,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $15880167; use it as a cost ceiling."
+        },
+        {
+          "iteration": 47,
+          "status": "survived",
+          "strategy": "explore:fuel_drag_tradeoff",
+          "cost_usd": 26823326,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $26823326; use it as a cost ceiling."
+        },
+        {
+          "iteration": 46,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 15641189,
+          "completion_pct": 98.9,
+          "failed_part": "Keel",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Keel failed by fatigue at 99% completion."
+        },
+        {
+          "iteration": 45,
+          "status": "survived",
+          "strategy": "explore:material_substitution",
+          "cost_usd": 17283884,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $17283884; use it as a cost ceiling."
+        },
+        {
+          "iteration": 44,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 15963832,
+          "completion_pct": 63.2,
+          "failed_part": "Bulkhead Frame",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bulkhead Frame failed by fatigue at 63% completion."
+        },
+        {
+          "iteration": 43,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 14687009,
+          "completion_pct": 61.6,
+          "failed_part": "Transom Frame",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Transom Frame failed by fatigue at 62% completion."
+        },
+        {
+          "iteration": 42,
+          "status": "survived",
+          "strategy": "explore:cost_cut_from_best",
+          "cost_usd": 15880167,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $15880167; use it as a cost ceiling."
+        },
+        {
+          "iteration": 41,
+          "status": "survived",
+          "strategy": "explore:fuel_drag_tradeoff",
+          "cost_usd": 26823326,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $26823326; use it as a cost ceiling."
+        },
+        {
+          "iteration": 40,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 15641189,
+          "completion_pct": 98.9,
+          "failed_part": "Keel",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Keel failed by fatigue at 99% completion."
+        },
+        {
+          "iteration": 39,
+          "status": "survived",
+          "strategy": "explore:material_substitution",
+          "cost_usd": 17283884,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $17283884; use it as a cost ceiling."
+        },
+        {
+          "iteration": 38,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 15963832,
+          "completion_pct": 63.2,
+          "failed_part": "Bulkhead Frame",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bulkhead Frame failed by fatigue at 63% completion."
+        },
+        {
+          "iteration": 37,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 14687009,
+          "completion_pct": 61.6,
+          "failed_part": "Transom Frame",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Transom Frame failed by fatigue at 62% completion."
+        },
+        {
+          "iteration": 36,
+          "status": "survived",
+          "strategy": "explore:cost_cut_from_best",
+          "cost_usd": 15880167,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $15880167; use it as a cost ceiling."
+        },
+        {
+          "iteration": 35,
+          "status": "survived",
+          "strategy": "explore:fuel_drag_tradeoff",
+          "cost_usd": 25017410,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $25017410; use it as a cost ceiling."
+        },
+        {
+          "iteration": 34,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 23262714,
+          "completion_pct": 94.9,
+          "failed_part": "Keel",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Keel failed by fatigue at 95% completion."
+        },
+        {
+          "iteration": 33,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 16619531,
+          "completion_pct": 86.2,
+          "failed_part": "Bow Flare",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Bow Flare failed by fatigue at 86% completion."
+        },
+        {
+          "iteration": 32,
+          "status": "survived",
+          "strategy": "explore:weld_quality_path",
+          "cost_usd": 16425002,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $16425002; use it as a cost ceiling."
+        },
+        {
+          "iteration": 31,
+          "status": "survived",
+          "strategy": "explore:targeted_reinforcement",
+          "cost_usd": 15616840,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $15616840; use it as a cost ceiling."
+        },
+        {
+          "iteration": 30,
+          "status": "survived",
+          "strategy": "explore:cost_cut_from_best",
+          "cost_usd": 18023942,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $18023942; use it as a cost ceiling."
+        },
+        {
+          "iteration": 29,
+          "status": "survived",
+          "strategy": "explore:fuel_drag_tradeoff",
+          "cost_usd": 29096818,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $29096818; use it as a cost ceiling."
+        },
+        {
+          "iteration": 28,
+          "status": "failed",
+          "strategy": "local-material-repair-fallback",
+          "cost_usd": 17742097,
+          "completion_pct": 98.9,
+          "failed_part": "Keel",
+          "failed_metric": "fatigue",
+          "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+          "takeaway": "Keel failed by fatigue at 99% completion."
+        },
+        {
+          "iteration": 27,
+          "status": "survived",
+          "strategy": "explore:material_substitution",
+          "cost_usd": 17717748,
+          "completion_pct": 100.0,
+          "failed_part": null,
+          "failed_metric": null,
+          "root_cause": null,
+          "takeaway": "Configuration survived at $17717748; use it as a cost ceiling."
+        }
+      ],
+      "component_lessons": {
+        "Keel": [
+          {
+            "iteration": 46,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 98.9,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Aluminum5083",
+              "thickness_mm": 25.82,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 40,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 98.9,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Aluminum5083",
+              "thickness_mm": 25.82,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 34,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 94.9,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 21.21,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 28,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 98.9,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Aluminum5083",
+              "thickness_mm": 25.82,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 22,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 98.9,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Aluminum5083",
+              "thickness_mm": 25.82,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 11,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 69.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 14.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 8,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 14.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 1,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 2.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Keel \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "Keel",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Bow Flare": [
+          {
+            "iteration": 33,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 86.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Aluminum5083",
+              "thickness_mm": 15.58,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 9,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 22.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 2,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 2.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bow Flare \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BowFlare",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Stern Plate": [
+          {
+            "iteration": 12,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 69.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Stern Plate \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SternPlate",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 3,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 2.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Stern Plate \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SternPlate",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Weather Deck": [
+          {
+            "iteration": 10,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 57.6,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Weather Deck \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "WeatherDeck",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 4,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 2.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Weather Deck \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "WeatherDeck",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Side Plating": [
+          {
+            "iteration": 13,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 94.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Side Plating \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SidePlating",
+              "material": "Eh36",
+              "thickness_mm": 8.0,
+              "weld_quality": "Premium",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 5,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 4.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Side Plating \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "SidePlating",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Transom Frame": [
+          {
+            "iteration": 49,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 61.6,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 11.22,
+              "weld_quality": "Economy",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 43,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 61.6,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 11.22,
+              "weld_quality": "Economy",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 37,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 61.6,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 11.22,
+              "weld_quality": "Economy",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 25,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 73.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 9.09,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 19,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 24.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 6.18,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 6,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 4.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Transom Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "TransomFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ],
+        "Bulkhead Frame": [
+          {
+            "iteration": 50,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "gemini",
+            "completion_pct": 63.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BulkheadFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 13.17,
+              "weld_quality": "Economy",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 44,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 63.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BulkheadFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 13.17,
+              "weld_quality": "Economy",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 38,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 63.2,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BulkheadFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 13.17,
+              "weld_quality": "Economy",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 26,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 77.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BulkheadFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 10.67,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 20,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 26.3,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BulkheadFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 7.26,
+              "weld_quality": "Standard",
+              "seal_quality": "Marine"
+            }
+          },
+          {
+            "iteration": 7,
+            "status": "failed",
+            "metric": "fatigue",
+            "strategy": "local-material-repair-fallback",
+            "completion_pct": 4.0,
+            "root_cause": "Miner's cumulative damage reached 1.00 at Bulkhead Frame \u2014 weld toe cracking likely. S-N curve exhausted by repeated wave loading.",
+            "zone_config": {
+              "zone": "BulkheadFrame",
+              "material": "MildSteelA",
+              "thickness_mm": 4.0,
+              "weld_quality": "Economy",
+              "seal_quality": "Economy"
+            }
+          }
+        ]
+      },
+      "strategy_stats": {
+        "local-material-repair-fallback": {
+          "runs": 28,
+          "successes": 0,
+          "best_cost_usd": 7628212,
+          "best_potential_score": 83.2
+        },
+        "explore:weld_quality_path": {
+          "runs": 2,
+          "successes": 2,
+          "best_cost_usd": 16425002,
+          "best_potential_score": 112.0
+        },
+        "explore:material_substitution": {
+          "runs": 5,
+          "successes": 5,
+          "best_cost_usd": 17283884,
+          "best_potential_score": 112.0
+        },
+        "explore:lightweight_composite_path": {
+          "runs": 1,
+          "successes": 1,
+          "best_cost_usd": 20536068,
+          "best_potential_score": 112.0
+        },
+        "explore:fuel_drag_tradeoff": {
+          "runs": 6,
+          "successes": 6,
+          "best_cost_usd": 24862540,
+          "best_potential_score": 112.0
+        },
+        "explore:cost_cut_from_best": {
+          "runs": 6,
+          "successes": 6,
+          "best_cost_usd": 15880167,
+          "best_potential_score": 112.0
+        },
+        "explore:targeted_reinforcement": {
+          "runs": 1,
+          "successes": 1,
+          "best_cost_usd": 15616840,
+          "best_potential_score": 112.0
+        },
+        "gemini": {
+          "runs": 1,
+          "successes": 0,
+          "best_cost_usd": 15963832,
+          "best_potential_score": 57.5
         }
       }
     }

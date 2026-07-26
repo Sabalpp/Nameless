@@ -285,6 +285,17 @@ def gemini_api_key_present() -> bool {
 # Campaign / Iteration / DesignMemory CRUD
 # ---------------------------------------------------------------------------
 
+"""Normalize graph spawn results — some runtimes return a list, others the node."""
+def:priv _spawned_node(created: any) -> any {
+    if isinstance(created, list) {
+        if len(created) > 0 {
+            return created[0];
+        }
+        return None;
+    }
+    return created;
+}
+
 """Create a Campaign (+ empty DesignMemory) under root. Returns the Campaign."""
 def create_campaign(
     mission_id: str,
@@ -294,22 +305,23 @@ def create_campaign(
     run_id: str
 ) -> Campaign {
     started = iso_now();
-    created = root ++> Campaign(
-        mission_id=mission_id,
-        tier=tier,
-        model=model,
-        status="running",
-        started_at=started,
-        completed_at=None,
-        max_iterations=max_iterations,
-        stopped=False
-    );
-    campaign = created[0] as Campaign;
+    campaign = _spawned_node(
+        root ++> Campaign(
+            mission_id=mission_id,
+            tier=tier,
+            model=model,
+            status="running",
+            started_at=started,
+            completed_at=None,
+            max_iterations=max_iterations,
+            stopped=False
+        )
+    ) as Campaign;
 
     # Persist logical run_id on DesignMemory.campaign_id (types.jac has no run_id field).
-    mem_list = root ++> DesignMemory(lessons=[], campaign_id=run_id);
-    memory = mem_list[0] as DesignMemory;
-    campaign ++> memory;
+    _ = _spawned_node(
+        campaign ++> DesignMemory(lessons=[], campaign_id=run_id)
+    );
 
     return campaign;
 }
@@ -364,7 +376,7 @@ def store_iteration(
         eval_data=eval_data,
         created_at=iso_now()
     );
-    return created[0] as Iteration;
+    return _spawned_node(created) as Iteration;
 }
 
 def complete_campaign(campaign: Campaign, status: str = "completed") {

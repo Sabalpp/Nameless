@@ -4,6 +4,22 @@ import "../assets/styles.css";
 import from "react" { useEffect }
 import from "../components/HullDiagram.jsx" { default as HullDiagram }
 import from ..components.missions { MISSIONS }
+import from ..components.panel {
+    CELL_STYLE,
+    COLLAPSED_RAIL_WIDTH,
+    EMPTY_STATE,
+    INSPECTOR_WIDTH,
+    PANEL_HEADER_STYLE,
+    PANEL_LABEL,
+    PANEL_ROW,
+    PANEL_SECTION_DIVIDER,
+    PANEL_SECTION_TITLE,
+    PANEL_VALUE,
+    PANEL_WRAPPED_VALUE,
+    SIDEBAR_WIDTH,
+    SPINE_STEP_TITLE,
+    list_item_style
+}
 sv import from ..api {
     api_simulations,
     api_gemini_status,
@@ -170,7 +186,8 @@ def:pub page() -> JsxPage {
     has running_campaign_id: any = None;
     has running_campaign_started_at: any = None;
     has gemini_dot_count: int = 0;
-    has panel_open: bool = False;
+    has sidebar_open: bool = True;
+    has conditions_open: bool = False;
     has gemini_dot_ref: Ref[int] = Ref(0);
 
     has tick_position_ref: Ref[float] = Ref(0.0);
@@ -764,78 +781,15 @@ def:pub page() -> JsxPage {
         set_displayed_tick_position(Math.min(playback_max_position, float(Math.round(cur_fwd)) + 1.0));
     }
 
-    cell: dict[str, object] = {
-        "fontFamily": "'Courier New', monospace",
-        "background": "#C3C4CA",
-        "border": "1px solid rgba(0,0,0,0.13)",
-        "display": "flex",
-        "alignItems": "center",
-        "justifyContent": "center",
-        "height": 28,
-        "lineHeight": 1
-    };
-    panel_section_title: dict[str, object] = {
-        "padding": "10px 14px 6px",
-        "fontFamily": "'Courier New', monospace",
-        "fontSize": 8.5,
-        "fontWeight": 700,
-        "letterSpacing": "0.12em",
-        "textTransform": "uppercase",
-        "color": "rgba(0,0,0,0.36)",
-        "whiteSpace": "nowrap"
-    };
-    panel_row: dict[str, object] = {
-        "display": "grid",
-        "gridTemplateColumns": "86px 1fr",
-        "gap": 8,
-        "padding": "3px 14px",
-        "fontFamily": "'Courier New', monospace",
-        "fontSize": 10,
-        "lineHeight": 1.25,
-        "color": "rgba(0,0,0,0.70)"
-    };
-    panel_label: dict[str, object] = {
-        "color": "rgba(0,0,0,0.38)",
-        "textTransform": "uppercase",
-        "overflow": "hidden",
-        "textOverflow": "ellipsis",
-        "whiteSpace": "nowrap"
-    };
-    panel_value: dict[str, object] = {
-        "overflow": "hidden",
-        "textOverflow": "ellipsis",
-        "whiteSpace": "nowrap"
-    };
-    panel_wrapped_value: dict[str, object] = {
-        "overflow": "visible",
-        "textOverflow": "clip",
-        "whiteSpace": "normal",
-        "overflowWrap": "anywhere",
-        "wordBreak": "normal"
-    };
-    panel_column_width: int = 280;
-    expanded_panel_width: int = panel_column_width * 2;
-    panel_header_style: dict[str, object] = {
-        "padding": "10px 14px 8px",
-        "fontFamily": "'Courier New', monospace",
-        "fontSize": 9,
-        "fontWeight": 700,
-        "letterSpacing": "0.12em",
-        "textTransform": "uppercase",
-        "color": "rgba(0,0,0,0.35)",
-        "whiteSpace": "nowrap",
-        "borderBottom": "1px solid rgba(0,0,0,0.08)"
-    };
-    panel_section_divider: dict[str, object] = {
-        "borderTop": "1px solid rgba(0,0,0,0.10)",
-        "paddingTop": 8
-    };
-    panel_footer_height: int = 62;
+    cell: dict[str, object] = CELL_STYLE;
+    sidebar_width: int = SIDEBAR_WIDTH;
+    inspector_width: int = INSPECTOR_WIDTH;
+    has_results: bool = len(visible_campaigns) > 0 or running_gemini;
 
     def render_panel_row(label: str, value: any, wrap: bool = False) -> JsxElement {
-        value_style: dict[str, object] = ({**panel_value, **panel_wrapped_value} if wrap else panel_value) as dict[str, object];
-        return <div style={panel_row}>
-            <span style={panel_label}>{label}</span>
+        value_style: dict[str, object] = ({**PANEL_VALUE, **PANEL_WRAPPED_VALUE} if wrap else PANEL_VALUE) as dict[str, object];
+        return <div style={PANEL_ROW}>
+            <span style={PANEL_LABEL}>{label}</span>
             <span style={value_style}>{value if value is not None else "—"}</span>
         </div>;
     }
@@ -849,11 +803,18 @@ def:pub page() -> JsxPage {
         };
     }
 
-    def on_panel_enter(e: MouseEvent) -> None { panel_open = True; }
-    def on_panel_leave(e: MouseEvent) -> None { panel_open = False; }
-
+    def toggle_sidebar(e: MouseEvent) -> None { sidebar_open = not sidebar_open; }
+    def toggle_conditions(e: MouseEvent) -> None { conditions_open = not conditions_open; }
     def on_run_gemini(e: MouseEvent) -> None { run_gemini_simulations(); }
     def on_stop_gemini(e: MouseEvent) -> None { stop_gemini_simulations(); }
+
+    optimize_label = (
+        "Optimizing" + dots(gemini_dot_count)
+        if running_gemini
+        else ("Select a mission to begin" if not selected_mission else "Optimize Design")
+    );
+    conditions_label = ("▼ " if conditions_open else "▶ ") + "Conditions";
+    sidebar_toggle_label = "Minimize sidebar" if sidebar_open else "Expand sidebar";
 
     return <div style={{
         "width": "100vw",
@@ -873,50 +834,78 @@ def:pub page() -> JsxPage {
         <div
             style={{
                 "position": "absolute",
-                "top": 0 if panel_open else 12,
-                "left": 0 if panel_open else 12,
-                "width": expanded_panel_width if panel_open else 36,
-                "height": "100vh" if panel_open else 28,
-                "background": "#C3C4CA",
-                "border": "1px solid rgba(0,0,0,0.13)",
-                "overflow": "hidden",
-                "zIndex": 10,
-                "transition": "top 220ms ease, left 220ms ease, width 220ms ease, height 220ms ease"
-            }}
-            onMouseEnter={on_panel_enter}
-            onMouseLeave={on_panel_leave}
-        >
-            <div style={{
-                "position": "absolute",
                 "top": 0,
                 "left": 0,
-                "width": 36,
-                "height": 28,
-                "display": "flex",
-                "alignItems": "center",
-                "justifyContent": "center",
-                "opacity": 0 if panel_open else 1,
-                "transition": "opacity 120ms ease",
-                "pointerEvents": "none"
-            }}>
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-                    <rect y="0" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
-                    <rect y="4.25" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
-                    <rect y="8.5" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
-                </svg>
-            </div>
+                "width": sidebar_width if sidebar_open else COLLAPSED_RAIL_WIDTH,
+                "height": "100vh",
+                "background": "#C3C4CA",
+                "borderRight": "1px solid rgba(0,0,0,0.13)",
+                "overflow": "hidden",
+                "zIndex": 10,
+                "transition": "width 220ms ease"
+            }}
+        >
+            <button
+                type="button"
+                onClick={toggle_sidebar}
+                aria-label={sidebar_toggle_label}
+                style={{
+                    "position": "absolute",
+                    "top": 0,
+                    "left": 0,
+                    "width": COLLAPSED_RAIL_WIDTH,
+                    "height": 28,
+                    "display": "flex",
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "background": "transparent",
+                    "border": "none",
+                    "cursor": "pointer",
+                    "zIndex": 2
+                }}
+            >
+                {if sidebar_open {
+                    <span style={{
+                        "fontFamily": "'Courier New', monospace",
+                        "fontSize": 12,
+                        "color": "rgba(0,0,0,0.55)"
+                    }}>
+                        {"❮"}
+                    </span>;
+                } else {
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                        <rect y="0" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
+                        <rect y="4.25" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
+                        <rect y="8.5" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
+                    </svg>;
+                }}
+            </button>
 
             <div style={{
-                "opacity": 1 if panel_open else 0,
-                "transition": "opacity 160ms ease 60ms",
-                "width": expanded_panel_width,
+                "opacity": 1 if sidebar_open else 0,
+                "pointerEvents": "auto" if sidebar_open else "none",
+                "transition": "opacity 160ms ease",
+                "width": sidebar_width,
                 "height": "100%",
-                "display": "grid",
-                "gridTemplateColumns": f"{panel_column_width}px {panel_column_width}px"
+                "display": "flex",
+                "flexDirection": "column"
             }}>
-                <div className="no-scrollbar" style={{"minWidth": 0, "overflowY": "auto", "paddingBottom": panel_footer_height}}>
+                <div style={{
+                    "padding": "8px 14px 8px 36px",
+                    "fontFamily": "'Courier New', monospace",
+                    "fontSize": 11,
+                    "fontWeight": 700,
+                    "letterSpacing": "0.16em",
+                    "textTransform": "uppercase",
+                    "color": "rgba(0,0,0,0.72)",
+                    "borderBottom": "1px solid rgba(0,0,0,0.08)"
+                }}>
+                    SEAFORGE
+                </div>
+
+                <div className="no-scrollbar" style={{"flex": 1, "overflowY": "auto"}}>
+                    <div style={SPINE_STEP_TITLE}>01 Mission</div>
                     <div style={{"flexShrink": 0}}>
-                        <div style={panel_header_style}>Missions</div>
                         {for m in mission_list {
                             is_selected = selected_mission and selected_mission["id"] == m["id"];
                             <div
@@ -924,23 +913,17 @@ def:pub page() -> JsxPage {
                                 onClick={lambda (e: MouseEvent) -> None {
                                     selected_simulation_id = None;
                                     selected_mission = None if is_selected else m;
+                                    conditions_open = False if is_selected else True;
                                 }}
                                 style={{
-                                    "padding": "7px 14px",
-                                    "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 10,
-                                    "letterSpacing": "0.02em",
-                                    "whiteSpace": "nowrap",
-                                    "cursor": "pointer",
-                                    "color": "rgba(0,0,0,0.82)" if is_selected else "rgba(0,0,0,0.55)",
-                                    "background": "rgba(0,0,0,0.06)" if is_selected else "transparent",
-                                    "borderBottom": "1px solid rgba(0,0,0,0.06)",
+                                    **list_item_style(is_selected),
                                     "display": "flex",
                                     "alignItems": "baseline",
-                                    "gap": 8
+                                    "gap": 8,
+                                    "whiteSpace": "nowrap"
                                 }}
                             >
-                                <span style={{"color": "rgba(0,0,0,0.25)", "fontSize": 9}}>
+                                <span style={{"color": "rgba(0,0,0,0.35)", "fontSize": 10}}>
                                     {str(m["id"]).split("_")[0]}
                                 </span>
                                 {m["name"]}
@@ -948,96 +931,145 @@ def:pub page() -> JsxPage {
                         }}
                     </div>
 
-                    <div style={{"borderTop": "1px solid rgba(0,0,0,0.08)"}}>
-                        <div style={panel_section_title}>Mission Brief</div>
-                        {if mission_brief {
-                            render_panel_row("Mission", mission_brief["name"], True);
-                            if mission_brief["objective"] {
-                                render_panel_row("Objective", mission_brief["objective"], True);
+                    {if mission_brief {
+                        <div style={{"borderTop": "1px solid rgba(0,0,0,0.08)"}}>
+                            <button
+                                type="button"
+                                onClick={toggle_conditions}
+                                style={{
+                                    "width": "100%",
+                                    "padding": "8px 14px",
+                                    "fontFamily": "'Courier New', monospace",
+                                    "fontSize": 10,
+                                    "fontWeight": 700,
+                                    "letterSpacing": "0.08em",
+                                    "textTransform": "uppercase",
+                                    "textAlign": "left",
+                                    "color": "rgba(0,0,0,0.55)",
+                                    "background": "transparent",
+                                    "border": "none",
+                                    "cursor": "pointer"
+                                }}
+                            >
+                                {conditions_label}
+                            </button>
+                            if conditions_open {
+                                render_panel_row("Mission", mission_brief["name"], True);
+                                if mission_brief["objective"] {
+                                    render_panel_row("Objective", mission_brief["objective"], True);
+                                }
+                                render_panel_row(
+                                    "Physics",
+                                    js_replace(
+                                        str(mission_brief["primary_stressor"] if mission_brief["primary_stressor"] else ""),
+                                        "_",
+                                        "g",
+                                        " "
+                                    ),
+                                    True
+                                );
+                                failure_modes = mission_brief["failure_modes_under_test"] if mission_brief["failure_modes_under_test"] else [];
+                                render_panel_row("Failure", ", ".join([str(x) for x in failure_modes]) if failure_modes and len(failure_modes as list) > 0 else "—", True);
+                                render_panel_row("Waves", fmt_range(env["wave_height_m"] if env else None, "m"));
+                                render_panel_row("Wind", mission_factor("—"));
+                                render_panel_row("Slamming", mission_factor(env["slamming_probability"] if env and env["slamming_probability"] else "—"));
+                                render_panel_row("Water", mission_factor(fmt_range(env["water_temp_c"] if env else None, "°C")));
+                                render_panel_row("Ice", mission_factor(env["ice_accretion_risk"] if env and env["ice_accretion_risk"] else "—"));
+                                render_panel_row("Salinity", mission_factor(f"{fmt_number(env['salinity_ppt'] if env else None)} ppt"));
+                                render_panel_row("pH", mission_factor(fmt_number(env["ph"] if env else None, 2)));
                             }
-                            render_panel_row(
-                                "Physics",
-                                js_replace(
-                                    str(mission_brief["primary_stressor"] if mission_brief["primary_stressor"] else ""),
-                                    "_",
-                                    "g",
-                                    " "
-                                ),
-                                True
-                            );
-                            failure_modes = mission_brief["failure_modes_under_test"] if mission_brief["failure_modes_under_test"] else [];
-                            render_panel_row("Failure", ", ".join([str(x) for x in failure_modes]) if failure_modes and len(failure_modes as list) > 0 else "—", True);
-                            render_panel_row("Waves", fmt_range(env["wave_height_m"] if env else None, "m"));
-                            render_panel_row("Wind", mission_factor("—"));
-                            render_panel_row("Slamming", mission_factor(env["slamming_probability"] if env and env["slamming_probability"] else "—"));
-                            render_panel_row("Water", mission_factor(fmt_range(env["water_temp_c"] if env else None, "°C")));
-                            render_panel_row("Ice", mission_factor(env["ice_accretion_risk"] if env and env["ice_accretion_risk"] else "—"));
-                            render_panel_row("Salinity", mission_factor(f"{fmt_number(env['salinity_ppt'] if env else None)} ppt"));
-                            render_panel_row("pH", mission_factor(fmt_number(env["ph"] if env else None, 2)));
-                        } else {
-                            <div style={({**panel_row, "display": "block", "color": "rgba(0,0,0,0.42)"}) as dict[str, object]}>
-                                Select a mission.
-                            </div>;
+                        </div>;
+                    } else {
+                        <div style={EMPTY_STATE}>
+                            Pick a mission above to see its conditions.
+                        </div>;
+                    }}
+
+                    <div style={({**SPINE_STEP_TITLE, **PANEL_SECTION_DIVIDER}) as dict[str, object]}>02 Optimize</div>
+                    <div style={({"padding": "0 14px 14px", "display": "flex"} if running_gemini else {"padding": "0 14px 14px"}) as dict[str, object]}>
+                        <button
+                            type="button"
+                            onClick={on_run_gemini}
+                            disabled={running_gemini or not selected_mission}
+                            style={{
+                                "width": "63%" if running_gemini else "100%",
+                                "height": 40,
+                                "fontFamily": "'Courier New', monospace",
+                                "fontSize": 11,
+                                "fontWeight": 700,
+                                "letterSpacing": "0.06em",
+                                "textTransform": "uppercase",
+                                "textAlign": "center",
+                                "cursor": "default" if running_gemini or not selected_mission else "pointer",
+                                "color": "rgba(0,0,0,0.45)" if running_gemini or not selected_mission else "rgba(0,0,0,0.85)",
+                                "background": "rgba(0,0,0,0.035)" if running_gemini or not selected_mission else "rgba(0,0,0,0.075)",
+                                "border": "1px solid rgba(0,0,0,0.16)"
+                            }}
+                        >
+                            {optimize_label}
+                        </button>
+                        {if running_gemini {
+                            <button
+                                type="button"
+                                onClick={on_stop_gemini}
+                                style={{
+                                    "width": "37%",
+                                    "height": 40,
+                                    "marginLeft": -1,
+                                    "fontFamily": "'Courier New', monospace",
+                                    "fontSize": 11,
+                                    "fontWeight": 700,
+                                    "letterSpacing": "0.06em",
+                                    "textTransform": "uppercase",
+                                    "textAlign": "center",
+                                    "cursor": "pointer",
+                                    "color": "rgba(120,0,0,0.82)",
+                                    "background": "rgba(180,0,0,0.08)",
+                                    "border": "1px solid rgba(120,0,0,0.24)"
+                                }}
+                            >
+                                Stop
+                            </button>;
                         }}
                     </div>
 
-                    <div style={{"borderTop": "1px solid rgba(0,0,0,0.08)"}}>
-                        <div style={panel_section_title}>Campaign Selector</div>
+                    {if has_results {
+                        <div style={({**SPINE_STEP_TITLE, **PANEL_SECTION_DIVIDER}) as dict[str, object]}>03 Results</div>
+                        <div style={PANEL_SECTION_TITLE}>Optimization Sessions</div>
                         <div className="no-scrollbar" style={{"maxHeight": 116, "overflowY": "auto"}}>
-                            {if len(visible_campaigns) == 0 {
-                                <div style={{
-                                    "padding": "7px 14px",
-                                    "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 10,
-                                    "color": "rgba(0,0,0,0.42)",
-                                    "whiteSpace": "nowrap"
-                                }}>
-                                    No campaigns.
+                            {for campaign in visible_campaigns {
+                                is_selected = selected_campaign_id == campaign["id"];
+                                <div
+                                    key={campaign["id"]}
+                                    onClick={lambda (e: MouseEvent) -> None { select_campaign(campaign["id"]); }}
+                                    style={{
+                                        **list_item_style(is_selected),
+                                        "display": "grid",
+                                        "gridTemplateColumns": "1fr auto",
+                                        "alignItems": "center",
+                                        "gap": 10,
+                                        "whiteSpace": "nowrap",
+                                        "overflow": "hidden"
+                                    }}
+                                >
+                                    <span style={{"overflow": "hidden", "textOverflow": "ellipsis"}}>
+                                        {campaign["id"]}
+                                    </span>
+                                    <span style={{
+                                        "color": "rgba(0,0,0,0.85)" if is_selected else "rgba(0,0,0,0.55)",
+                                        "fontWeight": 700,
+                                        "minWidth": 22,
+                                        "textAlign": "right"
+                                    }}>
+                                        {campaign["count"]}
+                                    </span>
                                 </div>;
-                            } else {
-                                for campaign in visible_campaigns {
-                                    is_selected = selected_campaign_id == campaign["id"];
-                                    <div
-                                        key={campaign["id"]}
-                                        onClick={lambda (e: MouseEvent) -> None { select_campaign(campaign["id"]); }}
-                                        style={{
-                                            "padding": "7px 14px",
-                                            "fontFamily": "'Courier New', monospace",
-                                            "fontSize": 10,
-                                            "letterSpacing": "0.02em",
-                                            "cursor": "pointer",
-                                            "color": "rgba(0,0,0,0.82)" if is_selected else "rgba(0,0,0,0.55)",
-                                            "background": "rgba(0,0,0,0.06)" if is_selected else "transparent",
-                                            "borderBottom": "1px solid rgba(0,0,0,0.06)",
-                                            "whiteSpace": "nowrap",
-                                            "overflow": "hidden",
-                                            "display": "grid",
-                                            "gridTemplateColumns": "1fr auto",
-                                            "alignItems": "center",
-                                            "gap": 10
-                                        }}
-                                    >
-                                        <span style={{"overflow": "hidden", "textOverflow": "ellipsis"}}>
-                                            {campaign["id"]}
-                                        </span>
-                                        <span style={{
-                                            "color": "rgba(0,0,0,0.72)" if is_selected else "rgba(0,0,0,0.42)",
-                                            "fontWeight": 700,
-                                            "minWidth": 22,
-                                            "textAlign": "right"
-                                        }}>
-                                            {campaign["count"]}
-                                        </span>
-                                    </div>;
-                                }
                             }}
                         </div>
-                    </div>
 
-                    <div style={{"borderTop": "1px solid rgba(0,0,0,0.08)"}}>
-                        <div style={panel_section_title}>Campaign Details</div>
-                        {if selected_campaign {
-                            render_panel_row("Campaign", selected_campaign["id"], True);
+                        <div style={PANEL_SECTION_TITLE}>Session Details</div>
+                        if selected_campaign {
+                            render_panel_row("Session", selected_campaign["id"], True);
                             render_panel_row("Status", selected_campaign_status);
                             render_panel_row("Mission", campaign_mission["name"] if campaign_mission else "—", True);
                             render_panel_row("Runs", str(selected_campaign["count"]));
@@ -1054,32 +1086,13 @@ def:pub page() -> JsxPage {
                                 );
                             }
                             render_panel_row("Leg", active_route_segment["label"] if active_route_segment and active_route_segment["label"] else "—", True);
-                        } else {
-                            <div style={({**panel_row, "display": "block", "color": "rgba(0,0,0,0.42)"}) as dict[str, object]}>
-                                Select a campaign.
-                            </div>;
-                        }}
-                    </div>
-                </div>
+                        }
 
-                <div className="no-scrollbar" style={{
-                    "minWidth": 0,
-                    "overflowY": "auto",
-                    "borderLeft": "1px solid rgba(0,0,0,0.10)",
-                    "paddingBottom": panel_footer_height
-                }}>
-                    <div style={{"flexShrink": 0}}>
-                        <div style={panel_header_style}>Simulation Runs</div>
-                        <div className="no-scrollbar" style={{"maxHeight": 170, "overflowY": "auto"}}>
-                            {if len(visible_simulations) == 0 {
-                                <div style={{
-                                    "padding": "7px 14px",
-                                    "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 10,
-                                    "color": "rgba(0,0,0,0.42)",
-                                    "whiteSpace": "nowrap"
-                                }}>
-                                    No saved simulations.
+                        <div style={PANEL_SECTION_TITLE}>Design Runs</div>
+                        <div className="no-scrollbar" style={{"maxHeight": 170, "overflowY": "auto", "paddingBottom": 14}}>
+                            if len(visible_simulations) == 0 {
+                                <div style={EMPTY_STATE}>
+                                    Runs appear here after you optimize a design.
                                 </div>;
                             } else {
                                 for sim in visible_simulations {
@@ -1098,30 +1111,24 @@ def:pub page() -> JsxPage {
                                         key={sim["id"]}
                                         onClick={lambda (e: MouseEvent) -> None { load_saved_simulation(str(sim["id"])); }}
                                         style={{
-                                            "padding": "6px 14px",
-                                            "fontFamily": "'Courier New', monospace",
-                                            "fontSize": 10,
-                                            "cursor": "pointer",
-                                            "color": "rgba(0,0,0,0.82)" if is_selected else "rgba(0,0,0,0.55)",
-                                            "background": "rgba(0,0,0,0.06)" if is_selected else "transparent",
-                                            "borderBottom": "1px solid rgba(0,0,0,0.05)",
-                                            "whiteSpace": "nowrap",
-                                            "overflow": "hidden",
+                                            **list_item_style(is_selected),
                                             "display": "grid",
                                             "gridTemplateColumns": "1fr auto",
                                             "alignItems": "center",
-                                            "gap": 10
+                                            "gap": 10,
+                                            "whiteSpace": "nowrap",
+                                            "overflow": "hidden"
                                         }}
                                     >
                                         <span style={{"overflow": "hidden", "textOverflow": "ellipsis"}}>
-                                            <span style={{"color": "rgba(0,0,0,0.28)"}}>
+                                            <span style={{"color": "rgba(0,0,0,0.35)"}}>
                                                 {pad2(int(sim["iteration"]))}
                                             </span>
                                             {" "}
                                             {failure}
                                         </span>
                                         <span style={{
-                                            "color": "rgba(0,0,0,0.72)" if is_selected else "rgba(0,0,0,0.42)",
+                                            "color": "rgba(0,0,0,0.85)" if is_selected else "rgba(0,0,0,0.55)",
                                             "fontWeight": 700,
                                             "minWidth": 34,
                                             "textAlign": "right"
@@ -1130,27 +1137,47 @@ def:pub page() -> JsxPage {
                                         </span>
                                     </div>;
                                 }
-                            }}
+                            }
                         </div>
-                    </div>
+                    }}
+                </div>
+            </div>
+        </div>
 
-                    <div style={({**panel_section_title, **panel_section_divider, "marginTop": 8}) as dict[str, object]}>Cost</div>
+        {if sim_result {
+            <div
+                style={{
+                    "position": "absolute",
+                    "top": 0,
+                    "right": 0,
+                    "width": inspector_width,
+                    "height": "100vh",
+                    "background": "#C3C4CA",
+                    "borderLeft": "1px solid rgba(0,0,0,0.13)",
+                    "overflow": "hidden",
+                    "zIndex": 10
+                }}
+            >
+                <div className="no-scrollbar" style={{"height": "100%", "overflowY": "auto"}}>
+                    <div style={PANEL_HEADER_STYLE}>Inspection</div>
+
+                    <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Cost</div>
                     {render_panel_row(
                         "Total",
                         (
                             fmt_usd(sim_result["result"]["total_config_cost_usd"])
-                            if sim_result and sim_result["result"] and sim_result["result"]["total_config_cost_usd"]
+                            if sim_result["result"] and sim_result["result"]["total_config_cost_usd"]
                             else "—"
                         )
                     )}
 
-                    <div style={({**panel_section_title, **panel_section_divider, "marginTop": 8}) as dict[str, object]}>Analysis</div>
-                    {if selected_simulation or (sim_result and sim_result["failure"]) {
+                    <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Analysis</div>
+                    if selected_simulation or sim_result["failure"] {
                         if selected_simulation {
                             render_panel_row("Status", display_status(selected_simulation["status"]));
                         }
                         if selected_simulation and selected_simulation["eval"] and Number.isFinite(selected_simulation["eval"]["score_pct"]) {
-                            render_panel_row("Eval", f"{selected_simulation['eval']['score_pct']}%");
+                            render_panel_row("Score", f"{selected_simulation['eval']['score_pct']}%");
                         }
                         if selected_simulation and selected_simulation["assessment"] and selected_simulation["assessment"]["model_used"] {
                             render_panel_row("Model", selected_simulation["assessment"]["model_used"], True);
@@ -1171,17 +1198,13 @@ def:pub page() -> JsxPage {
                         if len(changes) > 0 {
                             render_panel_row("Solution", "; ".join([str(x) for x in changes]), True);
                         }
-                        if sim_result and sim_result["failure"] {
+                        if sim_result["failure"] {
                             render_panel_row("Failed", failure_detail, True);
                         }
-                    } else {
-                        <div style={({**panel_row, "display": "block", "color": "rgba(0,0,0,0.42)"}) as dict[str, object]}>
-                            Load a simulation to view summary.
-                        </div>;
-                    }}
+                    }
 
-                    <div style={({**panel_section_title, **panel_section_divider, "marginTop": 8}) as dict[str, object]}>Parameter Configuration</div>
-                    {if config {
+                    <div style={({**PANEL_SECTION_TITLE, **PANEL_SECTION_DIVIDER, "marginTop": 8}) as dict[str, object]}>Parameter Configuration</div>
+                    if config {
                         render_panel_row("Shell mass", f"{fmt_number(config['shell_mass_kg'], 0)} kg");
                         if config["propulsion"] {
                             render_panel_row("Fuel cap", f"{fmt_number(config['propulsion']['fuel_capacity_kg'], 0)} kg");
@@ -1196,13 +1219,13 @@ def:pub page() -> JsxPage {
                                 style={{
                                     "padding": "6px 14px 7px",
                                     "fontFamily": "'Courier New', monospace",
-                                    "fontSize": 10,
+                                    "fontSize": 12,
                                     "lineHeight": 1.25,
-                                    "color": "rgba(0,0,0,0.70)"
+                                    "color": "rgba(0,0,0,0.85)"
                                 }}
                             >
                                 <div style={{
-                                    "color": "rgba(0,0,0,0.74)",
+                                    "color": "rgba(0,0,0,0.85)",
                                     "marginBottom": 3,
                                     "whiteSpace": "nowrap",
                                     "overflow": "hidden",
@@ -1214,94 +1237,23 @@ def:pub page() -> JsxPage {
                                     "display": "grid",
                                     "gridTemplateColumns": "70px 1fr",
                                     "gap": 6,
-                                    "color": "rgba(0,0,0,0.48)"
+                                    "color": "rgba(0,0,0,0.55)"
                                 }}>
-                                    <span>MAT</span>
-                                    <span style={panel_value}>{zone["material_label"] if zone["material_label"] else (zone["material"] if zone["material"] else "—")}</span>
-                                    <span>THK</span>
-                                    <span style={panel_value}>{fmt_number(zone["thickness_mm"])} mm</span>
-                                    <span>WLD</span>
-                                    <span style={panel_value}>{zone["weld_label"] if zone["weld_label"] else (zone["weld_quality"] if zone["weld_quality"] else "—")}</span>
-                                    <span>SEL</span>
-                                    <span style={panel_value}>{zone["seal_label"] if zone["seal_label"] else (zone["seal_quality"] if zone["seal_quality"] else "—")}</span>
+                                    <span title="Material">MAT</span>
+                                    <span>{zone["material_label"] if zone["material_label"] else (zone["material"] if zone["material"] else "—")}</span>
+                                    <span title="Thickness">THK</span>
+                                    <span>{fmt_number(zone["thickness_mm"])} mm</span>
+                                    <span title="Weld quality">WLD</span>
+                                    <span>{zone["weld_label"] if zone["weld_label"] else (zone["weld_quality"] if zone["weld_quality"] else "—")}</span>
+                                    <span title="Seal quality">SEL</span>
+                                    <span>{zone["seal_label"] if zone["seal_label"] else (zone["seal_quality"] if zone["seal_quality"] else "—")}</span>
                                 </div>
                             </div>;
                         }
-                    } else {
-                        <div style={({**panel_row, "display": "block", "color": "rgba(0,0,0,0.42)"}) as dict[str, object]}>
-                            Run a mission to load configuration.
-                        </div>;
-                    }}
+                    }
                 </div>
-
-                <div style={{
-                    "position": "absolute",
-                    "left": 0,
-                    "bottom": 0,
-                    "width": panel_column_width,
-                    "height": panel_footer_height,
-                    "padding": "10px 14px",
-                    "boxSizing": "border-box",
-                    "background": "#C3C4CA",
-                    "borderTop": "1px solid rgba(0,0,0,0.12)",
-                    "display": "flex"
-                }}>
-                    <button
-                        type="button"
-                        onClick={on_run_gemini}
-                        disabled={running_gemini or not selected_mission}
-                        style={{
-                            "width": "63%" if running_gemini else "100%",
-                            "height": 40,
-                            "fontFamily": "'Courier New', monospace",
-                            "fontSize": 11,
-                            "fontWeight": 700,
-                            "letterSpacing": "0.08em",
-                            "textTransform": "uppercase",
-                            "textAlign": "center",
-                            "cursor": "default" if running_gemini or not selected_mission else "pointer",
-                            "color": "rgba(0,0,0,0.34)" if running_gemini or not selected_mission else "rgba(0,0,0,0.76)",
-                            "background": "rgba(0,0,0,0.035)" if running_gemini or not selected_mission else "rgba(0,0,0,0.075)",
-                            "border": "1px solid rgba(0,0,0,0.16)"
-                        }}
-                    >
-                        {if running_gemini {
-                            <>
-                                Running Gemini
-                                <span style={{"display": "inline-block", "width": "3ch", "textAlign": "left"}}>
-                                    {dots(gemini_dot_count)}
-                                </span>
-                            </>;
-                        } else {
-                            "Run Gemini";
-                        }}
-                    </button>
-                    {if running_gemini {
-                        <button
-                            type="button"
-                            onClick={on_stop_gemini}
-                            style={{
-                                "width": "37%",
-                                "height": 40,
-                                "marginLeft": -1,
-                                "fontFamily": "'Courier New', monospace",
-                                "fontSize": 11,
-                                "fontWeight": 700,
-                                "letterSpacing": "0.08em",
-                                "textTransform": "uppercase",
-                                "textAlign": "center",
-                                "cursor": "pointer",
-                                "color": "rgba(120,0,0,0.82)",
-                                "background": "rgba(180,0,0,0.08)",
-                                "border": "1px solid rgba(120,0,0,0.24)"
-                            }}
-                        >
-                            Stop
-                        </button>;
-                    }}
-                </div>
-            </div>
-        </div>
+            </div>;
+        }}
 
         <div style={{
             "position": "absolute",
@@ -1352,7 +1304,7 @@ def:pub page() -> JsxPage {
                     "fontSize": 10,
                     "fontWeight": 700,
                     "letterSpacing": "0.06em",
-                    "color": "rgba(0,0,0,0.38)",
+                    "color": "rgba(0,0,0,0.55)",
                     "textTransform": "uppercase"
                 }) as dict[str, object]}>
                     {"×" + str(step_speed)}
@@ -1376,13 +1328,23 @@ def:pub page() -> JsxPage {
                     {"❯"}
                 </button>
             </div>
+            <div style={{
+                "marginTop": 6,
+                "fontFamily": "'Courier New', monospace",
+                "fontSize": 9,
+                "letterSpacing": "0.04em",
+                "color": "rgba(0,0,0,0.45)",
+                "textTransform": "uppercase"
+            }}>
+                left/right step · up/down speed
+            </div>
         </div>
 
         {if error {
             <div style={{
                 "position": "absolute",
-                "top": 16,
-                "right": 16,
+                "bottom": 16,
+                "left": (sidebar_width + 12) if sidebar_open else (COLLAPSED_RAIL_WIDTH + 12),
                 "maxWidth": 360,
                 "padding": "10px 12px",
                 "background": "rgba(180,35,24,0.10)",

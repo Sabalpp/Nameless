@@ -9,8 +9,14 @@ Public walkers:
 
 import math;
 import json;
-import agent_runner.codex_cli as codex_cli;
-import engine.services as engine_services;
+import from agent_runner.codex_cli {
+    run_material_optimizer,
+    run_route_planner
+}
+import from engine.services {
+    enrich_route_points,
+    save_simulation_trace
+}
 import from engine.domain {
     RoutePointInput, VesselInput,
     MissionNode, VesselDesignNode, WaypointNode, RouteEvaluation,
@@ -80,7 +86,7 @@ def _codex_revision(
     timeout_s: int
 ) -> ConfigRevision {
     prompt = _codex_prompt(history, design, best_survivor_cost_usd);
-    raw_json = codex_cli.run_material_optimizer(
+    raw_json = run_material_optimizer(
         prompt, model, timeout_s
     );
     parsed = json.loads(raw_json);
@@ -163,7 +169,7 @@ def _codex_route(
     model: str,
     timeout_s: int
 ) -> RouteRevision {
-    raw_json = codex_cli.run_route_planner(
+    raw_json = run_route_planner(
         _route_prompt(origin, destination, history, direct_distance_nm),
         model,
         timeout_s
@@ -253,7 +259,7 @@ def _enriched_points(
     raw_points: list[dict[str, any]] = [origin_raw];
     raw_points.extend(revision.waypoints);
     raw_points.append(destination_raw);
-    enriched_json = engine_services.enrich_route_points(
+    enriched_json = enrich_route_points(
         json.dumps(raw_points), use_live_conditions, timeout_s
     );
     parsed = json.loads(enriched_json);
@@ -526,7 +532,7 @@ def _save_simulation(
             "seal": mission.best_seal
         }
     };
-    return engine_services.save_simulation_trace(json.dumps(payload));
+    return save_simulation_trace(json.dumps(payload));
 }
 
 # ---------------------------------------------------------------------------

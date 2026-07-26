@@ -1,14 +1,11 @@
 """Bounded, isolated Codex CLI calls used by SeaForge walkers."""
 
-from __future__ import annotations
+import json;
+import os;
+import subprocess;
+import tempfile;
 
-import json
-import subprocess
-import tempfile
-from pathlib import Path
-
-
-MATERIAL_REVISION_SCHEMA = {
+glob MATERIAL_REVISION_SCHEMA: dict[str, any] = {
     "type": "object",
     "additionalProperties": False,
     "required": ["material", "thickness_m", "weld", "seal", "reasoning"],
@@ -22,27 +19,27 @@ MATERIAL_REVISION_SCHEMA = {
                 "Dh36",
                 "Eh36",
                 "Eh40",
-                "Aluminum5083",
-            ],
+                "Aluminum5083"
+            ]
         },
         "thickness_m": {
             "type": "number",
             "minimum": 0.003,
-            "maximum": 0.015,
+            "maximum": 0.015
         },
         "weld": {
             "type": "string",
-            "enum": ["Economy", "Standard", "Premium"],
+            "enum": ["Economy", "Standard", "Premium"]
         },
         "seal": {
             "type": "string",
-            "enum": ["Economy", "Commercial", "Marine"],
+            "enum": ["Economy", "Commercial", "Marine"]
         },
-        "reasoning": {"type": "string"},
-    },
-}
+        "reasoning": {"type": "string"}
+    }
+};
 
-ROUTE_SCHEMA = {
+glob ROUTE_SCHEMA: dict[str, any] = {
     "type": "object",
     "additionalProperties": False,
     "required": ["waypoints", "reasoning"],
@@ -60,104 +57,119 @@ ROUTE_SCHEMA = {
                     "lat_deg": {
                         "type": "number",
                         "minimum": -90,
-                        "maximum": 90,
+                        "maximum": 90
                     },
                     "lon_deg": {
                         "type": "number",
                         "minimum": -180,
-                        "maximum": 180,
-                    },
-                },
-            },
+                        "maximum": 180
+                    }
+                }
+            }
         },
-        "reasoning": {"type": "string"},
-    },
-}
-
+        "reasoning": {"type": "string"}
+    }
+};
 
 def _run_codex(
     prompt: str,
-    schema: dict[str, object],
+    schema: dict[str, any],
     task_name: str,
     model: str,
-    timeout_s: int,
-) -> str:
-    bounded_timeout = max(15, min(timeout_s, 300))
+    timeout_s: int
+) -> str {
+    bounded_timeout = max(15, min(timeout_s, 300));
     with tempfile.TemporaryDirectory(
         prefix=f"seaforge-{task_name}-"
-    ) as temp_dir:
-        temp_path = Path(temp_dir)
-        schema_path = temp_path / "response.schema.json"
-        output_path = temp_path / "response.json"
-        schema_path.write_text(json.dumps(schema), encoding="utf-8")
-        command = [
+    ) as temp_dir {
+        temp_path = temp_dir as str;
+        schema_path: str = os.path.join(
+            temp_path, "response.schema.json"
+        );
+        output_path: str = os.path.join(temp_path, "response.json");
+        with open(schema_path, "w", encoding="utf-8") as schema_file {
+            _ = schema_file.write(json.dumps(schema));
+        }
+        command: list[str] = [
             "codex",
             "exec",
             "--ephemeral",
             "--ignore-user-config",
             "--skip-git-repo-check",
             "--cd",
-            str(temp_path),
+            str(temp_dir),
             "--sandbox",
             "read-only",
             "--model",
             model,
             "--output-schema",
-            str(schema_path),
+            schema_path,
             "--output-last-message",
-            str(output_path),
+            output_path,
             "--color",
             "never",
-            "-",
-        ]
+            "-"
+        ];
         completed = subprocess.run(
             command,
             input=prompt,
-            text=True,
             capture_output=True,
             cwd=temp_path,
-            timeout=bounded_timeout,
+            timeout=float(bounded_timeout),
             check=False,
-        )
-        if completed.returncode != 0:
-            detail = completed.stderr.strip() or completed.stdout.strip()
+            encoding="utf-8",
+            errors="replace"
+        );
+        if completed.returncode != 0 {
+            detail = (
+                str(completed.stderr).strip()
+                or str(completed.stdout).strip()
+            );
             raise RuntimeError(
                 f"codex {task_name} failed with status "
                 f"{completed.returncode}: {detail[-1000:]}"
-            )
-        if not output_path.exists():
-            raise RuntimeError(f"codex {task_name} produced no response")
-        parsed = json.loads(output_path.read_text(encoding="utf-8"))
-        if not isinstance(parsed, dict):
-            raise RuntimeError(f"codex {task_name} returned a non-object")
-        return json.dumps(parsed)
-
+            );
+        }
+        if not os.path.exists(output_path) {
+            raise RuntimeError(f"codex {task_name} produced no response");
+        }
+        with open(output_path, "r", encoding="utf-8") as output_file {
+            raw = output_file.read() as str;
+        }
+        parsed = json.loads(raw);
+        if not isinstance(parsed, dict) {
+            raise RuntimeError(
+                f"codex {task_name} returned a non-object"
+            );
+        }
+        return json.dumps(parsed);
+    }
+}
 
 def run_material_optimizer(
     prompt: str,
     model: str = "gpt-5.6-sol",
-    timeout_s: int = 120,
-) -> str:
-    """Choose one vessel configuration using strict structured output."""
+    timeout_s: int = 120
+) -> str {
     return _run_codex(
         prompt,
         MATERIAL_REVISION_SCHEMA,
         "material-optimizer",
         model,
-        timeout_s,
-    )
-
+        timeout_s
+    );
+}
 
 def run_route_planner(
     prompt: str,
     model: str = "gpt-5.6-sol",
-    timeout_s: int = 120,
-) -> str:
-    """Choose intermediate geographic waypoints using structured output."""
+    timeout_s: int = 120
+) -> str {
     return _run_codex(
         prompt,
         ROUTE_SCHEMA,
         "route-planner",
         model,
-        timeout_s,
-    )
+        timeout_s
+    );
+}

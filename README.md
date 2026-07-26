@@ -21,15 +21,18 @@ seaforge_v3/
 │   ├── domain.jac              # persistent graph schema and API models
 │   ├── physics.jac             # structural, stability, fuel, and cost model
 │   ├── voyage.jac              # state-carrying physical voyage walker
-│   └── services.py             # marine conditions and JSON graph export
+│   └── services.jac            # marine conditions and JSON graph export
 ├── agent_runner/
-│   └── codex_cli.py            # isolated route/material Codex subprocesses
+│   └── codex_cli.jac           # isolated route/material Codex runner
 ├── examples/                   # POST payload examples
 └── simulations/                # generated self-learning traces
 ```
 
 The dependency direction is one-way: `main.sv.jac` orchestrates the engine and
 agent runner; the physics engine never launches or depends on an AI agent.
+All project source is Jac. The agent runner and engine services use standard
+library modules directly through Jac imports; there is no Python bridge or
+`.pyi` stub layer.
 
 ## Validate
 

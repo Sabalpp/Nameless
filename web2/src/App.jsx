@@ -221,13 +221,12 @@ async function planWaterWaypoints(origin, destination) {
 }
 
 function LearningMiniGraph({ iterations, selectedIndex, onSelect }) {
-  if (!iterations.length) return null;
   const width = 380;
   const height = 190;
   const pad = { left: 42, right: 16, top: 16, bottom: 30 };
   const costs = iterations.map((item) => Number(item?.result?.cost_usd) || 0);
-  let minCost = Math.min(...costs);
-  let maxCost = Math.max(...costs);
+  let minCost = costs.length ? Math.min(...costs) : 0;
+  let maxCost = costs.length ? Math.max(...costs) : 1;
   if (maxCost - minCost < 1) {
     minCost = Math.max(0, minCost - 500);
     maxCost += 500;
@@ -300,6 +299,68 @@ function LearningMiniGraph({ iterations, selectedIndex, onSelect }) {
   );
 }
 
+function AttemptInspector({ attempt, index }) {
+  if (!attempt) return null;
+  const result = attempt.result ?? {};
+  const configuration = attempt.configuration ?? {};
+  const rows = [
+    ['OUTCOME', result.survived ? 'SURVIVED' : 'FAILED'],
+    ['COST', `$${Number(result.cost_usd ?? 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}`],
+    ['COMPLETION', `${Number(result.distance_pct ?? 0).toFixed(1)}%`],
+    ['MATERIAL', configuration.material ?? '—'],
+    ['THICKNESS', `${Number(configuration.thickness_mm ?? 0).toFixed(1)} mm`],
+    ['WELD / SEAL', `${configuration.weld ?? '—'} / ${configuration.seal ?? '—'}`],
+  ];
+  return (
+    <div style={{
+      marginTop: 9,
+      padding: '9px 10px',
+      border: '1px solid rgba(0,0,0,0.14)',
+      background: 'rgba(255,255,255,0.16)',
+    }}>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: 7,
+        fontSize: 8,
+        fontWeight: 700,
+        letterSpacing: '0.12em',
+      }}>
+        <span>SELECTED RUN {index + 1}</span>
+        <span style={{ color: result.survived ? '#287447' : '#B42318' }}>
+          {result.survived ? 'MISSION PASS' : result.failure_mode?.replaceAll('_', ' ') || 'MISSION FAIL'}
+        </span>
+      </div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '90px 1fr',
+        gap: '4px 10px',
+        fontSize: 8,
+        lineHeight: 1.35,
+      }}>
+        {rows.map(([label, value]) => (
+          <React.Fragment key={label}>
+            <span style={{ color: 'rgba(0,0,0,0.40)', letterSpacing: '0.08em' }}>{label}</span>
+            <span style={{ fontWeight: 700 }}>{value}</span>
+          </React.Fragment>
+        ))}
+      </div>
+      {result.failure_reason ? (
+        <div style={{ marginTop: 7, paddingTop: 7, borderTop: '1px solid rgba(0,0,0,0.10)', fontSize: 8, lineHeight: 1.4 }}>
+          <span style={{ color: 'rgba(0,0,0,0.40)', letterSpacing: '0.08em' }}>FAILURE — </span>
+          {result.failure_reason}
+        </div>
+      ) : null}
+      {attempt.decision_reasoning ? (
+        <div style={{ marginTop: 6, fontSize: 8, lineHeight: 1.4 }}>
+          <span style={{ color: 'rgba(0,0,0,0.40)', letterSpacing: '0.08em' }}>AGENT DECISION — </span>
+          {attempt.decision_reasoning}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function App() {
   const [simResult, setSimResult] = useState(null);
   const [loading, setLoading]     = useState(false);
@@ -325,6 +386,7 @@ export default function App() {
   const [pickedPoints, setPickedPoints] = useState([]);
   const [agentStatus, setAgentStatus] = useState('Click the globe to choose point A');
   const [agentIterations, setAgentIterations] = useState(0);
+  const [pointRunActive, setPointRunActive] = useState(false);
   const [learningIterations, setLearningIterations] = useState([]);
   const [hasStartedPointRun, setHasStartedPointRun] = useState(false);
   const [liveShipProgress, setLiveShipProgress] = useState(0);
@@ -336,6 +398,7 @@ export default function App() {
       agentSocketRef.current.close();
     }
     setRunningGemini(true);
+    setPointRunActive(true);
     setAgentIterations(0);
     setLearningIterations([]);
     setHasStartedPointRun(true);
@@ -349,6 +412,7 @@ export default function App() {
       setPlannedWaypoints(waterWaypoints);
     } catch (routeError) {
       setRunningGemini(false);
+      setPointRunActive(false);
       setAgentStatus(routeError.message);
       setError(routeError.message);
       return;
@@ -361,16 +425,18 @@ export default function App() {
     let receivedReportBatch = false;
     agentSocketRef.current = socket;
     socket.onopen = () => {
-      setAgentStatus('Running mission optimizer…');
+      setAgentStatus('SEARCHING CONFIGURATIONS — waiting for first result…');
       socket.send(JSON.stringify({
         origin: { name: 'Point A', ...origin },
         destination: { name: 'Point B', ...destination },
         name: `Point A to Point B ${Date.now()}`,
         route_iterations: 1,
-        material_iterations: 20,
+        material_iterations: 100,
+        convergence_min_attempts: 30,
+        convergence_patience: 20,
         route_waypoints: waterWaypoints,
         use_codex: true,
-        codex_timeout_s: 30,
+        codex_timeout_s: 3,
         use_live_conditions: false,
         save_simulation: true,
         stream_events: true,
@@ -381,9 +447,17 @@ export default function App() {
         const envelope = JSON.parse(message.data);
         const reports = envelope?.data?.reports ?? [];
         receivedReportBatch = reports.length > 0;
-        reports.forEach((report, index) => {
+        let visibleEventIndex = 0;
+        reports.forEach((report) => {
+          const shouldDisplay = (
+            report.event_type === 'iteration'
+            && report.phase === 'material_search'
+          ) || report.event_type === 'complete';
+          if (!shouldDisplay) return;
+          const delay = visibleEventIndex * 350;
+          visibleEventIndex += 1;
           window.setTimeout(() => {
-            if (report.event_type === 'progress' || report.event_type === 'complete') {
+            if (report.event_type === 'complete') {
               setAgentStatus(report.message ?? report.status ?? 'Working…');
             }
             if (report.event_type === 'iteration') {
@@ -418,8 +492,9 @@ export default function App() {
                 return current;
               });
               setRunningGemini(false);
+              setPointRunActive(false);
             }
-          }, index * 350);
+          }, delay);
         });
       } catch (eventError) {
         setError(eventError.message);
@@ -427,11 +502,13 @@ export default function App() {
     };
     socket.onerror = () => {
       setRunningGemini(false);
+      setPointRunActive(false);
       setAgentStatus(`Could not connect to Jac at ${jacSocketUrl.host}`);
     };
     socket.onclose = () => {
       if (!receivedReportBatch) {
         setRunningGemini(false);
+        setPointRunActive(false);
         setAgentStatus('Jac disconnected before returning simulation data');
       }
     };
@@ -1015,6 +1092,9 @@ export default function App() {
         left: 18,
         zIndex: 12,
         width: 410,
+        maxHeight: 'calc(100vh - 36px)',
+        overflowY: 'auto',
+        boxSizing: 'border-box',
         padding: '12px 14px',
         background: 'rgba(195,196,202,0.94)',
         border: '1px solid rgba(0,0,0,0.16)',
@@ -1024,42 +1104,30 @@ export default function App() {
         <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', marginBottom: 7 }}>
           VOYAGE POINT PICKER
         </div>
-        <div style={{ fontSize: 11 }}>{agentStatus}</div>
         <div style={{ display: 'flex', gap: 16, marginTop: 8, fontSize: 9, color: 'rgba(0,0,0,0.48)' }}>
           <span>A - {pickedPoints[0] ? `${pickedPoints[0].lat_deg.toFixed(2)}, ${pickedPoints[0].lon_deg.toFixed(2)}` : '—'}</span>
           <span>B - {pickedPoints[1] ? `${pickedPoints[1].lat_deg.toFixed(2)}, ${pickedPoints[1].lon_deg.toFixed(2)}` : '—'}</span>
           {hasStartedPointRun ? <span>RUNS {agentIterations}</span> : null}
         </div>
-        <LearningMiniGraph
-          iterations={learningIterations}
-          selectedIndex={activeAttemptIndex}
-          onSelect={(index) => {
-            const attempt = learningIterations[index];
-            setActiveAttemptIndex(index);
-            setLiveShipProgress(Math.max(
-              0,
-              Math.min(1, Number(attempt?.result?.distance_pct ?? 0) / 100),
-            ));
-          }}
-        />
+        {hasStartedPointRun ? (
+          <>
+            <LearningMiniGraph
+              iterations={learningIterations}
+              selectedIndex={activeAttemptIndex}
+              onSelect={(index) => {
+                const attempt = learningIterations[index];
+                setActiveAttemptIndex(index);
+                setLiveShipProgress(Math.max(
+                  0,
+                  Math.min(1, Number(attempt?.result?.distance_pct ?? 0) / 100),
+                ));
+              }}
+            />
+            <AttemptInspector attempt={activeLearningAttempt} index={activeAttemptIndex ?? 0} />
+          </>
+        ) : null}
+        {!hasStartedPointRun ? (
         <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-        {runningGemini ? (
-          <div style={{
-            width: '100%',
-            minHeight: 36,
-            padding: '9px 11px',
-            boxSizing: 'border-box',
-            border: '1px solid rgba(0,0,0,0.18)',
-            background: 'rgba(0,0,0,0.055)',
-            font: "700 10px 'Courier New', monospace",
-            letterSpacing: '0.06em',
-            lineHeight: 1.5,
-            textTransform: 'uppercase',
-            color: 'rgba(0,0,0,0.68)',
-          }}>
-            {agentStatus}
-          </div>
-        ) : (
           <>
           <button
             type="button"
@@ -1103,7 +1171,40 @@ export default function App() {
           </button>
         ) : null}
           </>
-        )}
+        </div>
+        ) : null}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 9,
+          margin: '12px -14px -12px',
+          padding: '10px 14px 11px',
+          background: 'rgba(0,0,0,0.035)',
+          borderTop: '1px solid rgba(0,0,0,0.16)',
+          color: 'rgba(0,0,0,0.78)',
+        }}>
+          <span style={{
+            width: 8,
+            height: 8,
+            flex: '0 0 auto',
+            borderRadius: '50%',
+            background: pointRunActive ? '#B42318' : 'rgba(0,0,0,0.34)',
+            boxShadow: pointRunActive ? '0 0 0 4px rgba(180,35,24,0.14)' : 'none',
+          }} />
+          <div>
+            <div style={{
+              fontSize: 7,
+              fontWeight: 700,
+              letterSpacing: '0.17em',
+              color: 'rgba(0,0,0,0.40)',
+              marginBottom: 3,
+            }}>
+              CURRENT STATUS
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, lineHeight: 1.25 }}>
+              {agentStatus}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1497,34 +1598,6 @@ export default function App() {
             ) : null}
           </div>
         </div>
-      </div>
-
-
-      {/* Floating transport controls */}
-      <div style={{
-        position: 'absolute',
-        bottom: 24,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        userSelect: 'none',
-      }}>
-        <div style={{
-          ...cell,
-          width: 108,
-          height: 28,
-          marginBottom: -1,
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-          color: 'rgba(0,0,0,0.38)',
-        }}>
-          {activeDayLabel}
-        </div>
-
       </div>
     </div>
   );

@@ -695,6 +695,18 @@ def _apply_revision(
     design.revision += 1;
 }
 
+def _configuration_key(design: VesselDesignNode) -> str {
+    return (
+        design.material
+        + "|"
+        + f"{design.thickness_m:.6f}"
+        + "|"
+        + design.weld
+        + "|"
+        + design.seal
+    );
+}
+
 def _rule_revision(
     history: list[AttemptSummary],
     design: VesselDesignNode
@@ -710,6 +722,67 @@ def _rule_revision(
     }
 
     latest = history[-1];
+    cheapest_survivor: AttemptSummary | None = None;
+    first_survivor_index = -1;
+    for history_index in range(len(history)) {
+        candidate = history[history_index];
+        if candidate.survived {
+            if first_survivor_index < 0 {
+                first_survivor_index = history_index;
+            }
+            if (
+                cheapest_survivor is None
+                or candidate.cost_usd
+                < (cheapest_survivor as AttemptSummary).cost_usd
+            ) {
+                cheapest_survivor = candidate;
+            }
+        }
+    }
+    if cheapest_survivor is not None {
+        best = cheapest_survivor as AttemptSummary;
+        probe = max(0, len(history) - first_survivor_index - 1);
+        weld_options = ["Economy", "Standard", "Premium"];
+        seal_options = ["Economy", "Commercial", "Marine"];
+        material_options = [
+            "MildSteelA", "MildSteelE", "Ah36", "Eh36"
+        ];
+        combinations_per_thickness = (
+            len(weld_options)
+            * len(seal_options)
+            * len(material_options)
+        );
+        combination = probe % combinations_per_thickness;
+        thickness_level = (
+            int(probe / combinations_per_thickness) + 1
+        );
+        probe_weld = weld_options[
+            combination % len(weld_options)
+        ];
+        probe_seal = seal_options[
+            int(combination / len(weld_options))
+            % len(seal_options)
+        ];
+        probe_material = material_options[
+            int(
+                combination
+                / (len(weld_options) * len(seal_options))
+            ) % len(material_options)
+        ];
+        return ConfigRevision(
+            material=probe_material,
+            thickness_m=max(
+                0.003,
+                best.thickness_m - 0.001 * thickness_level
+            ),
+            weld=probe_weld,
+            seal=probe_seal,
+            reasoning=(
+                "Explore a distinct lower-cost material, weld, seal, "
+                "and thickness combination around the cheapest survivor"
+            )
+        );
+    }
     repeated_mode = 0;
     for prior_attempt in history {
         if (
@@ -1023,6 +1096,8 @@ walker PointOptimizerCore {
         name: str = "",
         route_iterations: int = 3,
         material_iterations: int = 10,
+        convergence_min_attempts: int = 30,
+        convergence_patience: int = 20,
         route_waypoints: list[dict[str, any]] = [],
         vessel: dict[str, any] = {},
         use_codex: bool = True,
@@ -1123,7 +1198,7 @@ walker PointOptimizerCore {
                 "destination": self.destination,
                 "route_iterations": max(1, min(8, self.route_iterations)),
                 "material_iterations": max(
-                    0, min(50, self.material_iterations)
+                    0, min(100, self.material_iterations)
                 ),
                 "agent_backend": (
                     "codex-cli" if self.use_codex else "local-rules"
@@ -1377,7 +1452,14 @@ walker PointOptimizerCore {
         }
         best_origin = _get_origin(mission, best_route_id);
         material_history: list[AttemptSummary] = [];
-        material_count = max(0, min(50, self.material_iterations));
+        tried_configurations: list[str] = [];
+        material_count = max(0, min(100, self.material_iterations));
+        minimum_attempts = min(
+            material_count,
+            max(1, self.convergence_min_attempts)
+        );
+        patience = max(1, self.convergence_patience);
+        attempts_without_improvement = 0;
 
         if best_origin is not None {
             # Begin optimization from a genuinely exploratory vessel instead of
@@ -1436,6 +1518,41 @@ walker PointOptimizerCore {
                     );
                 }
                 _apply_revision(design, config_revision);
+                configuration_key = _configuration_key(design);
+                if (
+                    configuration_key in tried_configurations
+                    and _material_index == 1
+                ) {
+                    config_revision = _rule_revision(
+                        material_history, design
+                    );
+                    _apply_revision(design, config_revision);
+                    configuration_key = _configuration_key(design);
+                }
+                if configuration_key in tried_configurations {
+                    # Never terminate merely because a rule revisited a prior
+                    # design. Nudge thickness to create a nearby cost probe.
+                    probe_offset = 0.0001 * (
+                        (_material_index % 9) + 1
+                    );
+                    probe_thickness = design.thickness_m + probe_offset;
+                    if probe_thickness > 0.060 {
+                        probe_thickness = design.thickness_m - probe_offset;
+                    }
+                    config_revision = ConfigRevision(
+                        material=design.material,
+                        thickness_m=max(0.003, probe_thickness),
+                        weld=design.weld,
+                        seal=design.seal,
+                        reasoning=(
+                            "Probe a nearby untested thickness instead of "
+                            "stopping on a repeated configuration"
+                        )
+                    );
+                    _apply_revision(design, config_revision);
+                    configuration_key = _configuration_key(design);
+                }
+                tried_configurations.append(configuration_key);
                 mission.attempts += 1;
                 material_walker = _spawn_voyage(
                     best_origin,
@@ -1450,7 +1567,19 @@ walker PointOptimizerCore {
                 material_result = material_walker.result;
                 material_summary = _summarize(material_result);
                 material_history.append(material_summary);
+                previous_best_cost = mission.best_cost_usd;
+                previously_solved = mission.solved;
                 _update_best(mission, design, material_result);
+                if mission.solved {
+                    if (
+                        not previously_solved
+                        or mission.best_cost_usd < previous_best_cost
+                    ) {
+                        attempts_without_improvement = 0;
+                    } else {
+                        attempts_without_improvement += 1;
+                    }
+                }
                 locked_points: list[RoutePointInput] = [];
                 current_waypoint: WaypointNode | None = best_origin;
                 while current_waypoint is not None {
@@ -1512,6 +1641,27 @@ walker PointOptimizerCore {
                         "total": material_count,
                         "iteration": material_event
                     };
+                }
+                if (
+                    len(material_history) >= minimum_attempts
+                    and mission.solved
+                    and attempts_without_improvement >= patience
+                ) {
+                    if self.stream_events {
+                        report {
+                            "event_type": "progress",
+                            "phase": "material_search",
+                            "status": "converged",
+                            "iteration": len(material_history),
+                            "total_iterations": material_count,
+                            "message": (
+                                "Cost search converged after "
+                                f"{attempts_without_improvement} attempts "
+                                "without a cheaper successful design"
+                            )
+                        };
+                    }
+                    break;
                 }
             }
         }

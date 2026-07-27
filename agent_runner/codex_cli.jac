@@ -78,7 +78,9 @@ def _run_codex(
     model: str,
     timeout_s: int
 ) -> str {
-    bounded_timeout = max(15, min(timeout_s, 300));
+    # Interactive optimization must not hold the first graph update hostage
+    # to a slow CLI response. Jac's local graph-history rules are the fallback.
+    bounded_timeout = max(3, min(timeout_s, 300));
     with tempfile.TemporaryDirectory(
         prefix=f"seaforge-{task_name}-"
     ) as temp_dir {

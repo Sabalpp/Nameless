@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import HullDiagram from './components/HullDiagram.jsx';
 import { MISSIONS } from './missions.js';
+import {
+  PANEL_LABEL,
+  PANEL_ROW,
+  PANEL_VALUE,
+  PANEL_WRAPPED_VALUE,
+  SF_BG,
+} from './components/panel.js';
 
 const TICK_STEP_MS = 1000;
 const MIN_STEP_SPEED = 1;
@@ -300,6 +307,54 @@ function LearningMiniGraph({ iterations, selectedIndex, onSelect }) {
   );
 }
 
+function AgentSection({ title, summary, open, onToggle, children }) {
+  return (
+    <div style={{ borderTop: '1px solid rgba(0,0,0,0.10)' }}>
+      <button
+        type="button"
+        onClick={onToggle}
+        style={{
+          width: '100%',
+          padding: '9px 0',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: 10,
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          fontFamily: "'Courier New', monospace",
+          textAlign: 'left',
+        }}
+      >
+        <span style={{
+          fontSize: 10,
+          fontWeight: 700,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'rgba(0,0,0,0.55)',
+          whiteSpace: 'nowrap',
+        }}>
+          {open ? '▼' : '▶'} {title}
+        </span>
+        {!open && summary ? (
+          <span style={{
+            fontSize: 9,
+            color: 'rgba(0,0,0,0.42)',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            maxWidth: '58%',
+          }}>
+            {summary}
+          </span>
+        ) : null}
+      </button>
+      {open ? <div style={{ paddingBottom: 10 }}>{children}</div> : null}
+    </div>
+  );
+}
+
 export default function App() {
   const [simResult, setSimResult] = useState(null);
   const [loading, setLoading]     = useState(false);
@@ -314,7 +369,18 @@ export default function App() {
   const [runningCampaignId, setRunningCampaignId] = useState(null);
   const [runningCampaignStartedAt, setRunningCampaignStartedAt] = useState(null);
   const [geminiDotCount, setGeminiDotCount] = useState(0);
-  const [panelOpen, setPanelOpen] = useState(false);
+  const [agentsOpen, setAgentsOpen] = useState(true);
+  const [openSections, setOpenSections] = useState({
+    missions: true,
+    brief: false,
+    campaigns: false,
+    runs: false,
+    analysis: false,
+    params: false,
+  });
+  const toggleSection = (key) => {
+    setOpenSections((current) => ({ ...current, [key]: !current[key] }));
+  };
   const tickPositionRef = useRef(0);
   const stepSpeedRef = useRef(1);
   const heldDirectionRef = useRef(0);
@@ -932,72 +998,37 @@ export default function App() {
     height: 28,
     lineHeight: 1,
   };
-  const panelSectionTitle = {
-    padding: '10px 14px 6px',
-    fontFamily: "'Courier New', monospace",
-    fontSize: 8.5,
-    fontWeight: 700,
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: 'rgba(0,0,0,0.36)',
-    whiteSpace: 'nowrap',
-  };
-  const panelRow = {
-    display: 'grid',
-    gridTemplateColumns: '86px 1fr',
-    gap: 8,
-    padding: '3px 14px',
-    fontFamily: "'Courier New', monospace",
-    fontSize: 10,
-    lineHeight: 1.25,
-    color: 'rgba(0,0,0,0.70)',
-  };
-  const panelLabel = {
-    color: 'rgba(0,0,0,0.38)',
-    textTransform: 'uppercase',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  };
-  const panelValue = {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  };
-  const panelWrappedValue = {
-    overflow: 'visible',
-    textOverflow: 'clip',
-    whiteSpace: 'normal',
-    overflowWrap: 'anywhere',
-    wordBreak: 'normal',
-  };
+  const panelRow = PANEL_ROW;
+  const panelLabel = PANEL_LABEL;
+  const panelValue = PANEL_VALUE;
+  const panelWrappedValue = PANEL_WRAPPED_VALUE;
   const renderPanelRow = (label, value, options = {}) => (
     <div style={panelRow}>
       <span style={panelLabel}>{label}</span>
       <span style={{ ...panelValue, ...(options.wrap ? panelWrappedValue : null) }}>{value ?? '—'}</span>
     </div>
   );
-  const panelColumnWidth = 280;
-  const expandedPanelWidth = panelColumnWidth * 2;
-  const panelHeaderStyle = {
-    padding: '10px 14px 8px',
-    fontFamily: "'Courier New', monospace",
-    fontSize: 9,
-    fontWeight: 700,
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: 'rgba(0,0,0,0.35)',
-    whiteSpace: 'nowrap',
-    borderBottom: '1px solid rgba(0,0,0,0.08)',
-  };
-  const panelSectionDivider = {
-    borderTop: '1px solid rgba(0,0,0,0.10)',
-    paddingTop: 8,
-  };
-  const panelFooterHeight = 62;
+  const missionSummary = selectedMission?.name ?? 'Pick a mission brief';
+  const briefSummary = missionBrief
+    ? `${missionBrief.name} · ${(missionBrief.primary_stressor ?? 'conditions').replaceAll('_', ' ')}`
+    : 'Select a mission for conditions';
+  const campaignSummary = selectedCampaign
+    ? `${selectedCampaign.id} · ${selectedCampaignStatus} · ${selectedCampaign.count} runs`
+    : (visibleCampaigns.length ? `${visibleCampaigns.length} campaigns` : 'No campaigns yet');
+  const runsSummary = visibleSimulations.length
+    ? `${visibleSimulations.length} runs · ${selectedSimulation ? displayStatus(selectedSimulation.status) : 'none selected'}`
+    : 'No saved simulations';
+  const analysisSummary = selectedSimulation
+    ? `${displayStatus(selectedSimulation.status)}${Number.isFinite(selectedSimulation?.eval?.score_pct) ? ` · ${selectedSimulation.eval.score_pct}%` : ''}`
+    : (simResult?.failure ? failureDetail : 'Load a run for analysis');
+  const paramsSummary = config
+    ? `${fmtNumber(config.shell_mass_kg, 0)} kg shell · ${displayedZones.length} zones`
+    : 'Run a mission to load config';
+  const pointA = pickedPoints[0] ? `${pickedPoints[0].lat_deg.toFixed(2)}, ${pickedPoints[0].lon_deg.toFixed(2)}` : '—';
+  const pointB = pickedPoints[1] ? `${pickedPoints[1].lat_deg.toFixed(2)}, ${pickedPoints[1].lon_deg.toFixed(2)}` : '—';
 
   return (
-    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', background: '#C3C4CA', position: 'relative' }}>
+    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', background: SF_BG, position: 'relative' }}>
       <HullDiagram
         simResult={simResult}
         loading={loading}
@@ -1014,153 +1045,128 @@ export default function App() {
         top: 18,
         left: 18,
         zIndex: 12,
-        width: 410,
-        padding: '12px 14px',
-        background: 'rgba(195,196,202,0.94)',
+        width: 430,
+        maxHeight: 'calc(100vh - 36px)',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'rgba(195,196,202,0.96)',
         border: '1px solid rgba(0,0,0,0.16)',
         fontFamily: "'Courier New', monospace",
         color: 'rgba(0,0,0,0.72)',
       }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', marginBottom: 7 }}>
-          VOYAGE POINT PICKER
-        </div>
-        <div style={{ fontSize: 11 }}>{agentStatus}</div>
-        <div style={{ display: 'flex', gap: 16, marginTop: 8, fontSize: 9, color: 'rgba(0,0,0,0.48)' }}>
-          <span>A - {pickedPoints[0] ? `${pickedPoints[0].lat_deg.toFixed(2)}, ${pickedPoints[0].lon_deg.toFixed(2)}` : '—'}</span>
-          <span>B - {pickedPoints[1] ? `${pickedPoints[1].lat_deg.toFixed(2)}, ${pickedPoints[1].lon_deg.toFixed(2)}` : '—'}</span>
-          {hasStartedPointRun ? <span>RUNS {agentIterations}</span> : null}
-        </div>
-        <LearningMiniGraph
-          iterations={learningIterations}
-          selectedIndex={activeAttemptIndex}
-          onSelect={(index) => {
-            const attempt = learningIterations[index];
-            setActiveAttemptIndex(index);
-            setLiveShipProgress(Math.max(
-              0,
-              Math.min(1, Number(attempt?.result?.distance_pct ?? 0) / 100),
-            ));
-          }}
-        />
-        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-        {runningGemini ? (
-          <div style={{
-            width: '100%',
-            minHeight: 36,
-            padding: '9px 11px',
-            boxSizing: 'border-box',
-            border: '1px solid rgba(0,0,0,0.18)',
-            background: 'rgba(0,0,0,0.055)',
-            font: "700 10px 'Courier New', monospace",
-            letterSpacing: '0.06em',
-            lineHeight: 1.5,
-            textTransform: 'uppercase',
-            color: 'rgba(0,0,0,0.68)',
-          }}>
-            {agentStatus}
-          </div>
-        ) : (
-          <>
-          <button
-            type="button"
-            disabled={pickedPoints.length !== 2}
-            onClick={() => runPointSimulation(pickedPoints[0], pickedPoints[1])}
-            style={{
-              flex: 1,
-              padding: '9px 10px',
-              border: '1px solid rgba(0,0,0,0.18)',
-              color: pickedPoints.length === 2 ? 'rgba(0,0,0,0.76)' : 'rgba(0,0,0,0.30)',
-              background: pickedPoints.length === 2 ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.025)',
-              font: "700 10px 'Courier New', monospace",
-              letterSpacing: '0.08em',
-              cursor: pickedPoints.length === 2 ? 'pointer' : 'default',
-            }}
-          >
-            RUN AGENT
-          </button>
-        {pickedPoints.length > 0 ? (
-          <button
-            type="button"
-            onClick={() => {
-              setPickedPoints([]);
-              setAgentIterations(0);
-              setLearningIterations([]);
-              setHasStartedPointRun(false);
-              setLiveShipProgress(0);
-              setActiveAttemptIndex(null);
-              setPlannedWaypoints([]);
-              setAgentStatus('Click the globe to choose point A');
-            }}
-            style={{
-              padding: '6px 10px',
-              border: '1px solid rgba(0,0,0,0.16)',
-              background: 'rgba(0,0,0,0.04)',
-              font: "700 9px 'Courier New', monospace",
-              cursor: 'pointer',
-            }}
-          >
-            RESET
-          </button>
-        ) : null}
-          </>
-        )}
-        </div>
-      </div>
-
-      {/* Left panel — hamburger cell that expands on hover */}
-      <div
-        style={{
-          display: 'none',
-          position: 'absolute',
-          top: panelOpen ? 0 : 12,
-          left: panelOpen ? 0 : 12,
-          width: panelOpen ? expandedPanelWidth : 36,
-          height: panelOpen ? '100vh' : 28,
-          background: '#C3C4CA',
-          border: '1px solid rgba(0,0,0,0.13)',
-          overflow: 'hidden',
-          zIndex: 10,
-          transition: 'top 220ms ease, left 220ms ease, width 220ms ease, height 220ms ease',
-        }}
-        onMouseEnter={() => setPanelOpen(true)}
-        onMouseLeave={() => setPanelOpen(false)}
-      >
-        {/* Hamburger icon — fades out when expanded */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: 36,
-          height: 28,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          opacity: panelOpen ? 0 : 1,
-          transition: 'opacity 120ms ease',
-          pointerEvents: 'none',
-        }}>
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-            <rect y="0"    width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
-            <rect y="4.25" width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
-            <rect y="8.5"  width="14" height="1.5" rx="0.75" fill="rgba(0,0,0,0.52)"/>
-          </svg>
-        </div>
-
-        {/* Panel content — fades in when expanded */}
-        <div
+        <button
+          type="button"
+          onClick={() => setAgentsOpen((open) => !open)}
           style={{
-            opacity: panelOpen ? 1 : 0,
-            transition: 'opacity 160ms ease 60ms',
-            width: expandedPanelWidth,
-            height: '100%',
-            display: 'grid',
-            gridTemplateColumns: `${panelColumnWidth}px ${panelColumnWidth}px`,
+            width: '100%',
+            padding: '12px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 12,
+            background: 'transparent',
+            border: 'none',
+            borderBottom: agentsOpen ? '1px solid rgba(0,0,0,0.10)' : 'none',
+            cursor: 'pointer',
+            fontFamily: "'Courier New', monospace",
           }}
         >
-          <div className="no-scrollbar" style={{ minWidth: 0, overflowY: 'auto', paddingBottom: panelFooterHeight }}>
-            {/* Missions section */}
-            <div style={{ flexShrink: 0 }}>
-              <div style={panelHeaderStyle}>Missions</div>
+          <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase' }}>
+            Spawn Sub Agents
+          </span>
+          <span style={{ fontSize: 10, color: 'rgba(0,0,0,0.45)' }}>{agentsOpen ? '▼' : '▶'}</span>
+        </button>
+
+        {agentsOpen ? (
+          <div className="no-scrollbar" style={{ overflowY: 'auto', padding: '12px 14px 14px' }}>
+            <div style={{ fontSize: 11, lineHeight: 1.45, marginBottom: 8 }}>{agentStatus}</div>
+            <div style={{ display: 'flex', gap: 14, fontSize: 9, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>
+              <span>A · {pointA}</span>
+              <span>B · {pointB}</span>
+              {hasStartedPointRun ? <span>RUNS {agentIterations}</span> : null}
+            </div>
+            <LearningMiniGraph
+              iterations={learningIterations}
+              selectedIndex={activeAttemptIndex}
+              onSelect={(index) => {
+                const attempt = learningIterations[index];
+                setActiveAttemptIndex(index);
+                setLiveShipProgress(Math.max(
+                  0,
+                  Math.min(1, Number(attempt?.result?.distance_pct ?? 0) / 100),
+                ));
+              }}
+            />
+            <div style={{ display: 'flex', gap: 8, marginTop: 10, marginBottom: 4 }}>
+              {runningGemini && hasStartedPointRun ? (
+                <div style={{
+                  width: '100%',
+                  minHeight: 36,
+                  padding: '9px 11px',
+                  boxSizing: 'border-box',
+                  border: '1px solid rgba(0,0,0,0.18)',
+                  background: 'rgba(0,0,0,0.055)',
+                  font: "700 10px 'Courier New', monospace",
+                  letterSpacing: '0.06em',
+                  lineHeight: 1.5,
+                  textTransform: 'uppercase',
+                  color: 'rgba(0,0,0,0.68)',
+                }}>
+                  {agentStatus}
+                </div>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    disabled={pickedPoints.length !== 2}
+                    onClick={() => runPointSimulation(pickedPoints[0], pickedPoints[1])}
+                    style={{
+                      flex: 1,
+                      padding: '9px 10px',
+                      border: '1px solid rgba(0,0,0,0.18)',
+                      color: pickedPoints.length === 2 ? 'rgba(0,0,0,0.76)' : 'rgba(0,0,0,0.30)',
+                      background: pickedPoints.length === 2 ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.025)',
+                      font: "700 10px 'Courier New', monospace",
+                      letterSpacing: '0.08em',
+                      cursor: pickedPoints.length === 2 ? 'pointer' : 'default',
+                    }}
+                  >
+                    SPAWN SUB AGENT
+                  </button>
+                  {pickedPoints.length > 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPickedPoints([]);
+                        setAgentIterations(0);
+                        setLearningIterations([]);
+                        setHasStartedPointRun(false);
+                        setLiveShipProgress(0);
+                        setActiveAttemptIndex(null);
+                        setPlannedWaypoints([]);
+                        setAgentStatus('Click the globe to choose point A');
+                      }}
+                      style={{
+                        padding: '6px 10px',
+                        border: '1px solid rgba(0,0,0,0.16)',
+                        background: 'rgba(0,0,0,0.04)',
+                        font: "700 9px 'Courier New', monospace",
+                        cursor: 'pointer',
+                      }}
+                    >
+                      RESET
+                    </button>
+                  ) : null}
+                </>
+              )}
+            </div>
+
+            <AgentSection
+              title="Missions"
+              summary={missionSummary}
+              open={openSections.missions}
+              onToggle={() => toggleSection('missions')}
+            >
               {MISSIONS.map((m) => {
                 const isSelected = selectedMission?.id === m.id;
                 return (
@@ -1169,39 +1175,43 @@ export default function App() {
                     onClick={() => {
                       setSelectedSimulationId(null);
                       setSelectedMission(isSelected ? null : m);
+                      if (!isSelected) {
+                        setOpenSections((current) => ({ ...current, brief: true }));
+                      }
                     }}
                     style={{
-                      padding: '7px 14px',
-                      fontFamily: "'Courier New', monospace",
+                      padding: '7px 0',
                       fontSize: 10,
                       letterSpacing: '0.02em',
                       whiteSpace: 'nowrap',
                       cursor: 'pointer',
                       color: isSelected ? 'rgba(0,0,0,0.82)' : 'rgba(0,0,0,0.55)',
-                      background: isSelected ? 'rgba(0,0,0,0.06)' : 'transparent',
+                      background: isSelected ? 'rgba(0,0,0,0.05)' : 'transparent',
                       borderBottom: '1px solid rgba(0,0,0,0.06)',
                       display: 'flex',
                       alignItems: 'baseline',
                       gap: 8,
                     }}
                   >
-                    <span style={{ color: 'rgba(0,0,0,0.25)', fontSize: 9 }}>
-                      {m.id.split('_')[0]}
-                    </span>
+                    <span style={{ color: 'rgba(0,0,0,0.25)', fontSize: 9 }}>{m.id.split('_')[0]}</span>
                     {m.name}
                   </div>
                 );
               })}
-            </div>
+            </AgentSection>
 
-            <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-              <div style={panelSectionTitle}>Mission Brief</div>
+            <AgentSection
+              title="Mission Brief"
+              summary={briefSummary}
+              open={openSections.brief}
+              onToggle={() => toggleSection('brief')}
+            >
               {missionBrief ? (
                 <>
                   {renderPanelRow('Mission', missionBrief.name, { wrap: true })}
                   {missionBrief?.objective ? renderPanelRow('Objective', missionBrief.objective, { wrap: true }) : null}
-                  {missionBrief ? renderPanelRow('Physics', missionBrief.primary_stressor?.replaceAll('_', ' '), { wrap: true }) : null}
-                  {missionBrief ? renderPanelRow('Failure', (missionBrief.failure_modes_under_test ?? []).join(', ') || '—', { wrap: true }) : null}
+                  {renderPanelRow('Physics', missionBrief.primary_stressor?.replaceAll('_', ' '), { wrap: true })}
+                  {renderPanelRow('Failure', (missionBrief.failure_modes_under_test ?? []).join(', ') || '—', { wrap: true })}
                   {renderPanelRow('Waves', fmtRange(env?.wave_height_m, 'm'))}
                   {renderPanelRow('Wind', missionFactor('—'))}
                   {renderPanelRow('Slamming', missionFactor(env?.slamming_probability ?? '—'))}
@@ -1212,24 +1222,20 @@ export default function App() {
                 </>
               ) : (
                 <div style={{ ...panelRow, display: 'block', color: 'rgba(0,0,0,0.42)' }}>
-                  Select a mission.
+                  Select a mission to load brief and sea conditions.
                 </div>
               )}
-            </div>
+            </AgentSection>
 
-            <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-              <div style={panelSectionTitle}>Campaign Selector</div>
-              <div className="no-scrollbar" style={{ maxHeight: 116, overflowY: 'auto' }}>
+            <AgentSection
+              title="Campaigns"
+              summary={campaignSummary}
+              open={openSections.campaigns}
+              onToggle={() => toggleSection('campaigns')}
+            >
+              <div className="no-scrollbar" style={{ maxHeight: 120, overflowY: 'auto', marginBottom: 8 }}>
                 {visibleCampaigns.length === 0 ? (
-                  <div style={{
-                    padding: '7px 14px',
-                    fontFamily: "'Courier New', monospace",
-                    fontSize: 10,
-                    color: 'rgba(0,0,0,0.42)',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    No campaigns.
-                  </div>
+                  <div style={{ fontSize: 10, color: 'rgba(0,0,0,0.42)' }}>No campaigns yet. Run agent on a mission.</div>
                 ) : visibleCampaigns.map((campaign) => {
                   const isSelected = selectedCampaignId === campaign.id;
                   return (
@@ -1237,44 +1243,25 @@ export default function App() {
                       key={campaign.id}
                       onClick={() => selectCampaign(campaign.id)}
                       style={{
-                        padding: '7px 14px',
-                        fontFamily: "'Courier New', monospace",
+                        padding: '7px 0',
                         fontSize: 10,
-                        letterSpacing: '0.02em',
                         cursor: 'pointer',
                         color: isSelected ? 'rgba(0,0,0,0.82)' : 'rgba(0,0,0,0.55)',
-                        background: isSelected ? 'rgba(0,0,0,0.06)' : 'transparent',
+                        background: isSelected ? 'rgba(0,0,0,0.05)' : 'transparent',
                         borderBottom: '1px solid rgba(0,0,0,0.06)',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
                         display: 'grid',
                         gridTemplateColumns: '1fr auto',
-                        alignItems: 'center',
                         gap: 10,
                       }}
                     >
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {campaign.id}
-                      </span>
-                      <span style={{
-                        color: isSelected ? 'rgba(0,0,0,0.72)' : 'rgba(0,0,0,0.42)',
-                        fontWeight: 700,
-                        minWidth: 22,
-                        textAlign: 'right',
-                      }}>
-                        {campaign.count}
-                      </span>
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{campaign.id}</span>
+                      <span style={{ fontWeight: 700 }}>{campaign.count}</span>
                     </div>
                   );
                 })}
               </div>
-            </div>
-
-            <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-              <div style={panelSectionTitle}>Campaign Details</div>
               {selectedCampaign ? (
                 <>
-                  {renderPanelRow('Campaign', selectedCampaign.id, { wrap: true })}
                   {renderPanelRow('Status', selectedCampaignStatus)}
                   {renderPanelRow('Mission', campaignMission?.name ?? '—', { wrap: true })}
                   {renderPanelRow('Runs', String(selectedCampaign.count))}
@@ -1286,27 +1273,20 @@ export default function App() {
                 </>
               ) : (
                 <div style={{ ...panelRow, display: 'block', color: 'rgba(0,0,0,0.42)' }}>
-                  Select a campaign.
+                  Select a campaign for details.
                 </div>
               )}
-            </div>
-          </div>
+            </AgentSection>
 
-          <div className="no-scrollbar" style={{ minWidth: 0, overflowY: 'auto', borderLeft: '1px solid rgba(0,0,0,0.10)', paddingBottom: panelFooterHeight }}>
-            {/* Simulation history section */}
-            <div style={{ flexShrink: 0 }}>
-              <div style={panelHeaderStyle}>Simulation Runs</div>
-              <div className="no-scrollbar" style={{ maxHeight: 170, overflowY: 'auto' }}>
+            <AgentSection
+              title="Simulation Runs"
+              summary={runsSummary}
+              open={openSections.runs}
+              onToggle={() => toggleSection('runs')}
+            >
+              <div className="no-scrollbar" style={{ maxHeight: 150, overflowY: 'auto' }}>
                 {visibleSimulations.length === 0 ? (
-                  <div style={{
-                    padding: '7px 14px',
-                    fontFamily: "'Courier New', monospace",
-                    fontSize: 10,
-                    color: 'rgba(0,0,0,0.42)',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    No saved simulations.
-                  </div>
+                  <div style={{ fontSize: 10, color: 'rgba(0,0,0,0.42)' }}>No saved simulations.</div>
                 ) : visibleSimulations.map((sim) => {
                   const isSelected = selectedSimulationId === sim.id;
                   const failure = sim.failure?.mode ?? displayStatus(sim.status);
@@ -1314,189 +1294,160 @@ export default function App() {
                   return (
                     <div
                       key={sim.id}
-                      onClick={() => loadSavedSimulation(sim.id)}
+                      onClick={() => {
+                        loadSavedSimulation(sim.id);
+                        setOpenSections((current) => ({ ...current, analysis: true, params: true }));
+                      }}
                       style={{
-                        padding: '6px 14px',
-                        fontFamily: "'Courier New', monospace",
+                        padding: '6px 0',
                         fontSize: 10,
                         cursor: 'pointer',
                         color: isSelected ? 'rgba(0,0,0,0.82)' : 'rgba(0,0,0,0.55)',
-                        background: isSelected ? 'rgba(0,0,0,0.06)' : 'transparent',
+                        background: isSelected ? 'rgba(0,0,0,0.05)' : 'transparent',
                         borderBottom: '1px solid rgba(0,0,0,0.05)',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
                         display: 'grid',
                         gridTemplateColumns: '1fr auto',
-                        alignItems: 'center',
                         gap: 10,
                       }}
                     >
                       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        <span style={{ color: 'rgba(0,0,0,0.28)' }}>
-                          {String(sim.iteration).padStart(2, '0')}
-                        </span>
-                        {' '}
-                        {failure}
+                        <span style={{ color: 'rgba(0,0,0,0.28)' }}>{String(sim.iteration).padStart(2, '0')}</span>
+                        {' '}{failure}
                       </span>
-                      <span style={{
-                        color: isSelected ? 'rgba(0,0,0,0.72)' : 'rgba(0,0,0,0.42)',
-                        fontWeight: 700,
-                        minWidth: 34,
-                        textAlign: 'right',
-                      }}>
-                        {evalScore}
-                      </span>
+                      <span style={{ fontWeight: 700 }}>{evalScore}</span>
                     </div>
                   );
                 })}
               </div>
-            </div>
+            </AgentSection>
 
-            <div style={{ ...panelSectionTitle, ...panelSectionDivider, marginTop: 8 }}>Cost</div>
-            {renderPanelRow('Total', simResult?.result?.total_config_cost_usd
-              ? `$${simResult.result.total_config_cost_usd.toLocaleString('en-US', { maximumFractionDigits: 0 })}`
-              : '—')}
-
-            <div style={{ ...panelSectionTitle, ...panelSectionDivider, marginTop: 8 }}>Analysis</div>
-            {selectedSimulation || simResult?.failure ? (
-              <>
-                {selectedSimulation ? renderPanelRow('Status', displayStatus(selectedSimulation.status)) : null}
-                {Number.isFinite(selectedSimulation?.eval?.score_pct) ? renderPanelRow('Eval', `${selectedSimulation.eval.score_pct}%`) : null}
-                {selectedSimulation?.assessment?.model_used ? renderPanelRow('Model', selectedSimulation.assessment.model_used, { wrap: true }) : null}
-                {selectedSimulation?.assessment?.assessment ? renderPanelRow('Thoughts', selectedSimulation.assessment.assessment, { wrap: true }) : null}
-                {selectedSimulation?.assessment?.failed_part ? renderPanelRow('Part', selectedSimulation.assessment.failed_part, { wrap: true }) : null}
-                {selectedSimulation?.assessment?.failed_metric ? renderPanelRow('Metric', selectedSimulation.assessment.failed_metric, { wrap: true }) : null}
-                {selectedSimulation?.assessment?.root_cause ? renderPanelRow('Cause', selectedSimulation.assessment.root_cause, { wrap: true }) : null}
-                {selectedSimulation?.assessment?.changes?.length
-                  ? renderPanelRow('Solution', selectedSimulation.assessment.changes.join('; '), { wrap: true })
-                  : null}
-                {simResult?.failure ? renderPanelRow('Failed', failureDetail, { wrap: true }) : null}
-              </>
-            ) : (
-              <div style={{ ...panelRow, display: 'block', color: 'rgba(0,0,0,0.42)' }}>
-                Load a simulation to view summary.
-              </div>
-            )}
-
-            <div style={{ ...panelSectionTitle, ...panelSectionDivider, marginTop: 8 }}>Parameter Configuration</div>
-            {config ? (
-              <>
-                {renderPanelRow('Shell mass', `${fmtNumber(config.shell_mass_kg, 0)} kg`)}
-                {config.propulsion ? renderPanelRow('Fuel cap', `${fmtNumber(config.propulsion.fuel_capacity_kg, 0)} kg`) : null}
-                {config.propulsion ? renderPanelRow('Efficiency', fmtNumber(config.propulsion.propulsive_efficiency, 2)) : null}
-                {config.propulsion ? renderPanelRow('Drag coeff', fmtNumber(config.propulsion.hull_drag_coeff, 4)) : null}
-                {displayedZones.map((zone, index) => (
-                  <div
-                    key={`${zone.zone_key ?? zone.zone}-${index}`}
-                    style={{
-                      padding: '6px 14px 7px',
-                      fontFamily: "'Courier New', monospace",
-                      fontSize: 10,
-                      lineHeight: 1.25,
-                      color: 'rgba(0,0,0,0.70)',
-                    }}
-                  >
-                    <div style={{
-                      color: 'rgba(0,0,0,0.74)',
-                      marginBottom: 3,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}>
-                      {zone.zone ?? 'Component'}
-                    </div>
-                    <div style={{
-                      display: 'grid',
-                      gridTemplateColumns: '70px 1fr',
-                      gap: 6,
-                      color: 'rgba(0,0,0,0.48)',
-                    }}>
-                      <span>MAT</span>
-                      <span style={panelValue}>{zone.material_label ?? zone.material ?? '—'}</span>
-                      <span>THK</span>
-                      <span style={panelValue}>{fmtNumber(zone.thickness_mm)} mm</span>
-                      <span>WLD</span>
-                      <span style={panelValue}>{zone.weld_label ?? zone.weld_quality ?? '—'}</span>
-                      <span>SEL</span>
-                      <span style={panelValue}>{zone.seal_label ?? zone.seal_quality ?? '—'}</span>
-                    </div>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <div style={{ ...panelRow, display: 'block', color: 'rgba(0,0,0,0.42)' }}>
-                Run a mission to load configuration.
-              </div>
-            )}
-          </div>
-
-          <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              bottom: 0,
-              width: panelColumnWidth,
-              height: panelFooterHeight,
-              padding: '10px 14px',
-              boxSizing: 'border-box',
-              background: '#C3C4CA',
-              borderTop: '1px solid rgba(0,0,0,0.12)',
-              display: 'flex',
-            }}
-          >
-            <button
-              type="button"
-              onClick={runGeminiSimulations}
-              disabled={runningGemini || !selectedMission}
-              style={{
-                width: runningGemini ? '63%' : '100%',
-                height: 40,
-                fontFamily: "'Courier New', monospace",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                textAlign: 'center',
-                cursor: runningGemini || !selectedMission ? 'default' : 'pointer',
-                color: runningGemini || !selectedMission ? 'rgba(0,0,0,0.34)' : 'rgba(0,0,0,0.76)',
-                background: runningGemini || !selectedMission ? 'rgba(0,0,0,0.035)' : 'rgba(0,0,0,0.075)',
-                border: '1px solid rgba(0,0,0,0.16)',
-              }}
+            <AgentSection
+              title="Cost & Analysis"
+              summary={analysisSummary}
+              open={openSections.analysis}
+              onToggle={() => toggleSection('analysis')}
             >
-              {runningGemini ? (
+              {renderPanelRow('Total', simResult?.result?.total_config_cost_usd
+                ? `$${simResult.result.total_config_cost_usd.toLocaleString('en-US', { maximumFractionDigits: 0 })}`
+                : '—')}
+              {selectedSimulation || simResult?.failure ? (
                 <>
-                  Running Agent
-                  <span style={{ display: 'inline-block', width: '3ch', textAlign: 'left' }}>
-                    {'.'.repeat(geminiDotCount)}
-                  </span>
+                  {selectedSimulation ? renderPanelRow('Status', displayStatus(selectedSimulation.status)) : null}
+                  {Number.isFinite(selectedSimulation?.eval?.score_pct) ? renderPanelRow('Eval', `${selectedSimulation.eval.score_pct}%`) : null}
+                  {selectedSimulation?.assessment?.model_used ? renderPanelRow('Model', selectedSimulation.assessment.model_used, { wrap: true }) : null}
+                  {selectedSimulation?.assessment?.assessment ? renderPanelRow('Thoughts', selectedSimulation.assessment.assessment, { wrap: true }) : null}
+                  {selectedSimulation?.assessment?.failed_part ? renderPanelRow('Part', selectedSimulation.assessment.failed_part, { wrap: true }) : null}
+                  {selectedSimulation?.assessment?.failed_metric ? renderPanelRow('Metric', selectedSimulation.assessment.failed_metric, { wrap: true }) : null}
+                  {selectedSimulation?.assessment?.root_cause ? renderPanelRow('Cause', selectedSimulation.assessment.root_cause, { wrap: true }) : null}
+                  {selectedSimulation?.assessment?.changes?.length
+                    ? renderPanelRow('Solution', selectedSimulation.assessment.changes.join('; '), { wrap: true })
+                    : null}
+                  {simResult?.failure ? renderPanelRow('Failed', failureDetail, { wrap: true }) : null}
                 </>
-              ) : 'Run Agent'}
-            </button>
-            {runningGemini ? (
+              ) : (
+                <div style={{ ...panelRow, display: 'block', color: 'rgba(0,0,0,0.42)' }}>
+                  Load a simulation to view analysis.
+                </div>
+              )}
+            </AgentSection>
+
+            <AgentSection
+              title="Parameters"
+              summary={paramsSummary}
+              open={openSections.params}
+              onToggle={() => toggleSection('params')}
+            >
+              {config ? (
+                <>
+                  {renderPanelRow('Shell mass', `${fmtNumber(config.shell_mass_kg, 0)} kg`)}
+                  {config.propulsion ? renderPanelRow('Fuel cap', `${fmtNumber(config.propulsion.fuel_capacity_kg, 0)} kg`) : null}
+                  {config.propulsion ? renderPanelRow('Efficiency', fmtNumber(config.propulsion.propulsive_efficiency, 2)) : null}
+                  {config.propulsion ? renderPanelRow('Drag coeff', fmtNumber(config.propulsion.hull_drag_coeff, 4)) : null}
+                  {displayedZones.map((zone, index) => (
+                    <div
+                      key={`${zone.zone_key ?? zone.zone}-${index}`}
+                      style={{
+                        padding: '6px 0 7px',
+                        fontSize: 10,
+                        lineHeight: 1.25,
+                        color: 'rgba(0,0,0,0.70)',
+                        borderTop: index ? '1px solid rgba(0,0,0,0.06)' : 'none',
+                      }}
+                    >
+                      <div style={{ color: 'rgba(0,0,0,0.74)', marginBottom: 3 }}>{zone.zone ?? 'Component'}</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '70px 1fr', gap: 6, color: 'rgba(0,0,0,0.48)' }}>
+                        <span>MAT</span><span style={panelValue}>{zone.material_label ?? zone.material ?? '—'}</span>
+                        <span>THK</span><span style={panelValue}>{fmtNumber(zone.thickness_mm)} mm</span>
+                        <span>WLD</span><span style={panelValue}>{zone.weld_label ?? zone.weld_quality ?? '—'}</span>
+                        <span>SEL</span><span style={panelValue}>{zone.seal_label ?? zone.seal_quality ?? '—'}</span>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div style={{ ...panelRow, display: 'block', color: 'rgba(0,0,0,0.42)' }}>
+                  Run a mission to load configuration.
+                </div>
+              )}
+            </AgentSection>
+
+            <div style={{ display: 'flex', gap: 0, marginTop: 12 }}>
               <button
                 type="button"
-                onClick={stopGeminiSimulations}
+                onClick={runGeminiSimulations}
+                disabled={runningGemini || !selectedMission}
                 style={{
-                  width: '37%',
+                  width: runningGemini && !hasStartedPointRun ? '63%' : '100%',
                   height: 40,
-                  marginLeft: -1,
                   fontFamily: "'Courier New', monospace",
                   fontSize: 11,
                   fontWeight: 700,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  color: 'rgba(120,0,0,0.82)',
-                  background: 'rgba(180,0,0,0.08)',
-                  border: '1px solid rgba(120,0,0,0.24)',
+                  cursor: runningGemini || !selectedMission ? 'default' : 'pointer',
+                  color: runningGemini || !selectedMission ? 'rgba(0,0,0,0.34)' : 'rgba(0,0,0,0.76)',
+                  background: runningGemini || !selectedMission ? 'rgba(0,0,0,0.035)' : 'rgba(0,0,0,0.075)',
+                  border: '1px solid rgba(0,0,0,0.16)',
                 }}
               >
-                Stop
+                {runningGemini && !hasStartedPointRun ? (
+                  <>
+                    Running Agent
+                    <span style={{ display: 'inline-block', width: '3ch', textAlign: 'left' }}>
+                      {'.'.repeat(geminiDotCount)}
+                    </span>
+                  </>
+                ) : 'Run Mission Agent'}
               </button>
-            ) : null}
+              {runningGemini && !hasStartedPointRun ? (
+                <button
+                  type="button"
+                  onClick={stopGeminiSimulations}
+                  style={{
+                    width: '37%',
+                    height: 40,
+                    marginLeft: -1,
+                    fontFamily: "'Courier New', monospace",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    color: 'rgba(120,0,0,0.82)',
+                    background: 'rgba(180,0,0,0.08)',
+                    border: '1px solid rgba(120,0,0,0.24)',
+                  }}
+                >
+                  Stop
+                </button>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div style={{ padding: '0 14px 12px', fontSize: 9, color: 'rgba(0,0,0,0.45)' }}>
+            A · {pointA} · B · {pointB}{selectedMission ? ` · ${selectedMission.name}` : ''}
+          </div>
+        )}
       </div>
 
 
